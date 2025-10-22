@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BarChart3, Mail, Lock } from 'lucide-react';
+import { BarChart3, Mail, Lock, Zap } from 'lucide-react';
 import { authService } from '../services/authService';
 
 const LoginPage: React.FC = () => {
@@ -26,6 +26,12 @@ const LoginPage: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDemoLogin = () => {
+    setEmail('admin@nexbii.demo');
+    setPassword('demo123');
+    setError('');
   };
 
   return (
