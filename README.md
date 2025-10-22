@@ -80,6 +80,16 @@ sudo supervisorctl start frontend
 - Backend API: http://localhost:8001
 - API Docs: http://localhost:8001/docs
 
+### 🎯 Demo Credentials
+
+For quick testing and validation, use the demo admin account:
+
+**Email:** `admin@nexbii.demo`  
+**Password:** `demo123`  
+**Role:** Admin (full access)
+
+> 💡 **Tip:** Click the "Fill Demo Credentials" button on the login page to auto-fill these credentials!
+
 ## 📊 Current Features (Phase 1 MVP)
 
 ### ✅ Completed
