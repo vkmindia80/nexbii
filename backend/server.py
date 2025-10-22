@@ -1,12 +1,40 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
-from app.core.database import Base, engine
+from app.core.database import Base, engine, SessionLocal
 from app.api.v1 import auth, datasources, queries, dashboards
+from app.models.user import User, UserRole
+from app.core.security import get_password_hash
 import uvicorn
+import uuid
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
+
+# Initialize demo user if it doesn't exist
+def init_demo_user():
+    db = SessionLocal()
+    try:
+        demo_user = db.query(User).filter(User.email == 'admin@nexbii.demo').first()
+        if not demo_user:
+            demo_user = User(
+                id=str(uuid.uuid4()),
+                email='admin@nexbii.demo',
+                hashed_password=get_password_hash('demo123'),
+                full_name='Demo Admin',
+                role=UserRole.ADMIN,
+                is_active=True
+            )
+            db.add(demo_user)
+            db.commit()
+            print('✅ Demo user created: admin@nexbii.demo / demo123')
+    except Exception as e:
+        print(f'⚠️  Error creating demo user: {e}')
+        db.rollback()
+    finally:
+        db.close()
+
+init_demo_user()
 
 app = FastAPI(
     title=settings.APP_NAME,
