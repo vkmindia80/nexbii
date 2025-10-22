@@ -16,7 +16,10 @@ class Settings(BaseSettings):
     REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     
     # CORS
-    BACKEND_CORS_ORIGINS: List[str] = ["http://localhost:3000"]
+    BACKEND_CORS_ORIGINS: List[str] = [
+        "http://localhost:3000",
+        "https://77020e92-b0ad-489e-acaf-253a106886c0.preview.emergentagent.com"
+    ]
     
     # App
     APP_NAME: str = "NexBII"
