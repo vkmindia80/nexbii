@@ -58,6 +58,28 @@ const LoginPage: React.FC = () => {
             </div>
           )}
 
+          {/* Demo Credentials Banner */}
+          <div className="mb-6 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-4">
+            <div className="flex items-start space-x-3">
+              <Zap className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <h3 className="text-sm font-semibold text-amber-900 mb-1">Try Demo Account</h3>
+                <p className="text-xs text-amber-700 mb-2">
+                  Explore the platform with pre-configured demo credentials
+                </p>
+                <button
+                  type="button"
+                  onClick={handleDemoLogin}
+                  className="inline-flex items-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+                  data-testid="demo-login-button"
+                >
+                  <Zap className="w-4 h-4" />
+                  <span>Fill Demo Credentials</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
