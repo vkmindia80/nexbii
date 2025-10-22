@@ -56,11 +56,11 @@ Build an enterprise-grade, AI-powered Business Intelligence platform that rivals
 
 ### Features to Build:
 
-#### 1. User Management & Authentication (Week 1-2)
+#### 1. User Management & Authentication (Week 1-2) - ✅ 90% COMPLETE
 - ✅ User registration and login
 - ✅ JWT-based authentication
-- ✅ Password reset functionality
-- ✅ User profile management
+- ⚠️ Password reset functionality (NOT IMPLEMENTED)
+- ⚠️ User profile management (NOT IMPLEMENTED)
 - ✅ Basic role-based access (Admin, Editor, Viewer)
 - ✅ Session management
 
