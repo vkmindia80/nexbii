@@ -1,0 +1,117 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+from typing import List
+import time
+from ...core.database import get_db
+from ...core.security import get_current_user
+from ...models.query import Query
+from ...models.datasource import DataSource
+from ...schemas.query import (
+    QueryCreate,
+    QueryResponse,
+    QueryExecute,
+    QueryResult
+)
+from ...services.query_service import QueryService
+
+router = APIRouter()
+
+@router.post("/", response_model=QueryResponse)
+async def create_query(
+    query_data: QueryCreate,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    query = Query(
+        name=query_data.name,
+        description=query_data.description,
+        datasource_id=query_data.datasource_id,
+        query_type=query_data.query_type,
+        query_config=query_data.query_config,
+        sql_query=query_data.sql_query,
+        created_by=current_user["sub"]
+    )
+    db.add(query)
+    db.commit()
+    db.refresh(query)
+    
+    return QueryResponse.from_orm(query)
+
+@router.get("/", response_model=List[QueryResponse])
+async def list_queries(
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    queries = db.query(Query).all()
+    return [QueryResponse.from_orm(q) for q in queries]
+
+@router.get("/{query_id}", response_model=QueryResponse)
+async def get_query(
+    query_id: str,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    query = db.query(Query).filter(Query.id == query_id).first()
+    if not query:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Query not found"
+        )
+    return QueryResponse.from_orm(query)
+
+@router.post("/execute", response_model=QueryResult)
+async def execute_query(
+    execute_data: QueryExecute,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Get datasource
+    datasource = db.query(DataSource).filter(DataSource.id == execute_data.datasource_id).first()
+    if not datasource:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Data source not found"
+        )
+    
+    # Execute query
+    service = QueryService()
+    start_time = time.time()
+    
+    try:
+        result = await service.execute_query(
+            datasource.type,
+            datasource.connection_config,
+            execute_data.sql_query,
+            limit=execute_data.limit
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Query execution failed: {str(e)}"
+        )
+    
+    execution_time = time.time() - start_time
+    
+    return QueryResult(
+        columns=result["columns"],
+        rows=result["rows"],
+        total_rows=len(result["rows"]),
+        execution_time=execution_time
+    )
+
+@router.delete("/{query_id}")
+async def delete_query(
+    query_id: str,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    query = db.query(Query).filter(Query.id == query_id).first()
+    if not query:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Query not found"
+        )
+    
+    db.delete(query)
+    db.commit()
+    return {"message": "Query deleted successfully"}
