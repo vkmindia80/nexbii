@@ -1,24 +1,19 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
 from pymongo import MongoClient
 from .config import settings
 
-# PostgreSQL for metadata
-engine = create_engine(settings.POSTGRES_URL, pool_pre_ping=True)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-# MongoDB for document storage (optional)
+# MongoDB for all data storage
 mongo_client = MongoClient(settings.MONGO_URL)
-mongo_db = mongo_client.get_default_database()
+mongo_db = mongo_client.get_database()
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Collections
+users_collection = mongo_db["users"]
+datasources_collection = mongo_db["datasources"]
+queries_collection = mongo_db["queries"]
+dashboards_collection = mongo_db["dashboards"]
 
 def get_mongo_db():
+    return mongo_db
+
+def get_db():
+    """For backward compatibility"""
     return mongo_db
