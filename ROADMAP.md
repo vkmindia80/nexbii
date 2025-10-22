@@ -80,23 +80,23 @@ Build an enterprise-grade, AI-powered Business Intelligence platform that rivals
 - ✅ Schema introspection (tables, columns, types) - Backend only
 - ✅ Connection pooling
 
-#### 3. Visual Query Builder (Week 5-6)
-- ✅ Drag-and-drop interface
-- ✅ Table and column selection
-- ✅ **Filter Operations:**
+#### 3. Visual Query Builder (Week 5-6) - ❌ 0% NOT STARTED
+- ❌ Drag-and-drop interface (NOT IMPLEMENTED)
+- ❌ Table and column selection (NOT IMPLEMENTED)
+- ❌ **Filter Operations:**
   - Equals, Not equals
   - Greater than, Less than
   - Contains, Starts with, Ends with
   - Between, In list
   - Is null, Is not null
-- ✅ **Join Operations:**
+- ❌ **Join Operations:**
   - Inner join, Left join, Right join
   - Visual relationship mapping
-- ✅ **Aggregations:**
+- ❌ **Aggregations:**
   - Count, Sum, Average, Min, Max
   - Group by multiple columns
-- ✅ Preview results (first 100 rows)
-- ✅ Save queries with names and descriptions
+- ❌ Preview results (first 100 rows)
+- ❌ Save queries with names and descriptions
 
 #### 4. SQL Editor (Week 7-8)
 - ✅ Syntax highlighting
