@@ -64,20 +64,20 @@ Build an enterprise-grade, AI-powered Business Intelligence platform that rivals
 - ✅ Basic role-based access (Admin, Editor, Viewer)
 - ✅ Session management
 
-#### 2. Data Source Connectivity (Week 3-4)
+#### 2. Data Source Connectivity (Week 3-4) - ✅ 85% COMPLETE
 - ✅ **Supported Databases:**
   - PostgreSQL
   - MySQL
   - MongoDB
   - SQLite
-- ✅ **File Uploads:**
-  - CSV parsing and import
-  - Excel file support
-  - JSON file support
+- ⚠️ **File Uploads:**
+  - ❌ CSV parsing and import (NOT IMPLEMENTED)
+  - ❌ Excel file support (NOT IMPLEMENTED)
+  - ❌ JSON file support (NOT IMPLEMENTED)
 - ✅ Connection management UI
 - ✅ Connection testing and validation
 - ✅ Secure credential storage (encrypted)
-- ✅ Schema introspection (tables, columns, types)
+- ✅ Schema introspection (tables, columns, types) - Backend only
 - ✅ Connection pooling
 
 #### 3. Visual Query Builder (Week 5-6)
