@@ -387,7 +387,11 @@ def create_demo_database():
         'customers': 200,
         'orders': 1500,
         'order_items': sum(random.randint(1, 5) for _ in range(1500)),
-        'user_activities': 5000
+        'user_activities': 5000,
+        'departments': len(departments_data),
+        'employees': sum(random.randint(8, 15) for _ in range(len(departments_data))),
+        'sales_targets': 12 * len(regions),
+        'product_reviews': 500
     }
 
 @router.post("/generate")
