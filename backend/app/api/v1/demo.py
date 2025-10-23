@@ -864,8 +864,9 @@ ORDER BY activity_count DESC;""",
         
         return {
             "success": True,
-            "message": "Comprehensive demo data generated successfully for all modules",
+            "message": "✨ Comprehensive demo data generated successfully for all modules!",
             "data": {
+                "sqlite_database": db_stats,
                 "datasources": len(datasources),
                 "queries": len(queries),
                 "dashboards": len(dashboards)
@@ -877,17 +878,18 @@ ORDER BY activity_count DESC;""",
             },
             "summary": {
                 "database_records": {
-                    "products": 25,
-                    "customers": 200,
-                    "orders": 1500,
-                    "order_items": "~3750",
-                    "user_activities": 5000
+                    "products": db_stats['products'],
+                    "customers": db_stats['customers'],
+                    "orders": db_stats['orders'],
+                    "order_items": f"~{db_stats['order_items']}",
+                    "user_activities": db_stats['user_activities']
                 },
                 "modules_covered": [
-                    "Data Sources (3 types: SQLite, PostgreSQL, MongoDB)",
-                    "SQL Queries (14 comprehensive queries)",
-                    "Dashboards (3 dashboards: Sales, Customer, Operations)",
-                    "User Management (Demo admin user)"
+                    "✅ SQLite Database (with 5 tables and realistic sample data)",
+                    "✅ Data Sources (3 types: SQLite, PostgreSQL, MongoDB)",
+                    "✅ SQL Queries (14 comprehensive queries covering sales, customers, operations)",
+                    "✅ Dashboards (3 dashboards: Sales Analytics, Customer Analytics, Operational Metrics)",
+                    "✅ User Management (Demo admin user: admin@nexbii.demo)"
                 ]
             }
         }
