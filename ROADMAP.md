@@ -24,7 +24,7 @@
 **Remaining Critical Features:**
 1. ⭐⭐⭐ **Dashboard Builder** - Drag-drop widget placement with react-grid-layout (IN PROGRESS)
 2. ⭐⭐ **Visual Query Builder** - No-code query interface
-3. ⭐⭐ **Enhanced SQL Editor** - Syntax highlighting with Monaco Editor, auto-completion
+3. ⭐ **Schema Auto-completion** - Smart table/column suggestions in SQL Editor
 
 📄 **Detailed Audit:** See [PHASE1_AUDIT.md](./PHASE1_AUDIT.md) for complete analysis
 
