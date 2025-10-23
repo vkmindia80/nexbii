@@ -358,12 +358,23 @@ const QueriesPage: React.FC = () => {
                     <p className="text-sm text-gray-500">{query.query_type}</p>
                   </div>
                 </div>
-                <button
-                  onClick={() => handleDelete(query.id)}
-                  className="text-red-600 hover:text-red-700"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => handleEdit(query)}
+                    className="text-blue-600 hover:text-blue-700"
+                    title="Edit query"
+                    data-testid={`edit-query-${query.id}`}
+                  >
+                    <Play className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(query.id)}
+                    className="text-red-600 hover:text-red-700"
+                    title="Delete query"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
               {query.description && (
                 <p className="text-sm text-gray-600 mb-3">{query.description}</p>
