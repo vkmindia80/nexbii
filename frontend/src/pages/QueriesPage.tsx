@@ -284,7 +284,17 @@ const QueriesPage: React.FC = () => {
             <span>History</span>
           </button>
           <button
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              setEditingQuery(null);
+              setFormData({
+                name: '',
+                description: '',
+                datasource_id: datasources[0]?.id || '',
+                sql_query: 'SELECT * FROM customers LIMIT 10;'
+              });
+              setResult(null);
+              setShowModal(true);
+            }}
             disabled={datasources.length === 0}
             className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             data-testid="create-query-button"
