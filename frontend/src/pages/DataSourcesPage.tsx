@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Database, Trash2, CheckCircle, XCircle } from 'lucide-react';
+import { Plus, Database, Trash2, CheckCircle, XCircle, Eye } from 'lucide-react';
 import { datasourceService } from '../services/datasourceService';
 import { DataSource } from '../types';
+import SchemaBrowser from '../components/SchemaBrowser';
 
 const DataSourcesPage: React.FC = () => {
   const [datasources, setDatasources] = useState<DataSource[]>([]);
