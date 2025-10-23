@@ -270,14 +270,6 @@ Add professional features and improve user experience for production deployment.
 - Alert history and logs
 - Snooze and acknowledge
 
-#### 7. **Visual Query Builder**
-- Drag-and-drop table/column selection
-- Filter builder (10+ operators)
-- Join operations UI
-- Aggregation builder
-- Visual-to-SQL conversion
-- Live SQL preview
-
 ---
 
 ## 🧠 PHASE 3: ADVANCED (Months 7-9)
