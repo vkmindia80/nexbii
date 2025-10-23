@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, Text, JSON, Boolean, DateTime
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import uuid
 from ..core.database import Base
@@ -16,3 +17,6 @@ class Dashboard(Base):
     created_by = Column(String)  # User ID
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Relationships
+    shared_links = relationship("SharedDashboard", back_populates="dashboard", cascade="all, delete-orphan")
