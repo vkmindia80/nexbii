@@ -375,7 +375,7 @@ const QueriesPage: React.FC = () => {
                     title="Edit query"
                     data-testid={`edit-query-${query.id}`}
                   >
-                    <Play className="w-4 h-4" />
+                    <Edit className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(query.id)}
