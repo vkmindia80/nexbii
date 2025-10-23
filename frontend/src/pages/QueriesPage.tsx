@@ -396,7 +396,9 @@ const QueriesPage: React.FC = () => {
           <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">SQL Editor</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {editingQuery ? 'Edit Query' : 'SQL Editor'}
+                </h2>
                 <button
                   onClick={() => setDarkMode(!darkMode)}
                   className="p-2 rounded-lg hover:bg-gray-100"
