@@ -413,6 +413,10 @@ async def generate_demo_data(db: Session = Depends(get_db)):
         print(f"   - Orders: {db_stats['orders']}")
         print(f"   - Order Items: ~{db_stats['order_items']}")
         print(f"   - User Activities: {db_stats['user_activities']}")
+        print(f"   - Departments: {db_stats['departments']}")
+        print(f"   - Employees: ~{db_stats['employees']}")
+        print(f"   - Sales Targets: {db_stats['sales_targets']}")
+        print(f"   - Product Reviews: {db_stats['product_reviews']}")
         
         # Step 2: Create metadata in PostgreSQL (datasources, queries, dashboards)
         # Get demo user
