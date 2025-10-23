@@ -144,25 +144,27 @@ const QueriesPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const queryData: any = {
+        name: formData.name,
+        description: formData.description,
+        datasource_id: formData.datasource_id,
+        query_type: queryMode,
+        sql_query: formData.sql_query
+      };
+
+      // Include visual config if in visual mode
+      if (queryMode === 'visual' && visualConfig) {
+        queryData.query_config = visualConfig;
+      }
+
       if (editingQuery) {
         // Update existing query
-        await queryService.update(editingQuery.id, {
-          name: formData.name,
-          description: formData.description,
-          datasource_id: formData.datasource_id,
-          query_type: 'sql',
-          sql_query: formData.sql_query
-        });
+        await queryService.update(editingQuery.id, queryData);
       } else {
         // Create new query
-        await queryService.create({
-          name: formData.name,
-          description: formData.description,
-          datasource_id: formData.datasource_id,
-          query_type: 'sql',
-          sql_query: formData.sql_query
-        });
+        await queryService.create(queryData);
       }
+      
       setShowModal(false);
       setEditingQuery(null);
       loadData();
@@ -173,6 +175,8 @@ const QueriesPage: React.FC = () => {
         sql_query: 'SELECT * FROM customers LIMIT 10;'
       });
       setResult(null);
+      setVisualConfig(null);
+      setQueryMode('sql');
     } catch (error) {
       console.error('Failed to save query:', error);
       alert('Failed to save query');
