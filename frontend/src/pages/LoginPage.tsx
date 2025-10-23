@@ -94,15 +94,27 @@ const LoginPage: React.FC = () => {
                 <p className="text-xs text-amber-700 mb-2">
                   Explore the platform with pre-configured demo credentials
                 </p>
-                <button
-                  type="button"
-                  onClick={handleDemoLogin}
-                  className="inline-flex items-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-                  data-testid="demo-login-button"
-                >
-                  <Zap className="w-4 h-4" />
-                  <span>Fill Demo Credentials</span>
-                </button>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={handleDemoLogin}
+                    className="inline-flex items-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+                    data-testid="demo-login-button"
+                  >
+                    <Zap className="w-4 h-4" />
+                    <span>Fill Demo Credentials</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleGenerateDemoData}
+                    disabled={generatingData}
+                    className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    data-testid="generate-demo-data-button"
+                  >
+                    <Database className="w-4 h-4" />
+                    <span>{generatingData ? 'Generating...' : 'Generate Demo Data'}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
