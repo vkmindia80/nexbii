@@ -8,6 +8,8 @@ const DataSourcesPage: React.FC = () => {
   const [datasources, setDatasources] = useState<DataSource[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [showSchemaBrowser, setShowSchemaBrowser] = useState(false);
+  const [selectedDatasource, setSelectedDatasource] = useState<DataSource | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     type: 'postgresql' as any,
