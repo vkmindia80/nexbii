@@ -98,7 +98,8 @@ For quick testing and validation, use the demo admin account:
 - **User authentication** - Register/login with JWT
 - **Data source management** - PostgreSQL, MySQL, MongoDB, SQLite
 - **Schema Browser** 🆕 - Interactive database schema exploration
-- **SQL query editor** - Create, execute, and save queries
+- **SQL query editor** - Monaco Editor with syntax highlighting and auto-completion
+- **Visual Query Builder** 🆕 - No-code query interface with save/load configurations
 - **10 Chart types** - Line, Bar, Pie, Donut, Column, Area, Scatter, Gauge, Metric, Table
 - **Dashboard Builder** - Drag-and-drop dashboard creation
 - **Dashboard Viewer** - Interactive dashboards with live data
@@ -107,12 +108,16 @@ For quick testing and validation, use the demo admin account:
 - **Redis Caching Layer** 🆕 - Query result caching with 15-minute TTL
 - Modern, responsive UI with Tailwind CSS
 
-### 🚀 Phase 2 Coming Soon
-- Monaco Editor for SQL with syntax highlighting (In Progress)
+### 🚀 Phase 2 Completed Features
+- ✅ Monaco Editor for SQL with syntax highlighting
+- ✅ Visual query builder with configuration persistence
+- ✅ Redis caching layer
+
+### 🔜 Phase 2 Coming Next
 - Export functionality (PDF, PNG, CSV)
-- Visual query builder (no-code)
 - Collaboration features (sharing, comments)
 - Email subscriptions and alerts
+- Advanced visualizations
 
 ## 🎯 Phase 1 Goals (Months 1-3)
 
