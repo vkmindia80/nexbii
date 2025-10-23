@@ -561,11 +561,90 @@ ORDER BY activity_count DESC;""",
         dashboards.append(d2)
         db.add(d2)
         
+        # Dashboard 3: Operational Metrics
+        d3 = Dashboard(
+            id=str(uuid.uuid4()),
+            name="Demo: Operational Metrics Dashboard",
+            description="Inventory, product categories, and operational KPIs",
+            layout={
+                "layouts": []
+            },
+            widgets=[
+                {
+                    "id": "w1",
+                    "type": "chart",
+                    "title": "Product Category Revenue",
+                    "query_id": q9.id,
+                    "chart_type": "bar",
+                    "x": 0,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "category",
+                        "y_axis": "revenue"
+                    }
+                },
+                {
+                    "id": "w2",
+                    "type": "chart",
+                    "title": "User Activity Distribution",
+                    "query_id": q14.id,
+                    "chart_type": "donut",
+                    "x": 6,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "label": "activity_type",
+                        "value": "activity_count"
+                    }
+                },
+                {
+                    "id": "w3",
+                    "type": "chart",
+                    "title": "Average Order Value by Segment",
+                    "query_id": q10.id,
+                    "chart_type": "column",
+                    "x": 0,
+                    "y": 3,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "customer_segment",
+                        "y_axis": "avg_order_value"
+                    }
+                },
+                {
+                    "id": "w4",
+                    "type": "chart",
+                    "title": "Inventory Status",
+                    "query_id": q13.id,
+                    "chart_type": "table",
+                    "x": 6,
+                    "y": 3,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "pageSize": 15
+                    }
+                }
+            ],
+            filters={
+                "category": "all",
+                "stock_level": "all"
+            },
+            is_public=False,
+            created_by=user_id
+        )
+        dashboards.append(d3)
+        db.add(d3)
+        
         db.commit()
         
         return {
             "success": True,
-            "message": "Demo data generated successfully",
+            "message": "Comprehensive demo data generated successfully for all modules",
             "data": {
                 "datasources": len(datasources),
                 "queries": len(queries),
@@ -575,6 +654,21 @@ ORDER BY activity_count DESC;""",
                 "datasources": [{"id": ds.id, "name": ds.name, "type": ds.type.value} for ds in datasources],
                 "queries": [{"id": q.id, "name": q.name} for q in queries],
                 "dashboards": [{"id": d.id, "name": d.name} for d in dashboards]
+            },
+            "summary": {
+                "database_records": {
+                    "products": 25,
+                    "customers": 200,
+                    "orders": 1500,
+                    "order_items": "~3750",
+                    "user_activities": 5000
+                },
+                "modules_covered": [
+                    "Data Sources (3 types: SQLite, PostgreSQL, MongoDB)",
+                    "SQL Queries (14 comprehensive queries)",
+                    "Dashboards (3 dashboards: Sales, Customer, Operations)",
+                    "User Management (Demo admin user)"
+                ]
             }
         }
         
