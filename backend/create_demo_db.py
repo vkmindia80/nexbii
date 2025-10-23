@@ -78,23 +78,33 @@ def create_demo_database():
         )
     ''')
     
-    # Insert Products
+    # Insert Products - More realistic business inventory
     products = [
         ('Laptop Pro 15', 'Electronics', 1299.99, 800),
         ('Wireless Mouse', 'Electronics', 29.99, 15),
         ('USB-C Cable', 'Accessories', 19.99, 8),
-        ('Desk Chair', 'Furniture', 299.99, 150),
-        ('Standing Desk', 'Furniture', 599.99, 350),
-        ('Monitor 27"', 'Electronics', 349.99, 200),
-        ('Keyboard Mechanical', 'Electronics', 149.99, 80),
-        ('Webcam HD', 'Electronics', 89.99, 45),
-        ('Desk Lamp', 'Accessories', 49.99, 25),
-        ('Notebook Set', 'Office Supplies', 14.99, 5),
-        ('Phone Stand', 'Accessories', 24.99, 12),
-        ('Headphones', 'Electronics', 199.99, 100),
-        ('Tablet 10"', 'Electronics', 449.99, 280),
+        ('Desk Chair Executive', 'Furniture', 299.99, 150),
+        ('Standing Desk Electric', 'Furniture', 599.99, 350),
+        ('Monitor 27" 4K', 'Electronics', 349.99, 200),
+        ('Keyboard Mechanical RGB', 'Electronics', 149.99, 80),
+        ('Webcam HD 1080p', 'Electronics', 89.99, 45),
+        ('LED Desk Lamp', 'Accessories', 49.99, 25),
+        ('Premium Notebook Set', 'Office Supplies', 14.99, 5),
+        ('Aluminum Phone Stand', 'Accessories', 24.99, 12),
+        ('Noise Cancelling Headphones', 'Electronics', 199.99, 100),
+        ('Tablet 10" WiFi', 'Electronics', 449.99, 280),
         ('External SSD 1TB', 'Electronics', 129.99, 70),
-        ('Wireless Charger', 'Accessories', 39.99, 18),
+        ('Wireless Charger Fast', 'Accessories', 39.99, 18),
+        ('Ergonomic Keyboard', 'Electronics', 89.99, 45),
+        ('USB Hub 7-Port', 'Accessories', 34.99, 18),
+        ('Monitor Arm Dual', 'Furniture', 179.99, 90),
+        ('Laptop Stand Aluminum', 'Accessories', 59.99, 30),
+        ('Cable Management Kit', 'Accessories', 19.99, 10),
+        ('Bluetooth Speaker', 'Electronics', 79.99, 40),
+        ('Desk Organizer Set', 'Office Supplies', 24.99, 12),
+        ('Mousepad Extended', 'Accessories', 29.99, 15),
+        ('Webcam Privacy Cover', 'Accessories', 9.99, 3),
+        ('Portable Hard Drive 2TB', 'Electronics', 89.99, 50),
     ]
     
     product_ids = []
