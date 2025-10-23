@@ -43,7 +43,7 @@ class DataSourceService:
                 return True
             
             elif ds_type == DataSourceType.SQLITE:
-                conn = sqlite3.connect(config.get("database_path"))
+                conn = sqlite3.connect(config.get("database_path") or config.get("database"))
                 conn.close()
                 return True
             
