@@ -15,7 +15,7 @@ class ActivityService:
         entity_id: Optional[str] = None,
         entity_name: Optional[str] = None,
         description: Optional[str] = None,
-        metadata: Optional[dict] = None
+        activity_metadata: Optional[dict] = None
     ) -> Activity:
         """Create a new activity entry"""
         activity = Activity(
@@ -25,7 +25,7 @@ class ActivityService:
             entity_id=entity_id,
             entity_name=entity_name,
             description=description,
-            metadata=metadata
+            activity_metadata=activity_metadata
         )
         
         db.add(activity)
