@@ -60,6 +60,10 @@ app.include_router(demo.router, prefix="/api/demo", tags=["Demo Data"])
 app.include_router(cache.router, prefix="/api/cache", tags=["Cache Management"])
 app.include_router(exports.router, prefix="/api/exports", tags=["Exports"])
 app.include_router(sharing.router, prefix="/api/sharing", tags=["Sharing"])
+app.include_router(subscriptions.router, prefix="/api/subscriptions", tags=["Subscriptions"])
+app.include_router(comments.router, prefix="/api/comments", tags=["Comments"])
+app.include_router(activities.router, prefix="/api/activities", tags=["Activities"])
+app.include_router(alerts.router, prefix="/api/alerts", tags=["Alerts"])
 
 @app.get("/api/health")
 async def health_check():
