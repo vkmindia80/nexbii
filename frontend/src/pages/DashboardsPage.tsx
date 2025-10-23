@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, BarChart3, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Plus, BarChart3, Trash2, Eye } from 'lucide-react';
 import { dashboardService } from '../services/dashboardService';
 import { Dashboard } from '../types';
 
