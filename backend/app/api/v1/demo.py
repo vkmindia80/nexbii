@@ -249,6 +249,136 @@ FROM customers;""",
         queries.append(q8)
         db.add(q8)
         
+        # Query 9: Product Category Analysis
+        q9 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Product Category Revenue",
+            description="Revenue breakdown by product category",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    p.category,
+    COUNT(DISTINCT oi.order_id) as orders,
+    SUM(oi.quantity) as units_sold,
+    SUM(oi.quantity * oi.price) as revenue
+FROM order_items oi
+JOIN products p ON oi.product_id = p.id
+GROUP BY p.category
+ORDER BY revenue DESC;""",
+            created_by=user_id
+        )
+        queries.append(q9)
+        db.add(q9)
+        
+        # Query 10: Average Order Value by Segment
+        q10 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Average Order Value by Segment",
+            description="Average order value for each customer segment",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    c.customer_segment,
+    COUNT(DISTINCT o.id) as total_orders,
+    AVG(o.amount) as avg_order_value,
+    MIN(o.amount) as min_order,
+    MAX(o.amount) as max_order
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+GROUP BY c.customer_segment
+ORDER BY avg_order_value DESC;""",
+            created_by=user_id
+        )
+        queries.append(q10)
+        db.add(q10)
+        
+        # Query 11: Monthly Growth Rate
+        q11 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Monthly Growth Rate",
+            description="Month-over-month revenue growth",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    strftime('%Y-%m', order_date) as month,
+    SUM(amount) as revenue,
+    COUNT(*) as orders
+FROM orders
+WHERE order_date >= date('now', '-12 months')
+GROUP BY month
+ORDER BY month;""",
+            created_by=user_id
+        )
+        queries.append(q11)
+        db.add(q11)
+        
+        # Query 12: Top Customers by Revenue
+        q12 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Top 10 Customers",
+            description="Highest revenue generating customers",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    c.customer_name,
+    c.customer_segment,
+    c.region,
+    COUNT(o.id) as total_orders,
+    SUM(o.amount) as total_revenue
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+GROUP BY c.id
+ORDER BY total_revenue DESC
+LIMIT 10;""",
+            created_by=user_id
+        )
+        queries.append(q12)
+        db.add(q12)
+        
+        # Query 13: Inventory Status
+        q13 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Inventory Status",
+            description="Current stock levels for all products",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    product_name,
+    category,
+    price,
+    stock_quantity,
+    CASE 
+        WHEN stock_quantity < 100 THEN 'Low Stock'
+        WHEN stock_quantity < 200 THEN 'Medium Stock'
+        ELSE 'High Stock'
+    END as stock_status
+FROM products
+ORDER BY stock_quantity ASC;""",
+            created_by=user_id
+        )
+        queries.append(q13)
+        db.add(q13)
+        
+        # Query 14: Daily Activity Trends
+        q14 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: User Activity by Type",
+            description="User activity distribution over last 30 days",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    activity_type,
+    COUNT(*) as activity_count,
+    COUNT(DISTINCT user_id) as unique_users
+FROM user_activities
+WHERE activity_timestamp >= datetime('now', '-30 days')
+GROUP BY activity_type
+ORDER BY activity_count DESC;""",
+            created_by=user_id
+        )
+        queries.append(q14)
+        db.add(q14)
+        
         db.commit()
         
         # Create Demo Dashboards
