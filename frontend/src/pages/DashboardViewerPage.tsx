@@ -250,13 +250,20 @@ const DashboardViewerPage: React.FC = () => {
                 }}
               >
                 {data ? (
-                  <ChartContainer
-                    type={chartType}
-                    data={data}
-                    config={widget.config || {}}
-                    title={widget.title}
-                    height="300px"
-                  />
+                  data.error ? (
+                    <div className="flex flex-col items-center justify-center h-64 text-center">
+                      <p className="text-red-600 mb-2">Failed to load data</p>
+                      <p className="text-sm text-gray-500">{data.error}</p>
+                    </div>
+                  ) : (
+                    <ChartContainer
+                      type={chartType}
+                      data={data}
+                      config={widget.config || {}}
+                      title={widget.title}
+                      height="300px"
+                    />
+                  )
                 ) : (
                   <div className="flex items-center justify-center h-64">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
