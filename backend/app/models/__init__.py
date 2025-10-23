@@ -3,5 +3,19 @@ from .datasource import DataSource
 from .query import Query
 from .dashboard import Dashboard
 from .share import SharedDashboard
+from .subscription import EmailSubscription, SubscriptionFrequency
+from .comment import Comment
+from .activity import Activity, ActivityType
+from .alert import Alert, AlertHistory, AlertConditionType, AlertFrequency, AlertStatus
 
-__all__ = ["User", "UserRole", "DataSource", "Query", "Dashboard", "SharedDashboard"]
+__all__ = [
+    "User", "UserRole", 
+    "DataSource", 
+    "Query", 
+    "Dashboard", 
+    "SharedDashboard",
+    "EmailSubscription", "SubscriptionFrequency",
+    "Comment",
+    "Activity", "ActivityType",
+    "Alert", "AlertHistory", "AlertConditionType", "AlertFrequency", "AlertStatus"
+]
