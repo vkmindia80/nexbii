@@ -17,12 +17,13 @@ export const queryService = {
     return response.data;
   },
 
-  async execute(datasource_id: string, sql_query: string, limit?: number): Promise<QueryResult> {
-    const response = await api.post('/api/queries/execute', {
-      datasource_id,
-      sql_query,
-      limit
-    });
+  async execute(params: { 
+    query_id?: string; 
+    datasource_id?: string; 
+    sql_query?: string; 
+    limit?: number 
+  }): Promise<QueryResult> {
+    const response = await api.post('/api/queries/execute', params);
     return response.data;
   },
 
