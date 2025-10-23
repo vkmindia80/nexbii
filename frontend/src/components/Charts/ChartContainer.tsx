@@ -100,6 +100,51 @@ const ChartContainer: React.FC<ChartContainerProps> = ({ type, data, config = {}
           />
         );
       
+      case 'bubble':
+        return (
+          <BubbleChart 
+            data={data} 
+            title={title} 
+            height={height}
+            xAxisLabel={config.xAxisLabel}
+            yAxisLabel={config.yAxisLabel}
+          />
+        );
+      
+      case 'heatmap':
+        return (
+          <HeatmapChart 
+            data={data} 
+            title={title} 
+            height={height}
+            colorRange={config.colorRange}
+          />
+        );
+      
+      case 'boxplot':
+        return <BoxPlotChart data={data} title={title} height={height} />;
+      
+      case 'treemap':
+        return <TreemapChart data={data} title={title} height={height} />;
+      
+      case 'sunburst':
+        return <SunburstChart data={data} title={title} height={height} />;
+      
+      case 'waterfall':
+        return <WaterfallChart data={data} title={title} height={height} />;
+      
+      case 'funnel':
+        return <FunnelChart data={data} title={title} height={height} />;
+      
+      case 'radar':
+        return <RadarChart data={data} title={title} height={height} />;
+      
+      case 'candlestick':
+        return <CandlestickChart data={data} title={title} height={height} />;
+      
+      case 'sankey':
+        return <SankeyChart data={data} title={title} height={height} />;
+      
       default:
         return (
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 flex items-center justify-center" style={{ height: height || '400px' }}>
