@@ -137,7 +137,7 @@ class CommentService:
             entity_type=entity_type,
             entity_id=entity_id,
             description=f"Added a comment: {comment.content[:50]}...",
-            metadata={
+            activity_metadata={
                 "comment_id": comment.id,
                 "mentions": comment.mentions
             }
