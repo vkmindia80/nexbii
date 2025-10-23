@@ -126,27 +126,30 @@ const SchemaBrowser: React.FC<SchemaBrowserProps> = ({ datasourceId, datasourceN
                 Found {filteredSchema.length} table{filteredSchema.length !== 1 ? 's' : ''}
               </div>
               {filteredSchema.map((table) => (
-                <div key={table.table_name} className="border border-gray-200 rounded-lg overflow-hidden">
+                <div key={table.name} className="border border-gray-200 rounded-lg overflow-hidden">
                   {/* Table Header */}
                   <button
-                    onClick={() => toggleTable(table.table_name)}
+                    onClick={() => toggleTable(table.name)}
                     className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition-colors text-left"
-                    data-testid={`table-${table.table_name}`}
+                    data-testid={`table-${table.name}`}
                   >
                     <div className="flex items-center space-x-3">
-                      {expandedTables.has(table.table_name) ? (
+                      {expandedTables.has(table.name) ? (
                         <ChevronDown className="w-5 h-5 text-gray-600" />
                       ) : (
                         <ChevronRight className="w-5 h-5 text-gray-600" />
                       )}
                       <Table className="w-5 h-5 text-primary-600" />
-                      <span className="font-semibold text-gray-900">{table.table_name}</span>
-                      <span className="text-sm text-gray-500">({table.columns.length} columns)</span>
+                      <span className="font-semibold text-gray-900">{table.name}</span>
+                      <span className="text-sm text-gray-500">
+                        ({table.columns?.length || 0} columns
+                        {table.row_count !== undefined ? `, ${table.row_count.toLocaleString()} rows` : ''})
+                      </span>
                     </div>
                   </button>
 
                   {/* Columns List */}
-                  {expandedTables.has(table.table_name) && (
+                  {expandedTables.has(table.name) && (
                     <div className="bg-white">
                       <table className="w-full">
                         <thead className="bg-gray-50">
@@ -160,17 +163,17 @@ const SchemaBrowser: React.FC<SchemaBrowserProps> = ({ datasourceId, datasourceN
                           </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
-                          {table.columns.map((column, idx) => (
+                          {(table.columns || []).map((column, idx) => (
                             <tr
-                              key={`${table.table_name}-${column.column_name}`}
+                              key={`${table.name}-${column.name}`}
                               className={idx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}
                             >
                               <td className="px-6 py-3 text-sm font-mono text-gray-900">
-                                {column.column_name}
+                                {column.name}
                               </td>
                               <td className="px-6 py-3 text-sm text-gray-600">
                                 <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                  {column.data_type}
+                                  {column.type}
                                 </span>
                               </td>
                             </tr>
