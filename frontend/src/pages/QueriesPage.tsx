@@ -375,6 +375,14 @@ const QueriesPage: React.FC = () => {
                 </div>
                 <div className="flex space-x-2">
                   <button
+                    onClick={() => handleView(query)}
+                    className="text-gray-600 hover:text-gray-700"
+                    title="View query"
+                    data-testid={`view-query-${query.id}`}
+                  >
+                    <Eye className="w-4 h-4" />
+                  </button>
+                  <button
                     onClick={() => handleEdit(query)}
                     className="text-blue-600 hover:text-blue-700"
                     title="Edit query"
