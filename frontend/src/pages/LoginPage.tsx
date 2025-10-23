@@ -52,14 +52,19 @@ const LoginPage: React.FC = () => {
         `✨ Demo Data Generated Successfully for All Modules!\n\n` +
         `👤 Users: Demo admin account (admin@nexbii.demo / demo123)\n` +
         `🗄️ Data Sources: ${response.data.datasources} sources (SQLite with real data, PostgreSQL, MongoDB)\n` +
-        `📝 Queries: ${response.data.queries} comprehensive SQL queries (sales, products, customers, analytics)\n` +
-        `📊 Dashboards: ${response.data.dashboards} dashboards with 13 interactive widgets\n` +
-        `📈 Charts: All 10 chart types (Line, Bar, Pie, Donut, Column, Area, Scatter, Gauge, Metric, Table)\n` +
-        `💾 Database: ${dbRecords.products || 25} products, ${dbRecords.customers || 200} customers, ${dbRecords.orders || 1500} orders, ${dbRecords.user_activities || 5000} activities\n\n` +
+        `📝 Queries: ${response.data.queries} comprehensive SQL queries (sales, customers, HR, products, reviews, analytics)\n` +
+        `📊 Dashboards: ${response.data.dashboards} interactive dashboards (Sales, Customer, Operations, HR, Products, Sales Targets)\n` +
+        `📈 Charts: All 20 chart types (10 basic + 10 advanced visualizations)\n` +
+        `💾 Database: 9 tables with comprehensive data:\n` +
+        `   • ${dbRecords.products || 25} products, ${dbRecords.customers || 200} customers\n` +
+        `   • ${dbRecords.orders || 1500} orders, ${dbRecords.departments || 8} departments\n` +
+        `   • ~${dbRecords.employees || 80} employees, ${dbRecords.sales_targets || 48} sales targets\n` +
+        `   • ${dbRecords.product_reviews || 500} reviews, ${dbRecords.user_activities || 5000} activities\n\n` +
+        `🤖 AI Features: Natural language queries, query optimization, chart recommendations, automated insights\n\n` +
         `🎯 Ready to explore! Login with demo credentials and check out:\n` +
         `   • Data Sources page - Browse database schema\n` +
-        `   • Queries page - View and execute SQL queries\n` +
-        `   • Dashboards page - Explore interactive analytics dashboards`
+        `   • Queries page - Try AI-powered natural language queries\n` +
+        `   • Dashboards page - Explore 6 interactive analytics dashboards`
       );
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to generate demo data. Please try again.');
