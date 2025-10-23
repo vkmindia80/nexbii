@@ -166,13 +166,22 @@ const DataSourcesPage: React.FC = () => {
                 <button
                   onClick={() => handleDelete(ds.id)}
                   className="text-red-600 hover:text-red-700"
+                  data-testid={`delete-datasource-${ds.id}`}
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-gray-600 mb-4">
                 <p>Created: {new Date(ds.created_at).toLocaleDateString()}</p>
               </div>
+              <button
+                onClick={() => handleBrowseSchema(ds)}
+                className="w-full flex items-center justify-center space-x-2 bg-primary-50 text-primary-700 px-4 py-2 rounded-lg hover:bg-primary-100 transition-colors"
+                data-testid={`browse-schema-${ds.id}`}
+              >
+                <Eye className="w-4 h-4" />
+                <span>Browse Schema</span>
+              </button>
             </div>
           ))}
         </div>
