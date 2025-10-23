@@ -231,9 +231,12 @@ const AlertBuilderModal: React.FC<AlertBuilderModalProps> = ({ queries, onClose,
     metric_column: '',
     threshold_value: 0,
     frequency: 'once',
-    notify_emails: []
+    notify_emails: [],
+    notify_slack: false,
+    slack_webhook: ''
   });
   const [emailInput, setEmailInput] = useState('');
+  const [testingWebhook, setTestingWebhook] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -261,6 +264,24 @@ const AlertBuilderModal: React.FC<AlertBuilderModalProps> = ({ queries, onClose,
       ...formData,
       notify_emails: formData.notify_emails?.filter(e => e !== email) || []
     });
+  };
+
+  const testSlackWebhook = async () => {
+    if (!formData.slack_webhook) {
+      alert('Please enter a Slack webhook URL first');
+      return;
+    }
+
+    try {
+      setTestingWebhook(true);
+      await alertService.testSlackWebhook(formData.slack_webhook);
+      alert('✅ Test message sent successfully! Check your Slack channel.');
+    } catch (error) {
+      console.error('Failed to test webhook:', error);
+      alert('❌ Failed to send test message. Please check your webhook URL.');
+    } finally {
+      setTestingWebhook(false);
+    }
   };
 
   return (
