@@ -186,21 +186,68 @@ ORDER BY date;""",
             id=str(uuid.uuid4()),
             name="Demo: Regional Performance",
             description="Sales performance breakdown by region",
-            datasource_id=ds_postgres.id,
+            datasource_id=ds_sqlite.id,
             query_type="sql",
             sql_query="""SELECT 
     region,
     COUNT(*) as total_orders,
-    SUM(order_value) as revenue,
-    AVG(order_value) as avg_order_value
+    SUM(amount) as revenue
 FROM orders
-WHERE order_date >= CURRENT_DATE - INTERVAL '90 days'
+JOIN customers ON orders.customer_id = customers.id
 GROUP BY region
 ORDER BY revenue DESC;""",
             created_by=user_id
         )
         queries.append(q5)
         db.add(q5)
+        
+        # Query 6: Order Status Distribution
+        q6 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Order Status Distribution",
+            description="Distribution of orders by status",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    status,
+    COUNT(*) as order_count
+FROM orders
+GROUP BY status
+ORDER BY order_count DESC;""",
+            created_by=user_id
+        )
+        queries.append(q6)
+        db.add(q6)
+        
+        # Query 7: Total Revenue Metric
+        q7 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Total Revenue",
+            description="Total revenue from all orders",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    SUM(amount) as total_revenue
+FROM orders;""",
+            created_by=user_id
+        )
+        queries.append(q7)
+        db.add(q7)
+        
+        # Query 8: Total Customers Metric
+        q8 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Total Customers",
+            description="Total number of customers",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    COUNT(*) as total_customers
+FROM customers;""",
+            created_by=user_id
+        )
+        queries.append(q8)
+        db.add(q8)
         
         db.commit()
         
