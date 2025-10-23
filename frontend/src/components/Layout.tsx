@@ -8,7 +8,8 @@ import {
   LogOut, 
   Menu, 
   X,
-  BarChart3
+  BarChart3,
+  PieChart
 } from 'lucide-react';
 import { authService } from '../services/authService';
 
