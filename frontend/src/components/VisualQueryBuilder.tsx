@@ -65,17 +65,6 @@ interface VisualQueryBuilderProps {
   onConfigChange?: (config: VisualQueryConfig) => void;
 }
 
-interface VisualQueryConfig {
-  selectedTable: string;
-  selectedColumns: SelectedColumn[];
-  filters: FilterCondition[];
-  joins: JoinCondition[];
-  groupBy: GroupByColumn[];
-  orderBy: OrderByColumn[];
-  limit: number;
-  distinct: boolean;
-}
-
 const OPERATORS = [
   { value: '=', label: 'Equals (=)' },
   { value: '!=', label: 'Not Equals (!=)' },
