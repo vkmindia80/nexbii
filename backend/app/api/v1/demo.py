@@ -25,6 +25,10 @@ def create_demo_database():
     cursor.execute('DROP TABLE IF EXISTS products')
     cursor.execute('DROP TABLE IF EXISTS customers')
     cursor.execute('DROP TABLE IF EXISTS user_activities')
+    cursor.execute('DROP TABLE IF EXISTS employees')
+    cursor.execute('DROP TABLE IF EXISTS departments')
+    cursor.execute('DROP TABLE IF EXISTS sales_targets')
+    cursor.execute('DROP TABLE IF EXISTS product_reviews')
     
     # Create Products table
     cursor.execute('''
