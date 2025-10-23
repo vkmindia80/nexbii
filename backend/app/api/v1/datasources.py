@@ -11,6 +11,7 @@ from ...schemas.datasource import (
     SchemaResponse
 )
 from ...services.datasource_service import DataSourceService
+from ...services.cache_service import CacheService
 
 router = APIRouter()
 
