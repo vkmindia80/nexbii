@@ -131,11 +131,13 @@ Week 3-4: ✅ **Data Source Connectivity**
 - Connection testing and validation
 - Secure credential storage
 
-Week 5-6: 🚧 **Visual Query Builder** (Next)
+Week 5-6: ✅ **Visual Query Builder** (COMPLETE!)
 - Drag-and-drop interface
-- Filter operations
-- Join operations
-- Aggregations
+- Filter operations (13 operators)
+- Join operations (INNER, LEFT, RIGHT, FULL)
+- Aggregations (COUNT, SUM, AVG, MIN, MAX, COUNT DISTINCT)
+- Save/Load configurations
+- Visual/SQL mode indicators
 
 Week 7-8: **SQL Editor Enhancement**
 - Syntax highlighting
