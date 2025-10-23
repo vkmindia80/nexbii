@@ -324,56 +324,67 @@ const DashboardViewerPage: React.FC = () => {
       </div>
 
       {/* Widgets */}
-      {dashboard.widgets && dashboard.widgets.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {dashboard.widgets.map((widget) => {
-            const data = widgetData[widget.id];
-            const chartType = widget.chart_type || widget.type;
+      <div id="dashboard-content">
+        {dashboard.widgets && dashboard.widgets.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {dashboard.widgets.map((widget) => {
+              const data = widgetData[widget.id];
+              const chartType = widget.chart_type || widget.type;
 
-            return (
-              <div 
-                key={widget.id} 
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
-                style={{ 
-                  gridColumn: widget.w ? `span ${widget.w}` : 'span 1',
-                  gridRow: widget.h ? `span ${widget.h}` : 'span 1'
-                }}
-              >
-                {data ? (
-                  data.error ? (
-                    <div className="flex flex-col items-center justify-center h-64 text-center">
-                      <p className="text-red-600 mb-2">Failed to load data</p>
-                      <p className="text-sm text-gray-500">{data.error}</p>
-                    </div>
+              return (
+                <div 
+                  key={widget.id} 
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+                  style={{ 
+                    gridColumn: widget.w ? `span ${widget.w}` : 'span 1',
+                    gridRow: widget.h ? `span ${widget.h}` : 'span 1'
+                  }}
+                >
+                  {data ? (
+                    data.error ? (
+                      <div className="flex flex-col items-center justify-center h-64 text-center">
+                        <p className="text-red-600 mb-2">Failed to load data</p>
+                        <p className="text-sm text-gray-500">{data.error}</p>
+                      </div>
+                    ) : (
+                      <ChartContainer
+                        type={chartType}
+                        data={data}
+                        config={widget.config || {}}
+                        title={widget.title}
+                        height="300px"
+                      />
+                    )
                   ) : (
-                    <ChartContainer
-                      type={chartType}
-                      data={data}
-                      config={widget.config || {}}
-                      title={widget.title}
-                      height="300px"
-                    />
-                  )
-                ) : (
-                  <div className="flex items-center justify-center h-64">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No widgets yet</h3>
-          <p className="text-gray-600 mb-4">Add widgets to visualize your data</p>
-          <button
-            onClick={() => navigate(`/dashboards/${id}/edit`)}
-            className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
-          >
-            Add Widgets
-          </button>
-        </div>
+                    <div className="flex items-center justify-center h-64">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">No widgets yet</h3>
+            <p className="text-gray-600 mb-4">Add widgets to visualize your data</p>
+            <button
+              onClick={() => navigate(`/dashboards/${id}/edit`)}
+              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
+            >
+              Add Widgets
+            </button>
+          </div>
+        )}
+      </div>
+      
+      {/* Share Modal */}
+      {showShareModal && dashboard && (
+        <ShareModal
+          dashboardId={dashboard.id}
+          dashboardName={dashboard.name}
+          onClose={() => setShowShareModal(false)}
+        />
       )}
     </div>
   );
