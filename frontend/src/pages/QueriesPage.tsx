@@ -36,6 +36,7 @@ const QueriesPage: React.FC = () => {
   const [schemaCache, setSchemaCache] = useState<any>(null);
   const [loadingSchema, setLoadingSchema] = useState(false);
   const [queryMode, setQueryMode] = useState<'sql' | 'visual'>('sql');
+  const [visualConfig, setVisualConfig] = useState<VisualQueryConfig | null>(null);
   
   const [formData, setFormData] = useState({
     name: '',
