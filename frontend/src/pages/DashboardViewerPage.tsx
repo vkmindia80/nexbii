@@ -97,10 +97,10 @@ const DashboardViewerPage: React.FC = () => {
         const barValueIndex = columns.indexOf(barValueCol);
         
         return {
-          yAxis: rows.map(row => String(row[barYAxisIndex])),
+          yAxis: rows.map((row: any) => String(row[barYAxisIndex])),
           series: [{
             name: barValueCol,
-            data: rows.map(row => Number(row[barValueIndex]) || 0),
+            data: rows.map((row: any) => Number(row[barValueIndex]) || 0),
             color: config.color
           }]
         };
