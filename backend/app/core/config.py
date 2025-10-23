@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://redis-cache-layer.preview.emergentagent.com",
-        "https://redis-cache-layer.preview.emergentagent.com",
-        "https://redis-cache-layer.preview.emergentagent.com"
+        "https://visual-git-query.preview.emergentagent.com",
+        "https://visual-git-query.preview.emergentagent.com",
+        "https://visual-git-query.preview.emergentagent.com"
     ]
     
     # App
