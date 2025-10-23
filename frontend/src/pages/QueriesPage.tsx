@@ -531,12 +531,26 @@ const QueriesPage: React.FC = () => {
             <div key={query.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-green-600" />
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                    query.query_type === 'visual' ? 'bg-purple-100' : 'bg-green-100'
+                  }`}>
+                    {query.query_type === 'visual' ? (
+                      <BarChart3 className="w-5 h-5 text-purple-600" />
+                    ) : (
+                      <FileText className="w-5 h-5 text-green-600" />
+                    )}
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">{query.name}</h3>
-                    <p className="text-sm text-gray-500">{query.query_type}</p>
+                    <div className="flex items-center space-x-2">
+                      <span className={`text-xs px-2 py-0.5 rounded-full ${
+                        query.query_type === 'visual' 
+                          ? 'bg-purple-100 text-purple-700' 
+                          : 'bg-green-100 text-green-700'
+                      }`}>
+                        {query.query_type === 'visual' ? 'Visual Builder' : 'SQL'}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="flex space-x-2">
