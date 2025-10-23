@@ -95,7 +95,7 @@ const DashboardsPage: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {dashboards.map((dashboard) => (
-            <div key={dashboard.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div key={dashboard.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow group">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
@@ -109,7 +109,10 @@ const DashboardsPage: React.FC = () => {
                   </div>
                 </div>
                 <button
-                  onClick={() => handleDelete(dashboard.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDelete(dashboard.id);
+                  }}
                   className="text-red-600 hover:text-red-700"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -118,7 +121,7 @@ const DashboardsPage: React.FC = () => {
               {dashboard.description && (
                 <p className="text-sm text-gray-600 mb-3">{dashboard.description}</p>
               )}
-              <div className="text-sm text-gray-500">
+              <div className="text-sm text-gray-500 mb-4">
                 <p>Created: {new Date(dashboard.created_at).toLocaleDateString()}</p>
                 {dashboard.is_public && (
                   <span className="inline-block mt-2 px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
@@ -126,6 +129,14 @@ const DashboardsPage: React.FC = () => {
                   </span>
                 )}
               </div>
+              <button
+                onClick={() => navigate(`/dashboards/${dashboard.id}`)}
+                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                data-testid={`view-dashboard-${dashboard.id}`}
+              >
+                <Eye className="w-4 h-4" />
+                <span>View Dashboard</span>
+              </button>
             </div>
           ))}
         </div>
