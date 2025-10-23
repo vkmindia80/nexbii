@@ -221,11 +221,23 @@ def create_demo_database():
 async def generate_demo_data(db: Session = Depends(get_db)):
     """
     Generate demo data for all modules:
+    - SQLite database with sample data (products, customers, orders, etc.)
     - Data sources (3 demo sources)
-    - Queries (5 demo queries)
-    - Dashboards (2 demo dashboards)
+    - Queries (14 demo queries)
+    - Dashboards (3 demo dashboards)
     """
     try:
+        # Step 1: Create the actual SQLite database with all tables and sample data
+        print("🔄 Creating demo SQLite database with sample data...")
+        db_stats = create_demo_database()
+        print(f"✅ Demo database created successfully!")
+        print(f"   - Products: {db_stats['products']}")
+        print(f"   - Customers: {db_stats['customers']}")
+        print(f"   - Orders: {db_stats['orders']}")
+        print(f"   - Order Items: ~{db_stats['order_items']}")
+        print(f"   - User Activities: {db_stats['user_activities']}")
+        
+        # Step 2: Create metadata in PostgreSQL (datasources, queries, dashboards)
         # Get demo user
         demo_user = db.query(User).filter(User.email == 'admin@nexbii.demo').first()
         if not demo_user:
