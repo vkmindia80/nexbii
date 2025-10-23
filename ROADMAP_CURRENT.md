@@ -2,7 +2,7 @@
 ### Advanced Business Intelligence & Analytics Platform
 
 **Last Updated:** October 23, 2025  
-**Current Version:** 0.2.0 (MVP Development - Phase 1 Completion)
+**Current Version:** 0.2.1 (MVP Development - Phase 1 Completion + Bug Fixes)
 
 ---
 
