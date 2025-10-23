@@ -628,70 +628,120 @@ const QueriesPage: React.FC = () => {
                   />
                 </div>
 
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <label className="block text-sm font-medium text-gray-700">SQL Query</label>
-                    <div className="flex items-center space-x-2">
-                      {loadingSchema && (
-                        <span className="text-xs text-gray-500 flex items-center">
-                          <div className="animate-spin rounded-full h-3 w-3 border-b border-primary-600 mr-1"></div>
-                          Loading schema...
-                        </span>
-                      )}
-                      <button
-                        type="button"
-                        onClick={formatQuery}
-                        className="flex items-center space-x-1 text-sm text-primary-600 hover:text-primary-700 px-3 py-1 rounded border border-primary-300 hover:bg-primary-50"
-                        title="Format SQL (Shift+Alt+F)"
-                        data-testid="format-sql-button"
-                      >
-                        <Wand2 className="w-4 h-4" />
-                        <span>Format</span>
-                      </button>
+                {/* Query Mode Toggle */}
+                <div className="flex items-center space-x-4 p-3 bg-gray-100 rounded-lg">
+                  <span className="text-sm font-medium text-gray-700">Query Mode:</span>
+                  <button
+                    type="button"
+                    onClick={() => setQueryMode('sql')}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                      queryMode === 'sql' 
+                        ? 'bg-primary-600 text-white' 
+                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                    }`}
+                    data-testid="sql-mode-button"
+                  >
+                    <Code className="w-4 h-4" />
+                    <span>SQL Editor</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setQueryMode('visual');
+                      if (formData.datasource_id && !schemaCache) {
+                        loadSchema(formData.datasource_id);
+                      }
+                    }}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                      queryMode === 'visual' 
+                        ? 'bg-primary-600 text-white' 
+                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                    }`}
+                    data-testid="visual-mode-button"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    <span>Visual Builder</span>
+                  </button>
+                </div>
+
+                {/* SQL Editor Mode */}
+                {queryMode === 'sql' && (
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-sm font-medium text-gray-700">SQL Query</label>
+                      <div className="flex items-center space-x-2">
+                        {loadingSchema && (
+                          <span className="text-xs text-gray-500 flex items-center">
+                            <div className="animate-spin rounded-full h-3 w-3 border-b border-primary-600 mr-1"></div>
+                            Loading schema...
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={formatQuery}
+                          className="flex items-center space-x-1 text-sm text-primary-600 hover:text-primary-700 px-3 py-1 rounded border border-primary-300 hover:bg-primary-50"
+                          title="Format SQL (Shift+Alt+F)"
+                          data-testid="format-sql-button"
+                        >
+                          <Wand2 className="w-4 h-4" />
+                          <span>Format</span>
+                        </button>
+                      </div>
+                    </div>
+                    <div className="border border-gray-300 rounded-lg overflow-hidden">
+                      <Editor
+                        height="350px"
+                        defaultLanguage="sql"
+                        value={formData.sql_query}
+                        onChange={(value) => setFormData({ ...formData, sql_query: value || '' })}
+                        onMount={handleEditorDidMount}
+                        theme={darkMode ? 'vs-dark' : 'light'}
+                        options={{
+                          minimap: { enabled: true },
+                          fontSize: 14,
+                          lineNumbers: 'on',
+                          scrollBeyondLastLine: false,
+                          automaticLayout: true,
+                          tabSize: 2,
+                          wordWrap: 'on',
+                          formatOnPaste: true,
+                          formatOnType: true,
+                          quickSuggestions: true,
+                          suggestOnTriggerCharacters: true,
+                          acceptSuggestionOnEnter: 'on',
+                          tabCompletion: 'on',
+                          suggest: {
+                            showKeywords: true,
+                            showSnippets: true,
+                            showFunctions: true,
+                          },
+                          parameterHints: {
+                            enabled: true,
+                          },
+                          folding: true,
+                          bracketPairColorization: {
+                            enabled: true,
+                          },
+                        }}
+                      />
+                    </div>
+                    <div className="mt-1 text-xs text-gray-500">
+                      💡 Tip: Press <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded">Ctrl+Enter</kbd> to execute query, 
+                      <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded ml-1">Shift+Alt+F</kbd> to format
                     </div>
                   </div>
-                  <div className="border border-gray-300 rounded-lg overflow-hidden">
-                    <Editor
-                      height="350px"
-                      defaultLanguage="sql"
-                      value={formData.sql_query}
-                      onChange={(value) => setFormData({ ...formData, sql_query: value || '' })}
-                      onMount={handleEditorDidMount}
-                      theme={darkMode ? 'vs-dark' : 'light'}
-                      options={{
-                        minimap: { enabled: true },
-                        fontSize: 14,
-                        lineNumbers: 'on',
-                        scrollBeyondLastLine: false,
-                        automaticLayout: true,
-                        tabSize: 2,
-                        wordWrap: 'on',
-                        formatOnPaste: true,
-                        formatOnType: true,
-                        quickSuggestions: true,
-                        suggestOnTriggerCharacters: true,
-                        acceptSuggestionOnEnter: 'on',
-                        tabCompletion: 'on',
-                        suggest: {
-                          showKeywords: true,
-                          showSnippets: true,
-                          showFunctions: true,
-                        },
-                        parameterHints: {
-                          enabled: true,
-                        },
-                        folding: true,
-                        bracketPairColorization: {
-                          enabled: true,
-                        },
-                      }}
+                )}
+
+                {/* Visual Query Builder Mode */}
+                {queryMode === 'visual' && (
+                  <div className="max-h-[500px] overflow-y-auto">
+                    <VisualQueryBuilder
+                      schema={schemaCache}
+                      onQueryGenerated={(sql) => setFormData({ ...formData, sql_query: sql })}
+                      darkMode={darkMode}
                     />
                   </div>
-                  <div className="mt-1 text-xs text-gray-500">
-                    💡 Tip: Press <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded">Ctrl+Enter</kbd> to execute query, 
-                    <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded ml-1">Shift+Alt+F</kbd> to format
-                  </div>
-                </div>
+                )}
 
                 <button
                   type="button"
