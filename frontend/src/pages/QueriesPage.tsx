@@ -146,6 +146,27 @@ const QueriesPage: React.FC = () => {
 
   const handleView = async (query: Query) => {
     setViewingQuery(query);
+    setViewQueryResult(null);
+    // Auto-execute the query to show results
+    setViewQueryExecuting(true);
+    try {
+      const queryResult = await queryService.execute({
+        query_id: query.id,
+        limit: 100
+      });
+      setViewQueryResult(queryResult);
+    } catch (error: any) {
+      console.error('Failed to execute query:', error);
+      setViewQueryResult({
+        columns: [],
+        rows: [],
+        total_rows: 0,
+        execution_time: 0,
+        error: error.response?.data?.detail || error.message
+      } as any);
+    } finally {
+      setViewQueryExecuting(false);
+    }
   };
 
   const handleEdit = async (query: Query) => {
