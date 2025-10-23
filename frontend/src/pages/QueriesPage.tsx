@@ -5,7 +5,7 @@ import { format as formatSQL } from 'sql-formatter';
 import { queryService } from '../services/queryService';
 import { datasourceService } from '../services/datasourceService';
 import { Query, QueryResult, DataSource } from '../types';
-import VisualQueryBuilder from '../components/VisualQueryBuilder';
+import VisualQueryBuilder, { VisualQueryConfig } from '../components/VisualQueryBuilder';
 
 interface QueryHistoryItem {
   sql: string;
