@@ -85,6 +85,9 @@ class QueryService:
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         
+        # Strip trailing semicolons and whitespace to avoid SQLite errors
+        query = query.strip().rstrip(';').strip()
+        
         # Add limit if not present
         if "LIMIT" not in query.upper():
             query = f"{query} LIMIT {limit}"
