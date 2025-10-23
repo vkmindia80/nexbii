@@ -196,17 +196,36 @@ Add professional features and improve user experience for production deployment.
 
 **Status**: 85% Complete | **Date**: October 23, 2025
 
-### 🔄 In Progress / Planned Features
+#### 2. **Visual Query Builder** ✅ **COMPLETE**
+- ✅ Drag-and-drop table/column selection
+- ✅ Filter builder (13 operators: =, !=, >, <, >=, <=, LIKE, NOT LIKE, IN, NOT IN, IS NULL, IS NOT NULL, BETWEEN)
+- ✅ Join operations UI (INNER, LEFT, RIGHT, FULL)
+- ✅ Aggregation builder (COUNT, SUM, AVG, MIN, MAX, COUNT DISTINCT)
+- ✅ GROUP BY and ORDER BY support
+- ✅ DISTINCT and LIMIT settings
+- ✅ Visual-to-SQL conversion with real-time preview
+- ✅ **Save/Load Visual Configurations** 🆕
+- ✅ **Visual query type indicators** (purple badges) 🆕
+- ✅ **Edit saved visual queries with state restoration** 🆕
 
-#### 2. **Visual Query Builder** (Next Priority)
-- Drag-and-drop table/column selection
-- Filter builder (10+ operators)
-- Join operations UI
-- Aggregation builder
-- Visual-to-SQL conversion
-- Live SQL preview
+**Features:**
+- Complete visual query state persistence (table, columns, filters, joins, groupBy, orderBy, limit, distinct)
+- Automatic mode detection (Visual vs SQL)
+- Visual/SQL badges in query list for easy identification
+- Full round-trip support: create → save → edit → restore all settings
 
-#### 3. **Advanced Visualizations**
+**Status**: 100% Complete | **Date**: October 23, 2025
+
+#### 3. **Caching Layer** ✅ **COMPLETE**
+- ✅ Redis integration
+- ✅ Query result caching with TTL (15 minutes default)
+- ✅ Cache invalidation strategies (datasource update/delete)
+- ✅ Cache hit rate monitoring
+- ✅ Configurable cache duration
+- ✅ Manual cache clearing endpoint
+- ✅ Cache statistics endpoint
+
+**Status**: 100% Complete | **Date**: October 23, 2025
 - 10 additional chart types:
   - Bubble Chart (3D data)
   - Heatmap (correlation matrix)
