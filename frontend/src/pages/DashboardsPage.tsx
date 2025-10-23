@@ -5,6 +5,7 @@ import { dashboardService } from '../services/dashboardService';
 import { Dashboard } from '../types';
 
 const DashboardsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [dashboards, setDashboards] = useState<Dashboard[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
