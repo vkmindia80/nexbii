@@ -14,9 +14,11 @@
 
 ### 🎉 Recent Major Updates:
 1. ✅ **Visualization Engine COMPLETE** - All 10 chart types implemented (Line, Bar, Column, Area, Pie, Donut, Scatter, Gauge, Metric Card, Data Table)
-2. ✅ **Demo SQLite Database** - Real sample data with 200 customers, 1000 orders, 15 products
-3. ✅ **Dashboard Viewer** - View and interact with dashboards
-4. ✅ **Charts Showcase Page** - Demo page showing all chart types
+2. ✅ **Enhanced SQL Editor** - Monaco Editor integration with syntax highlighting, auto-completion, query history, dark/light themes
+3. ✅ **Comprehensive Demo Data** - 25 products, 200 customers, 1500 orders, 14 demo queries, 3 dashboards
+4. ✅ **Dashboard Viewer** - View and interact with dashboards
+5. ✅ **Charts Showcase Page** - Demo page showing all chart types
+6. ✅ **Query Performance Metrics** - Execution time tracking, sortable results, pagination, CSV/JSON export
 
 ### 🎯 Next Priority: Complete Phase 1 MVP
 **Remaining Critical Features:**
