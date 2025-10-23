@@ -108,6 +108,13 @@ class AlertService {
     });
     return response.data;
   }
+
+  async testSlackWebhook(webhookUrl: string): Promise<any> {
+    const response = await api.post('/api/alerts/test-slack-webhook', null, {
+      params: { webhook_url: webhookUrl }
+    });
+    return response.data;
+  }
 }
 
 export default new AlertService();
