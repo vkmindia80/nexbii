@@ -512,6 +512,42 @@ Click "Generate Demo Data" on login page to create sample data for all modules.
 ### Demo Data
 - `POST /api/demo/generate` - Generate demo data for all modules
 
+### Cache Management
+- `GET /api/cache/stats` - Get cache performance statistics
+- `DELETE /api/cache/clear` - Clear all cached queries
+- `DELETE /api/cache/datasource/{id}` - Clear cache for specific datasource
+- `POST /api/cache/reset-stats` - Reset cache statistics counters
+
+### Integrations (Admin Only)
+- `GET /api/integrations/email` - Get email configuration
+- `POST /api/integrations/email` - Save email configuration
+- `POST /api/integrations/email/test` - Test email configuration
+- `GET /api/integrations/slack` - Get Slack configuration
+- `POST /api/integrations/slack` - Save Slack configuration
+- `POST /api/integrations/slack/test` - Test Slack webhook
+
+### Alerts
+- `POST /api/alerts/` - Create alert
+- `GET /api/alerts/` - List alerts
+- `GET /api/alerts/{id}` - Get alert
+- `PUT /api/alerts/{id}` - Update alert
+- `DELETE /api/alerts/{id}` - Delete alert
+- `POST /api/alerts/{id}/snooze` - Snooze alert
+
+### Subscriptions
+- `POST /api/subscriptions/` - Create subscription
+- `GET /api/subscriptions/` - List subscriptions
+- `DELETE /api/subscriptions/{id}` - Delete subscription
+
+### Comments
+- `POST /api/comments/` - Add comment
+- `GET /api/comments/{entity_type}/{entity_id}` - Get comments
+- `DELETE /api/comments/{id}` - Delete comment
+
+### Activities
+- `GET /api/activities/` - Get activity feed
+- `GET /api/activities/user/{user_id}` - Get user activities
+
 ---
 
 ## 🎨 Key Features Highlights
