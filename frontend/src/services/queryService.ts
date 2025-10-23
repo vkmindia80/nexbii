@@ -17,6 +17,11 @@ export const queryService = {
     return response.data;
   },
 
+  async update(id: string, data: Partial<Query>): Promise<Query> {
+    const response = await api.put(`/api/queries/${id}`, data);
+    return response.data;
+  },
+
   async execute(params: { 
     query_id?: string; 
     datasource_id?: string; 
