@@ -7,6 +7,8 @@ import DashboardPage from './pages/DashboardPage';
 import DataSourcesPage from './pages/DataSourcesPage';
 import QueriesPage from './pages/QueriesPage';
 import DashboardsPage from './pages/DashboardsPage';
+import DashboardViewerPage from './pages/DashboardViewerPage';
+import ChartsShowcasePage from './pages/ChartsShowcasePage';
 import Layout from './components/Layout';
 
 function App() {
