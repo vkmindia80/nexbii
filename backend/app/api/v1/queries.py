@@ -95,7 +95,28 @@ async def execute_query(
             )
         sql_to_execute = execute_data.sql_query
     
-    # Execute query
+    # Initialize cache service
+    cache_service = CacheService()
+    
+    # Try to get cached result
+    cached_result = cache_service.get_cached_result(
+        datasource.id,
+        sql_to_execute,
+        execute_data.limit
+    )
+    
+    if cached_result:
+        # Return cached result
+        return QueryResult(
+            columns=cached_result["columns"],
+            rows=cached_result["rows"],
+            total_rows=cached_result.get("total_rows", len(cached_result["rows"])),
+            execution_time=cached_result.get("execution_time", 0),
+            from_cache=True,
+            cached_at=cached_result.get("cached_at")
+        )
+    
+    # Execute query if not cached
     service = QueryService()
     start_time = time.time()
     
@@ -114,11 +135,29 @@ async def execute_query(
     
     execution_time = time.time() - start_time
     
+    # Prepare result
+    query_result = {
+        "columns": result["columns"],
+        "rows": result["rows"],
+        "total_rows": len(result["rows"]),
+        "execution_time": execution_time
+    }
+    
+    # Cache the result (15 minutes TTL)
+    cache_service.set_cached_result(
+        datasource.id,
+        sql_to_execute,
+        query_result,
+        limit=execute_data.limit,
+        ttl=900  # 15 minutes
+    )
+    
     return QueryResult(
-        columns=result["columns"],
-        rows=result["rows"],
-        total_rows=len(result["rows"]),
-        execution_time=execution_time
+        columns=query_result["columns"],
+        rows=query_result["rows"],
+        total_rows=query_result["total_rows"],
+        execution_time=query_result["execution_time"],
+        from_cache=False
     )
 
 @router.put("/{query_id}", response_model=QueryResponse)
