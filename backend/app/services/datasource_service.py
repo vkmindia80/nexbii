@@ -142,7 +142,7 @@ class DataSourceService:
                 client.close()
             
             elif ds_type == DataSourceType.SQLITE:
-                conn = sqlite3.connect(config.get("database_path"))
+                conn = sqlite3.connect(config.get("database_path") or config.get("database"))
                 cursor = conn.cursor()
                 
                 # Get tables
@@ -154,9 +154,14 @@ class DataSourceService:
                     cursor.execute(f"PRAGMA table_info({table_name})")
                     columns = cursor.fetchall()
                     
+                    # Get row count
+                    cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+                    row_count = cursor.fetchone()[0]
+                    
                     tables.append({
                         "name": table_name,
-                        "columns": [{"name": col[1], "type": col[2]} for col in columns]
+                        "columns": [{"name": col[1], "type": col[2]} for col in columns],
+                        "row_count": row_count
                     })
                 
                 conn.close()
