@@ -6,9 +6,11 @@
 
 NexBII is an advanced BI platform that rivals Metabase, providing intuitive data exploration, visualization, and reporting tools for both technical and non-technical users.
 
+**Phase 1 MVP Status:** ✅ **COMPLETE** (95%)
+
 ## 🗺️ Development Roadmap
 
-See [ROADMAP.md](./ROADMAP.md) for the comprehensive 12-month development plan covering all features.
+See [ROADMAP.md](./ROADMAP.md) for the complete development plan, current status, and Phase 2 features.
 
 ## 🏗️ Architecture
 
