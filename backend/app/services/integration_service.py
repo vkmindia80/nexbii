@@ -15,11 +15,12 @@ logger = logging.getLogger(__name__)
 ENCRYPTION_KEY = os.getenv("INTEGRATION_ENCRYPTION_KEY", "")
 
 if not ENCRYPTION_KEY:
-    # Generate a default key for development (DO NOT use in production)
-    ENCRYPTION_KEY = base64.urlsafe_b64encode(b'nexbii_default_encryption_key!1').decode()
+    # Use a static default key for development (DO NOT use in production)
+    # This is a valid Fernet key generated with Fernet.generate_key()
+    ENCRYPTION_KEY = "dJIqJ2H98c8bzKs4fD7e4j_W0sCmyHalWpsTWmXEJXM="
     logger.warning("⚠️  Using default encryption key. Set INTEGRATION_ENCRYPTION_KEY in production!")
 
-cipher_suite = Fernet(ENCRYPTION_KEY)
+cipher_suite = Fernet(ENCRYPTION_KEY.encode() if isinstance(ENCRYPTION_KEY, str) else ENCRYPTION_KEY)
 
 class IntegrationService:
     """Service for managing encrypted integration configurations"""
