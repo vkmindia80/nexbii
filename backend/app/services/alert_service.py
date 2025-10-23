@@ -313,9 +313,9 @@ class AlertService:
         alert: Alert,
         actual_value: float
     ) -> bool:
-        """Send alert notification via email"""
-        if not alert.notify_emails:
-            return False
+        """Send alert notification via email and/or Slack"""
+        email_sent = False
+        slack_sent = False
         
         # Get query name
         query = db.query(Query).filter(Query.id == alert.query_id).first()
@@ -328,15 +328,31 @@ class AlertService:
             alert.threshold_value_2
         )
         
-        # Send email
-        return EmailService.send_alert_notification(
-            to_emails=alert.notify_emails,
-            alert_name=alert.name,
-            condition_description=condition_desc,
-            actual_value=actual_value,
-            threshold_value=alert.threshold_value,
-            query_name=query_name
-        )
+        # Send email notification
+        if alert.notify_emails:
+            email_sent = EmailService.send_alert_notification(
+                to_emails=alert.notify_emails,
+                alert_name=alert.name,
+                condition_description=condition_desc,
+                actual_value=actual_value,
+                threshold_value=alert.threshold_value,
+                query_name=query_name
+            )
+        
+        # Send Slack notification
+        if alert.notify_slack and alert.slack_webhook:
+            slack_sent = SlackService.send_alert_notification(
+                webhook_url=alert.slack_webhook,
+                alert_name=alert.name,
+                condition_description=condition_desc,
+                actual_value=actual_value,
+                threshold_value=alert.threshold_value,
+                query_name=query_name,
+                alert_url=None  # You can add alert URL if you have one
+            )
+        
+        # Return True if at least one notification was sent
+        return email_sent or slack_sent
     
     @staticmethod
     def _format_condition_description(
