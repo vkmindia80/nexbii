@@ -49,10 +49,17 @@ const LoginPage: React.FC = () => {
       const dbRecords = summary.database_records || {};
       
       setSuccessMessage(
-        `✨ Demo data generated successfully!\n\n` +
-        `📊 Created: ${response.data.datasources} data sources, ${response.data.queries} SQL queries, ${response.data.dashboards} dashboards\n\n` +
-        `💾 Database includes: ${dbRecords.products || 25} products, ${dbRecords.customers || 200} customers, ${dbRecords.orders || 1500} orders with realistic business data\n\n` +
-        `🎯 Ready to explore! Login and check out the demo queries and dashboards.`
+        `✨ Demo Data Generated Successfully for All Modules!\n\n` +
+        `👤 Users: Demo admin account (admin@nexbii.demo / demo123)\n` +
+        `🗄️ Data Sources: ${response.data.datasources} sources (SQLite with real data, PostgreSQL, MongoDB)\n` +
+        `📝 Queries: ${response.data.queries} comprehensive SQL queries (sales, products, customers, analytics)\n` +
+        `📊 Dashboards: ${response.data.dashboards} dashboards with 13 interactive widgets\n` +
+        `📈 Charts: All 10 chart types (Line, Bar, Pie, Donut, Column, Area, Scatter, Gauge, Metric, Table)\n` +
+        `💾 Database: ${dbRecords.products || 25} products, ${dbRecords.customers || 200} customers, ${dbRecords.orders || 1500} orders, ${dbRecords.user_activities || 5000} activities\n\n` +
+        `🎯 Ready to explore! Login with demo credentials and check out:\n` +
+        `   • Data Sources page - Browse database schema\n` +
+        `   • Queries page - View and execute SQL queries\n` +
+        `   • Dashboards page - Explore interactive analytics dashboards`
       );
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to generate demo data. Please try again.');
