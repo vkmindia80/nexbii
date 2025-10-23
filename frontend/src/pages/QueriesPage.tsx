@@ -72,6 +72,35 @@ const QueriesPage: React.FC = () => {
     }
   };
 
+  const loadSchema = async (datasourceId: string) => {
+    if (!datasourceId) return;
+    setLoadingSchema(true);
+    try {
+      const schema = await datasourceService.getSchema(datasourceId);
+      setSchemaCache(schema);
+      return schema;
+    } catch (error) {
+      console.error('Failed to load schema:', error);
+    } finally {
+      setLoadingSchema(false);
+    }
+  };
+
+  const formatQuery = () => {
+    if (!formData.sql_query) return;
+    try {
+      const formatted = formatSQL(formData.sql_query, {
+        language: 'sql',
+        tabWidth: 2,
+        keywordCase: 'upper',
+        linesBetweenQueries: 2,
+      });
+      setFormData({ ...formData, sql_query: formatted });
+    } catch (error) {
+      console.error('Failed to format SQL:', error);
+    }
+  };
+
   const saveQueryToHistory = (sql: string, executionTime: number, rowCount: number) => {
     const historyItem: QueryHistoryItem = {
       sql,
