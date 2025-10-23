@@ -376,6 +376,7 @@ const VisualQueryBuilder: React.FC<VisualQueryBuilderProps> = ({
     setOrderBy([]);
     setLimit(100);
     setDistinct(false);
+    setIsInitialized(false);
   };
 
   if (!schema || schema.tables.length === 0) {
