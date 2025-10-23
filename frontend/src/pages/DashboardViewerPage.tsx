@@ -19,6 +19,8 @@ const DashboardViewerPage: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showExportMenu, setShowExportMenu] = useState(false);
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     if (id) {
