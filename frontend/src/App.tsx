@@ -38,6 +38,9 @@ function App() {
         <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/register" element={!isAuthenticated ? <RegisterPage /> : <Navigate to="/" />} />
         
+        {/* Public routes (no authentication required) */}
+        <Route path="/public/dashboard/:shareToken" element={<PublicDashboardPage />} />
+        
         <Route element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/datasources" element={<DataSourcesPage />} />
