@@ -26,6 +26,7 @@ const QueriesPage: React.FC = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage] = useState(50);
+  const [editingQuery, setEditingQuery] = useState<Query | null>(null);
   const editorRef = useRef<any>(null);
   
   const [formData, setFormData] = useState({
