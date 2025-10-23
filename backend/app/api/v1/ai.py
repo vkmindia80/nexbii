@@ -59,7 +59,7 @@ async def natural_language_to_sql(
             )
         
         # Get schema information
-        datasource_service = DatasourceService()
+        datasource_service = DataSourceService()
         schema_info = datasource_service.get_schema(datasource)
         
         if not schema_info.get("success"):
@@ -114,7 +114,7 @@ async def validate_query(
             )
         
         # Get schema information
-        datasource_service = DatasourceService()
+        datasource_service = DataSourceService()
         schema_info = datasource_service.get_schema(datasource)
         
         if not schema_info.get("success"):
@@ -169,7 +169,7 @@ async def optimize_query(
             )
         
         # Get schema information
-        datasource_service = DatasourceService()
+        datasource_service = DataSourceService()
         schema_info = datasource_service.get_schema(datasource)
         
         if not schema_info.get("success"):
