@@ -59,7 +59,7 @@ class ActivityResponse(BaseModel):
     entity_id: Optional[str] = None
     entity_name: Optional[str] = None
     description: Optional[str] = None
-    metadata: Optional[dict] = None
+    activity_metadata: Optional[dict] = None
     created_at: datetime
     
     class Config:
