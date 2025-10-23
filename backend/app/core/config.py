@@ -15,6 +15,9 @@ class Settings(BaseSettings):
     # Redis
     REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379/0")
     
+    # AI Integration
+    EMERGENT_LLM_KEY: str = os.getenv("EMERGENT_LLM_KEY", "")
+    
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
