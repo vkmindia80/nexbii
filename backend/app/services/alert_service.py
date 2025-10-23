@@ -8,6 +8,7 @@ from ..models.user import User
 from ..models.activity import Activity, ActivityType
 from .query_service import QueryService
 from .email_service import EmailService
+from .slack_service import SlackService
 
 logger = logging.getLogger(__name__)
 
