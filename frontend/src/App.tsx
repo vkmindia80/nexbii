@@ -41,6 +41,8 @@ function App() {
           <Route path="/datasources" element={<DataSourcesPage />} />
           <Route path="/queries" element={<QueriesPage />} />
           <Route path="/dashboards" element={<DashboardsPage />} />
+          <Route path="/dashboards/:id" element={<DashboardViewerPage />} />
+          <Route path="/charts-showcase" element={<ChartsShowcasePage />} />
         </Route>
       </Routes>
     </Router>
