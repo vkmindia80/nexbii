@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://repohelper.preview.emergentagent.com",
-        "https://repohelper.preview.emergentagent.com",
-        "https://repohelper.preview.emergentagent.com"
+        "https://bi-core-unlock.preview.emergentagent.com",
+        "https://bi-core-unlock.preview.emergentagent.com",
+        "https://bi-core-unlock.preview.emergentagent.com"
     ]
     
     # App
