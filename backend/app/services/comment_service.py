@@ -191,7 +191,7 @@ class CommentService:
                     entity_type=entity_type,
                     entity_id=entity_id,
                     description=f"You were mentioned by {commenter.full_name or commenter.email}",
-                    metadata={
+                    activity_metadata={
                         "comment_id": comment.id,
                         "mentioned_by": commenter_id
                     }
