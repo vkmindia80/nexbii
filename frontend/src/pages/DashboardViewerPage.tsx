@@ -176,6 +176,39 @@ const DashboardViewerPage: React.FC = () => {
     setRefreshing(false);
   };
 
+  const handleExportPDF = async () => {
+    try {
+      await exportService.exportDashboardToPDF(id!);
+      setShowExportMenu(false);
+    } catch (error) {
+      console.error('Failed to export PDF:', error);
+      alert('Failed to export dashboard as PDF');
+    }
+  };
+
+  const handleExportPNG = async () => {
+    try {
+      await exportService.exportDashboardToPNG(
+        'dashboard-content',
+        `dashboard_${dashboard?.name || id}.png`
+      );
+      setShowExportMenu(false);
+    } catch (error) {
+      console.error('Failed to export PNG:', error);
+      alert('Failed to export dashboard as PNG');
+    }
+  };
+
+  const handleExportJSON = async () => {
+    try {
+      await exportService.exportDashboardToJSON(id!);
+      setShowExportMenu(false);
+    } catch (error) {
+      console.error('Failed to export JSON:', error);
+      alert('Failed to export dashboard configuration');
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-96">
