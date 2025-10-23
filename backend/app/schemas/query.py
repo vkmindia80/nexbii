@@ -13,6 +13,14 @@ class QueryBase(BaseModel):
 class QueryCreate(QueryBase):
     pass
 
+class QueryUpdate(BaseModel):
+    name: Optional[str] = None
+    description: Optional[str] = None
+    datasource_id: Optional[str] = None
+    query_type: Optional[str] = None
+    query_config: Optional[Dict[str, Any]] = None
+    sql_query: Optional[str] = None
+
 class QueryResponse(QueryBase):
     id: str
     created_by: str
