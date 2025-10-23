@@ -210,3 +210,34 @@ async def check_all_alerts(
         "message": "Alert check completed",
         **results
     }
+
+
+@router.post("/test-slack-webhook", status_code=status.HTTP_200_OK)
+async def test_slack_webhook(
+    webhook_url: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Test a Slack webhook URL by sending a test message
+    """
+    from ...services.slack_service import SlackService
+    
+    if not SlackService.validate_webhook_url(webhook_url):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid Slack webhook URL format"
+        )
+    
+    success = SlackService.send_test_message(webhook_url)
+    
+    if success:
+        return {
+            "success": True,
+            "message": "Test message sent successfully to Slack"
+        }
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Failed to send test message to Slack webhook"
+        )
