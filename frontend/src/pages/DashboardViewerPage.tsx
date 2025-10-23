@@ -307,12 +307,30 @@ const DashboardViewerPage: React.FC = () => {
             </div>
             
             <button
+              onClick={() => setShowSubscriptionModal(true)}
+              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              data-testid="subscribe-button"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Subscribe</span>
+            </button>
+            
+            <button
               onClick={() => setShowShareModal(true)}
               className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
               data-testid="share-button"
             >
               <Share2 className="w-4 h-4" />
               <span>Share</span>
+            </button>
+            
+            <button
+              onClick={() => setShowComments(!showComments)}
+              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              data-testid="comments-button"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>Comments</span>
             </button>
             
             <button
