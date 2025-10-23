@@ -9,7 +9,9 @@ import {
   Menu, 
   X,
   BarChart3,
-  PieChart
+  PieChart,
+  Bell,
+  Activity
 } from 'lucide-react';
 import { authService } from '../services/authService';
 
