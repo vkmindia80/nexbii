@@ -104,6 +104,14 @@ async def delete_datasource(
             detail="Data source not found"
         )
     
+    # Invalidate cache for this datasource
+    cache_service = CacheService()
+    invalidated_count = cache_service.invalidate_datasource_cache(datasource_id)
+    
     datasource.is_active = False
     db.commit()
-    return {"message": "Data source deleted successfully"}
+    
+    return {
+        "message": "Data source deleted successfully",
+        "cache_invalidated": invalidated_count
+    }
