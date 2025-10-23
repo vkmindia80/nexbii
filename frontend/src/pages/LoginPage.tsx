@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BarChart3, Mail, Lock, Zap } from 'lucide-react';
+import { BarChart3, Mail, Lock, Zap, Database } from 'lucide-react';
 import { authService } from '../services/authService';
+import { demoService } from '../services/demoService';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
