@@ -38,27 +38,35 @@ const DashboardViewerPage: React.FC = () => {
   };
 
   const loadWidgetData = async (widgets: any[]) => {
+    console.log('Loading widget data for', widgets.length, 'widgets');
     const dataPromises = widgets.map(async (widget) => {
+      console.log('Processing widget:', widget.id, 'with query_id:', widget.query_id);
       if (widget.query_id) {
         try {
           // Execute the query to get data
+          console.log('Executing query for widget', widget.id);
           const result = await queryService.execute({
             query_id: widget.query_id,
             limit: 1000
           });
+          console.log('Query result for widget', widget.id, ':', result);
           
           // Transform data based on chart type
           const transformedData = transformDataForChart(result, widget);
+          console.log('Transformed data for widget', widget.id, ':', transformedData);
           return { [widget.id]: transformedData };
-        } catch (error) {
+        } catch (error: any) {
           console.error(`Failed to load data for widget ${widget.id}:`, error);
-          return { [widget.id]: null };
+          console.error('Error details:', error.response?.data || error.message);
+          return { [widget.id]: { error: error.message } };
         }
       }
+      console.log('Widget', widget.id, 'has no query_id');
       return { [widget.id]: null };
     });
 
     const results = await Promise.all(dataPromises);
+    console.log('All widget data loaded:', results);
     const dataMap = results.reduce((acc, curr) => ({ ...acc, ...curr }), {});
     setWidgetData(dataMap);
   };
