@@ -80,10 +80,10 @@ const DashboardViewerPage: React.FC = () => {
         const yAxisIndex = columns.indexOf(yAxisCol);
         
         return {
-          xAxis: rows.map(row => String(row[xAxisIndex])),
+          xAxis: rows.map((row: any) => String(row[xAxisIndex])),
           series: [{
             name: yAxisCol,
-            data: rows.map(row => Number(row[yAxisIndex]) || 0),
+            data: rows.map((row: any) => Number(row[yAxisIndex]) || 0),
             color: config.color
           }]
         };
