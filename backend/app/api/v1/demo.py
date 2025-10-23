@@ -91,6 +91,56 @@ def create_demo_database():
         )
     ''')
     
+    # Create Departments table
+    cursor.execute('''
+        CREATE TABLE departments (
+            id TEXT PRIMARY KEY,
+            dept_name TEXT NOT NULL,
+            budget REAL NOT NULL,
+            location TEXT NOT NULL,
+            manager_name TEXT NOT NULL
+        )
+    ''')
+    
+    # Create Employees table
+    cursor.execute('''
+        CREATE TABLE employees (
+            id TEXT PRIMARY KEY,
+            employee_name TEXT NOT NULL,
+            department_id TEXT NOT NULL,
+            salary REAL NOT NULL,
+            hire_date TEXT NOT NULL,
+            position TEXT NOT NULL,
+            performance_rating REAL NOT NULL,
+            FOREIGN KEY (department_id) REFERENCES departments(id)
+        )
+    ''')
+    
+    # Create Sales Targets table
+    cursor.execute('''
+        CREATE TABLE sales_targets (
+            id TEXT PRIMARY KEY,
+            month TEXT NOT NULL,
+            target_amount REAL NOT NULL,
+            achieved_amount REAL NOT NULL,
+            region TEXT NOT NULL
+        )
+    ''')
+    
+    # Create Product Reviews table
+    cursor.execute('''
+        CREATE TABLE product_reviews (
+            id TEXT PRIMARY KEY,
+            product_id TEXT NOT NULL,
+            customer_id TEXT NOT NULL,
+            rating INTEGER NOT NULL,
+            review_text TEXT,
+            review_date TEXT NOT NULL,
+            FOREIGN KEY (product_id) REFERENCES products(id),
+            FOREIGN KEY (customer_id) REFERENCES customers(id)
+        )
+    ''')
+    
     # Insert Products - More realistic business inventory
     products = [
         ('Laptop Pro 15', 'Electronics', 1299.99, 800),
