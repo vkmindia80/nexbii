@@ -31,5 +31,5 @@ class Activity(Base):
     entity_id = Column(String)
     entity_name = Column(String)
     description = Column(Text)
-    metadata = Column(JSON)  # Additional context
+    activity_metadata = Column(JSON)  # Additional context
     created_at = Column(DateTime(timezone=True), server_default=func.now())
