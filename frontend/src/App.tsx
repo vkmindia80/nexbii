@@ -10,6 +10,7 @@ import DashboardsPage from './pages/DashboardsPage';
 import DashboardViewerPage from './pages/DashboardViewerPage';
 import DashboardBuilderPage from './pages/DashboardBuilderPage';
 import ChartsShowcasePage from './pages/ChartsShowcasePage';
+import PublicDashboardPage from './pages/PublicDashboardPage';
 import Layout from './components/Layout';
 
 function App() {
