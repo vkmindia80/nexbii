@@ -217,9 +217,19 @@ const QueriesPage: React.FC = () => {
       sql_query: query.sql_query || 'SELECT * FROM customers LIMIT 10;'
     });
     setResult(null);
+    
+    // Set query mode and load visual config if it exists
+    if (query.query_type === 'visual' && query.query_config) {
+      setQueryMode('visual');
+      setVisualConfig(query.query_config);
+    } else {
+      setQueryMode('sql');
+      setVisualConfig(null);
+    }
+    
     setShowModal(true);
     if (query.datasource_id) {
-      loadSchema(query.datasource_id);
+      await loadSchema(query.datasource_id);
     }
   };
 
