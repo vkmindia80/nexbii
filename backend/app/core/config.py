@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://data-load-repair-1.preview.emergentagent.com",
-        "https://data-load-repair-1.preview.emergentagent.com",
-        "https://data-load-repair-1.preview.emergentagent.com"
+        "https://data-generator-2.preview.emergentagent.com",
+        "https://data-generator-2.preview.emergentagent.com",
+        "https://data-generator-2.preview.emergentagent.com"
     ]
     
     # App
