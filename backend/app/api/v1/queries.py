@@ -120,6 +120,39 @@ async def execute_query(
         execution_time=execution_time
     )
 
+@router.put("/{query_id}", response_model=QueryResponse)
+async def update_query(
+    query_id: str,
+    query_data: QueryUpdate,
+    current_user: dict = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    query = db.query(Query).filter(Query.id == query_id).first()
+    if not query:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Query not found"
+        )
+    
+    # Update fields
+    if query_data.name is not None:
+        query.name = query_data.name
+    if query_data.description is not None:
+        query.description = query_data.description
+    if query_data.datasource_id is not None:
+        query.datasource_id = query_data.datasource_id
+    if query_data.query_type is not None:
+        query.query_type = query_data.query_type
+    if query_data.query_config is not None:
+        query.query_config = query_data.query_config
+    if query_data.sql_query is not None:
+        query.sql_query = query_data.sql_query
+    
+    db.commit()
+    db.refresh(query)
+    
+    return QueryResponse.from_orm(query)
+
 @router.delete("/{query_id}")
 async def delete_query(
     query_id: str,
