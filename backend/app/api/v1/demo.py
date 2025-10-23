@@ -1520,13 +1520,17 @@ ORDER BY month, region;""",
                     "customers": db_stats['customers'],
                     "orders": db_stats['orders'],
                     "order_items": f"~{db_stats['order_items']}",
-                    "user_activities": db_stats['user_activities']
+                    "user_activities": db_stats['user_activities'],
+                    "departments": db_stats['departments'],
+                    "employees": f"~{db_stats['employees']}",
+                    "sales_targets": db_stats['sales_targets'],
+                    "product_reviews": db_stats['product_reviews']
                 },
                 "modules_covered": [
-                    "✅ SQLite Database (with 5 tables and realistic sample data)",
+                    "✅ SQLite Database (with 9 tables and realistic sample data)",
                     "✅ Data Sources (3 types: SQLite, PostgreSQL, MongoDB)",
-                    "✅ SQL Queries (14 comprehensive queries covering sales, customers, operations)",
-                    "✅ Dashboards (3 dashboards: Sales Analytics, Customer Analytics, Operational Metrics)",
+                    "✅ SQL Queries (25 comprehensive queries covering sales, customers, HR, products, reviews)",
+                    "✅ Dashboards (6 dashboards: Sales, Customer, Operational, HR, Product Reviews, Sales Targets)",
                     "✅ User Management (Demo admin user: admin@nexbii.demo)"
                 ]
             }
