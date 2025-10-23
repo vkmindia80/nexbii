@@ -114,7 +114,7 @@ const DashboardViewerPage: React.FC = () => {
         const labelIndex = columns.indexOf(labelCol);
         const valueIndex = columns.indexOf(valueCol);
         
-        return rows.map(row => ({
+        return rows.map((row: any) => ({
           name: String(row[labelIndex]),
           value: Number(row[valueIndex]) || 0
         }));
