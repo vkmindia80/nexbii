@@ -781,6 +781,261 @@ ORDER BY activity_count DESC;""",
         queries.append(q14)
         db.add(q14)
         
+        # Query 15: Employee Performance Analysis
+        q15 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Employee Performance by Department",
+            description="Average employee performance ratings by department",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    d.dept_name as department,
+    COUNT(e.id) as employee_count,
+    ROUND(AVG(e.performance_rating), 2) as avg_performance,
+    ROUND(AVG(e.salary), 2) as avg_salary
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.dept_name
+ORDER BY avg_performance DESC;""",
+            created_by=user_id
+        )
+        queries.append(q15)
+        db.add(q15)
+        
+        # Query 16: Sales Target Achievement
+        q16 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Sales Target Achievement by Region",
+            description="Sales targets vs achievements across regions",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    region,
+    ROUND(SUM(target_amount), 2) as total_target,
+    ROUND(SUM(achieved_amount), 2) as total_achieved,
+    ROUND((SUM(achieved_amount) / SUM(target_amount)) * 100, 1) as achievement_percentage
+FROM sales_targets
+WHERE month >= date('now', '-12 months')
+GROUP BY region
+ORDER BY achievement_percentage DESC;""",
+            created_by=user_id
+        )
+        queries.append(q16)
+        db.add(q16)
+        
+        # Query 17: Product Ratings Analysis
+        q17 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Product Ratings and Reviews",
+            description="Average product ratings with review counts",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    p.product_name,
+    p.category,
+    COUNT(pr.id) as review_count,
+    ROUND(AVG(pr.rating), 1) as avg_rating,
+    SUM(CASE WHEN pr.rating >= 4 THEN 1 ELSE 0 END) as positive_reviews
+FROM products p
+LEFT JOIN product_reviews pr ON p.id = pr.product_id
+GROUP BY p.id
+HAVING review_count > 0
+ORDER BY avg_rating DESC, review_count DESC
+LIMIT 20;""",
+            created_by=user_id
+        )
+        queries.append(q17)
+        db.add(q17)
+        
+        # Query 18: Department Budget Analysis
+        q18 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Department Budget Overview",
+            description="Department budgets and employee costs",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    d.dept_name,
+    d.budget,
+    d.location,
+    COUNT(e.id) as employee_count,
+    ROUND(SUM(e.salary), 2) as total_salary_cost,
+    ROUND(d.budget - SUM(e.salary), 2) as remaining_budget
+FROM departments d
+LEFT JOIN employees e ON d.id = e.department_id
+GROUP BY d.id
+ORDER BY d.budget DESC;""",
+            created_by=user_id
+        )
+        queries.append(q18)
+        db.add(q18)
+        
+        # Query 19: Monthly Revenue Trend
+        q19 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Monthly Revenue Comparison",
+            description="Revenue comparison for last 12 months",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    strftime('%Y-%m', order_date) as month,
+    COUNT(DISTINCT customer_id) as unique_customers,
+    COUNT(*) as total_orders,
+    ROUND(SUM(amount), 2) as revenue,
+    ROUND(AVG(amount), 2) as avg_order_value
+FROM orders
+WHERE order_date >= date('now', '-12 months')
+  AND status = 'completed'
+GROUP BY month
+ORDER BY month;""",
+            created_by=user_id
+        )
+        queries.append(q19)
+        db.add(q19)
+        
+        # Query 20: Customer Lifetime Value
+        q20 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Customer Lifetime Value Analysis",
+            description="Top customers by total purchase value",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    c.customer_name,
+    c.customer_segment,
+    c.region,
+    COUNT(o.id) as total_orders,
+    ROUND(SUM(o.amount), 2) as lifetime_value,
+    ROUND(AVG(o.amount), 2) as avg_order_value,
+    MIN(o.order_date) as first_order,
+    MAX(o.order_date) as last_order
+FROM customers c
+JOIN orders o ON c.id = o.customer_id
+WHERE o.status = 'completed'
+GROUP BY c.id
+ORDER BY lifetime_value DESC
+LIMIT 25;""",
+            created_by=user_id
+        )
+        queries.append(q20)
+        db.add(q20)
+        
+        # Query 21: Product Performance by Category
+        q21 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Product Performance by Category",
+            description="Sales performance analysis by product category",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    p.category,
+    COUNT(DISTINCT p.id) as product_count,
+    COUNT(DISTINCT oi.order_id) as orders,
+    SUM(oi.quantity) as units_sold,
+    ROUND(SUM(oi.quantity * oi.price), 2) as revenue,
+    ROUND(AVG(oi.price), 2) as avg_price
+FROM products p
+LEFT JOIN order_items oi ON p.id = oi.product_id
+GROUP BY p.category
+ORDER BY revenue DESC;""",
+            created_by=user_id
+        )
+        queries.append(q21)
+        db.add(q21)
+        
+        # Query 22: Recent High-Value Orders
+        q22 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Recent High-Value Orders",
+            description="Recent orders above average order value",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    o.id as order_id,
+    c.customer_name,
+    o.order_date,
+    o.amount,
+    o.status,
+    o.region
+FROM orders o
+JOIN customers c ON o.customer_id = c.id
+WHERE o.amount > (SELECT AVG(amount) FROM orders)
+  AND o.order_date >= date('now', '-30 days')
+ORDER BY o.amount DESC
+LIMIT 50;""",
+            created_by=user_id
+        )
+        queries.append(q22)
+        db.add(q22)
+        
+        # Query 23: Employee Tenure Analysis
+        q23 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Employee Tenure and Retention",
+            description="Employee tenure and distribution across departments",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    d.dept_name,
+    COUNT(e.id) as employee_count,
+    ROUND(AVG(JULIANDAY('now') - JULIANDAY(e.hire_date)) / 365.25, 1) as avg_tenure_years,
+    SUM(CASE WHEN JULIANDAY('now') - JULIANDAY(e.hire_date) < 365 THEN 1 ELSE 0 END) as new_employees,
+    SUM(CASE WHEN JULIANDAY('now') - JULIANDAY(e.hire_date) >= 1825 THEN 1 ELSE 0 END) as veteran_employees
+FROM employees e
+JOIN departments d ON e.department_id = d.id
+GROUP BY d.dept_name
+ORDER BY avg_tenure_years DESC;""",
+            created_by=user_id
+        )
+        queries.append(q23)
+        db.add(q23)
+        
+        # Query 24: Customer Review Sentiment
+        q24 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Customer Review Sentiment Distribution",
+            description="Distribution of product ratings over time",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    strftime('%Y-%m', review_date) as month,
+    SUM(CASE WHEN rating = 5 THEN 1 ELSE 0 END) as five_star,
+    SUM(CASE WHEN rating = 4 THEN 1 ELSE 0 END) as four_star,
+    SUM(CASE WHEN rating = 3 THEN 1 ELSE 0 END) as three_star,
+    SUM(CASE WHEN rating = 2 THEN 1 ELSE 0 END) as two_star,
+    SUM(CASE WHEN rating = 1 THEN 1 ELSE 0 END) as one_star,
+    ROUND(AVG(rating), 2) as avg_rating
+FROM product_reviews
+WHERE review_date >= date('now', '-12 months')
+GROUP BY month
+ORDER BY month;""",
+            created_by=user_id
+        )
+        queries.append(q24)
+        db.add(q24)
+        
+        # Query 25: Sales Performance by Month and Region
+        q25 = Query(
+            id=str(uuid.uuid4()),
+            name="Demo: Sales Heatmap - Region vs Month",
+            description="Sales performance matrix by region and month",
+            datasource_id=ds_sqlite.id,
+            query_type="sql",
+            sql_query="""SELECT 
+    region,
+    strftime('%Y-%m', order_date) as month,
+    COUNT(*) as order_count,
+    ROUND(SUM(amount), 2) as revenue
+FROM orders
+WHERE order_date >= date('now', '-12 months')
+  AND status = 'completed'
+GROUP BY region, month
+ORDER BY month, region;""",
+            created_by=user_id
+        )
+        queries.append(q25)
+        db.add(q25)
+        
         db.commit()
         
         # Create Demo Dashboards
