@@ -11,7 +11,8 @@ import {
   BarChart3,
   PieChart,
   Bell,
-  Activity
+  Activity,
+  Plug
 } from 'lucide-react';
 import { authService } from '../services/authService';
 
