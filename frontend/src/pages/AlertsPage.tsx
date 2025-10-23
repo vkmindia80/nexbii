@@ -439,6 +439,51 @@ const AlertBuilderModal: React.FC<AlertBuilderModalProps> = ({ queries, onClose,
             </div>
           </div>
 
+          {/* Slack Notifications Section */}
+          <div className="border-t pt-4">
+            <div className="flex items-center mb-4">
+              <input
+                type="checkbox"
+                id="notify_slack"
+                checked={formData.notify_slack}
+                onChange={(e) => setFormData({ ...formData, notify_slack: e.target.checked })}
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
+              />
+              <label htmlFor="notify_slack" className="ml-2 block text-sm font-medium text-gray-700">
+                Send notifications to Slack
+              </label>
+            </div>
+
+            {formData.notify_slack && (
+              <div className="space-y-3 pl-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Slack Webhook URL *
+                  </label>
+                  <input
+                    type="url"
+                    required={formData.notify_slack}
+                    value={formData.slack_webhook}
+                    onChange={(e) => setFormData({ ...formData, slack_webhook: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="https://hooks.slack.com/services/..."
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Get your webhook URL from Slack's Incoming Webhooks app
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={testSlackWebhook}
+                  disabled={testingWebhook || !formData.slack_webhook}
+                  className="text-sm px-4 py-2 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50"
+                >
+                  {testingWebhook ? 'Testing...' : 'Test Webhook'}
+                </button>
+              </div>
+            )}
+          </div>
+
           <div className="flex justify-end gap-3 pt-4 border-t">
             <button
               type="button"
