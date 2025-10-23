@@ -142,6 +142,10 @@ const QueriesPage: React.FC = () => {
     }
   };
 
+  const handleView = async (query: Query) => {
+    setViewingQuery(query);
+  };
+
   const handleEdit = async (query: Query) => {
     setEditingQuery(query);
     setFormData({
