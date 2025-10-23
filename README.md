@@ -213,6 +213,15 @@ Week 11-12: **Dashboard System**
 - `PUT /api/dashboards/{id}` - Update dashboard
 - `DELETE /api/dashboards/{id}` - Delete dashboard
 
+### Demo Data
+- `POST /api/demo/generate` - Generate demo data for all modules
+
+### Cache Management
+- `GET /api/cache/stats` - Get cache performance statistics
+- `DELETE /api/cache/clear` - Clear all cached queries
+- `DELETE /api/cache/datasource/{id}` - Clear cache for specific datasource
+- `POST /api/cache/reset-stats` - Reset cache statistics counters
+
 ## 🧪 Testing
 
 ```bash
