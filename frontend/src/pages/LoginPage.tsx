@@ -79,6 +79,12 @@ const LoginPage: React.FC = () => {
             </div>
           )}
 
+          {successMessage && (
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4" data-testid="success-message">
+              {successMessage}
+            </div>
+          )}
+
           {/* Demo Credentials Banner */}
           <div className="mb-6 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg p-4">
             <div className="flex items-start space-x-3">
