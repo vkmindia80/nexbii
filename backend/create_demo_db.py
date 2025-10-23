@@ -201,11 +201,16 @@ def create_demo_database():
     conn.close()
     
     print(f'✅ Demo database created successfully at {db_path}')
-    print(f'   - Products: 15')
+    print(f'   - Products: {len(products)}')
     print(f'   - Customers: 200')
-    print(f'   - Orders: 1000')
-    print(f'   - Order Items: ~2500')
+    print(f'   - Orders: 1500')
+    print(f'   - Order Items: ~3750')
     print(f'   - User Activities: 5000')
+    print(f'\\n📊 Database includes realistic business scenarios:')
+    print(f'   - Sales analytics across multiple regions')
+    print(f'   - Customer segmentation (Enterprise, SMB, Startup, Individual)')
+    print(f'   - Product inventory with categories')
+    print(f'   - User activity tracking for analytics')
 
 if __name__ == '__main__':
     create_demo_database()
