@@ -104,11 +104,11 @@ For quick testing and validation, use the demo admin account:
 - **Dashboard Viewer** - Interactive dashboards with live data
 - **Demo Data Generation** - One-click setup for all modules
 - **Role-based access control** - Admin, Editor, Viewer roles
+- **Redis Caching Layer** 🆕 - Query result caching with 15-minute TTL
 - Modern, responsive UI with Tailwind CSS
 
 ### 🚀 Phase 2 Coming Soon
-- Monaco Editor for SQL with syntax highlighting
-- Redis caching for query results
+- Monaco Editor for SQL with syntax highlighting (In Progress)
 - Export functionality (PDF, PNG, CSV)
 - Visual query builder (no-code)
 - Collaboration features (sharing, comments)
