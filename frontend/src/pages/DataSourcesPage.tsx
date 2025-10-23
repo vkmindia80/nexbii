@@ -102,6 +102,11 @@ const DataSourcesPage: React.FC = () => {
     }
   };
 
+  const handleBrowseSchema = (ds: DataSource) => {
+    setSelectedDatasource(ds);
+    setShowSchemaBrowser(true);
+  };
+
   const getDefaultPort = (type: string) => {
     switch (type) {
       case 'postgresql': return '5432';
