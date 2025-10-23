@@ -86,7 +86,7 @@ const LoginPage: React.FC = () => {
           )}
 
           {successMessage && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4" data-testid="success-message">
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4 whitespace-pre-line" data-testid="success-message">
               {successMessage}
             </div>
           )}
