@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, X, Trash2, Copy, ChevronDown, Database, Table2, Columns3, Filter, Link, BarChart3 } from 'lucide-react';
+import { Plus, X, Trash2, Copy, ChevronDown, Database, Table2, Columns, Filter, Link, BarChart3 } from 'lucide-react';
 
 export interface Column {
   column_name: string;
