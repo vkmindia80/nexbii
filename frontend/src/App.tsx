@@ -54,6 +54,7 @@ function App() {
           <Route path="/charts-showcase" element={<ChartsShowcasePage />} />
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/activity" element={<ActivityFeedPage />} />
+          <Route path="/integrations" element={<IntegrationsPage />} />
         </Route>
       </Routes>
     </Router>
