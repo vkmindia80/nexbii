@@ -260,31 +260,19 @@ FROM customers;""",
             name="Demo: Sales Analytics Dashboard",
             description="Comprehensive sales performance metrics and trends",
             layout={
-                "grid": "3x3",
-                "widgets": [
-                    {"id": "w1", "x": 0, "y": 0, "w": 2, "h": 2},
-                    {"id": "w2", "x": 2, "y": 0, "w": 1, "h": 1},
-                    {"id": "w3", "x": 0, "y": 2, "w": 3, "h": 1}
-                ]
+                "layouts": []
             },
             widgets=[
                 {
                     "id": "w1",
                     "type": "chart",
-                    "title": "Monthly Sales Trend",
-                    "query_id": q1.id,
-                    "chart_type": "line",
-                    "config": {
-                        "x_axis": "month",
-                        "y_axis": "total_revenue",
-                        "color": "#3b82f6"
-                    }
-                },
-                {
-                    "id": "w2",
-                    "type": "metric",
                     "title": "Total Revenue",
-                    "query_id": q1.id,
+                    "query_id": q7.id,
+                    "chart_type": "metric",
+                    "x": 0,
+                    "y": 0,
+                    "w": 3,
+                    "h": 2,
                     "config": {
                         "aggregation": "sum",
                         "field": "total_revenue",
@@ -293,11 +281,76 @@ FROM customers;""",
                     }
                 },
                 {
+                    "id": "w2",
+                    "type": "chart",
+                    "title": "Total Customers",
+                    "query_id": q8.id,
+                    "chart_type": "metric",
+                    "x": 3,
+                    "y": 0,
+                    "w": 3,
+                    "h": 2,
+                    "config": {
+                        "aggregation": "sum",
+                        "field": "total_customers"
+                    }
+                },
+                {
                     "id": "w3",
                     "type": "chart",
-                    "title": "Top Products",
+                    "title": "Total Orders",
+                    "query_id": q1.id,
+                    "chart_type": "metric",
+                    "x": 6,
+                    "y": 0,
+                    "w": 3,
+                    "h": 2,
+                    "config": {
+                        "aggregation": "sum",
+                        "field": "total_orders"
+                    }
+                },
+                {
+                    "id": "w4",
+                    "type": "chart",
+                    "title": "Monthly Sales Trend",
+                    "query_id": q1.id,
+                    "chart_type": "line",
+                    "x": 0,
+                    "y": 2,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "month",
+                        "y_axis": "total_revenue",
+                        "color": "#3b82f6"
+                    }
+                },
+                {
+                    "id": "w5",
+                    "type": "chart",
+                    "title": "Order Status",
+                    "query_id": q6.id,
+                    "chart_type": "pie",
+                    "x": 6,
+                    "y": 2,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "label": "status",
+                        "value": "order_count"
+                    }
+                },
+                {
+                    "id": "w6",
+                    "type": "chart",
+                    "title": "Top 10 Products by Revenue",
                     "query_id": q2.id,
                     "chart_type": "bar",
+                    "x": 0,
+                    "y": 5,
+                    "w": 12,
+                    "h": 3,
                     "config": {
                         "x_axis": "product_name",
                         "y_axis": "revenue"
