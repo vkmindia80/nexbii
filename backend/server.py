@@ -36,11 +36,26 @@ def init_demo_user():
 
 init_demo_user()
 
+# Start background monitoring for alerts and subscriptions
+from app.services.background_monitor import background_monitor
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.VERSION,
     description="Advanced Business Intelligence & Analytics Platform"
 )
+
+@app.on_event("startup")
+async def startup_event():
+    """Start background services on startup"""
+    background_monitor.start()
+    print("✅ Background monitor started for alerts and subscriptions")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Stop background services on shutdown"""
+    background_monitor.stop()
+    print("🛑 Background monitor stopped")
 
 # CORS middleware
 app.add_middleware(
