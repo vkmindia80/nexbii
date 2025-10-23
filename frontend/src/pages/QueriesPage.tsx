@@ -588,12 +588,13 @@ const QueriesPage: React.FC = () => {
                     type="submit"
                     className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
                   >
-                    Save Query
+                    {editingQuery ? 'Update Query' : 'Save Query'}
                   </button>
                   <button
                     type="button"
                     onClick={() => {
                       setShowModal(false);
+                      setEditingQuery(null);
                       setResult(null);
                     }}
                     className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
