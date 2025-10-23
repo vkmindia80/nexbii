@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://git-navigator-2.preview.emergentagent.com",
-        "https://git-navigator-2.preview.emergentagent.com",
-        "https://git-navigator-2.preview.emergentagent.com"
+        "https://dashboard-repair-29.preview.emergentagent.com",
+        "https://dashboard-repair-29.preview.emergentagent.com",
+        "https://dashboard-repair-29.preview.emergentagent.com"
     ]
     
     # App
