@@ -226,6 +226,10 @@ Add professional features and improve user experience for production deployment.
 - ✅ Cache statistics endpoint
 
 **Status**: 100% Complete | **Date**: October 23, 2025
+
+### 🔄 Planned Features
+
+#### 4. **Advanced Visualizations**
 - 10 additional chart types:
   - Bubble Chart (3D data)
   - Heatmap (correlation matrix)
@@ -242,18 +246,7 @@ Add professional features and improve user experience for production deployment.
 - Cross-filtering between charts
 - Export charts (PNG, SVG)
 
-#### 3. **Caching Layer** ✅ **COMPLETE**
-- ✅ Redis integration
-- ✅ Query result caching with TTL (15 minutes default)
-- ✅ Cache invalidation strategies (datasource update/delete)
-- ✅ Cache hit rate monitoring
-- ✅ Configurable cache duration
-- ✅ Manual cache clearing endpoint
-- ✅ Cache statistics endpoint
-
-**Status**: 100% Complete | **Date**: October 23, 2025
-
-#### 4. **Export & Sharing**
+#### 5. **Export & Sharing**
 - Export dashboards as PDF
 - Export charts as PNG/SVG
 - Export data as CSV/Excel
