@@ -101,7 +101,9 @@ const JOIN_TYPES = [
 const VisualQueryBuilder: React.FC<VisualQueryBuilderProps> = ({
   schema,
   onQueryGenerated,
-  darkMode = false
+  darkMode = false,
+  initialConfig = null,
+  onConfigChange
 }) => {
   const [selectedTable, setSelectedTable] = useState<string>('');
   const [selectedColumns, setSelectedColumns] = useState<SelectedColumn[]>([]);
@@ -112,12 +114,43 @@ const VisualQueryBuilder: React.FC<VisualQueryBuilderProps> = ({
   const [limit, setLimit] = useState<number>(100);
   const [distinct, setDistinct] = useState<boolean>(false);
   const [generatedSQL, setGeneratedSQL] = useState<string>('');
+  const [isInitialized, setIsInitialized] = useState<boolean>(false);
+
+  // Load initial configuration when provided
+  useEffect(() => {
+    if (initialConfig && !isInitialized && schema) {
+      setSelectedTable(initialConfig.selectedTable || '');
+      setSelectedColumns(initialConfig.selectedColumns || []);
+      setFilters(initialConfig.filters || []);
+      setJoins(initialConfig.joins || []);
+      setGroupBy(initialConfig.groupBy || []);
+      setOrderBy(initialConfig.orderBy || []);
+      setLimit(initialConfig.limit || 100);
+      setDistinct(initialConfig.distinct || false);
+      setIsInitialized(true);
+    }
+  }, [initialConfig, schema, isInitialized]);
 
   // Generate SQL whenever any state changes
   useEffect(() => {
     const sql = generateSQL();
     setGeneratedSQL(sql);
     onQueryGenerated(sql);
+    
+    // Notify parent of config changes
+    if (onConfigChange) {
+      const config: VisualQueryConfig = {
+        selectedTable,
+        selectedColumns,
+        filters,
+        joins,
+        groupBy,
+        orderBy,
+        limit,
+        distinct
+      };
+      onConfigChange(config);
+    }
   }, [selectedTable, selectedColumns, filters, joins, groupBy, orderBy, limit, distinct]);
 
   const generateSQL = (): string => {
