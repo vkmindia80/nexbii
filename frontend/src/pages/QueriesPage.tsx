@@ -28,6 +28,8 @@ const QueriesPage: React.FC = () => {
   const [rowsPerPage] = useState(50);
   const [editingQuery, setEditingQuery] = useState<Query | null>(null);
   const [viewingQuery, setViewingQuery] = useState<Query | null>(null);
+  const [viewQueryResult, setViewQueryResult] = useState<QueryResult | null>(null);
+  const [viewQueryExecuting, setViewQueryExecuting] = useState(false);
   const editorRef = useRef<any>(null);
   
   const [formData, setFormData] = useState({
