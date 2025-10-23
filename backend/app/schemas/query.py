@@ -22,8 +22,9 @@ class QueryResponse(QueryBase):
         from_attributes = True
 
 class QueryExecute(BaseModel):
-    datasource_id: str
-    sql_query: str
+    query_id: Optional[str] = None
+    datasource_id: Optional[str] = None
+    sql_query: Optional[str] = None
     limit: Optional[int] = 1000
 
 class QueryResult(BaseModel):
