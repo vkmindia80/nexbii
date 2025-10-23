@@ -124,7 +124,7 @@
 - ✅ Error handling
 - ✅ Result pagination
 
-#### Frontend Implementation: ✅ **70% COMPLETE**
+#### Frontend Implementation: ✅ **80% COMPLETE**
 - ✅ Queries list page
 - ✅ Create query modal
 - ✅ SQL query textarea
@@ -133,6 +133,8 @@
 - ✅ Execution time display
 - ✅ Save query functionality
 - ✅ Delete query
+- ✅ **View query modal with auto-execution** (NEW)
+- ✅ **Read-only query results display** (NEW)
 - ⚠️ Monaco Editor with syntax highlighting - Deferred to Phase 2
 - ⚠️ Auto-completion - Deferred to Phase 2
 - ⚠️ Export results (CSV, JSON) - Deferred to Phase 2
