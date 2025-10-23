@@ -106,14 +106,27 @@ const QueriesPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await queryService.create({
-        name: formData.name,
-        description: formData.description,
-        datasource_id: formData.datasource_id,
-        query_type: 'sql',
-        sql_query: formData.sql_query
-      });
+      if (editingQuery) {
+        // Update existing query
+        await queryService.update(editingQuery.id, {
+          name: formData.name,
+          description: formData.description,
+          datasource_id: formData.datasource_id,
+          query_type: 'sql',
+          sql_query: formData.sql_query
+        });
+      } else {
+        // Create new query
+        await queryService.create({
+          name: formData.name,
+          description: formData.description,
+          datasource_id: formData.datasource_id,
+          query_type: 'sql',
+          sql_query: formData.sql_query
+        });
+      }
       setShowModal(false);
+      setEditingQuery(null);
       loadData();
       setFormData({
         name: '',
@@ -123,8 +136,8 @@ const QueriesPage: React.FC = () => {
       });
       setResult(null);
     } catch (error) {
-      console.error('Failed to create query:', error);
-      alert('Failed to create query');
+      console.error('Failed to save query:', error);
+      alert('Failed to save query');
     }
   };
 
