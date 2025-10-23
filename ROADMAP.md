@@ -227,33 +227,54 @@ Add professional features and improve user experience for production deployment.
 
 **Status**: 100% Complete | **Date**: October 23, 2025
 
+#### 4. **Advanced Visualizations** ✅ **COMPLETE**
+- ✅ 10 additional chart types:
+  - ✅ Bubble Chart (3D scatter data visualization)
+  - ✅ Heatmap (correlation matrix with color coding)
+  - ✅ Box Plot (statistical distribution with quartiles)
+  - ✅ Treemap (hierarchical data as nested rectangles)
+  - ✅ Sunburst (radial hierarchical visualization)
+  - ✅ Waterfall (cumulative changes visualization)
+  - ✅ Funnel Chart (conversion stages and drop-offs)
+  - ✅ Radar Chart (multivariate comparison spider web)
+  - ✅ Candlestick (financial OHLC data)
+  - ✅ Sankey Diagram (flow visualization between nodes)
+- ✅ All charts built with Apache ECharts
+- ✅ Full interactivity (tooltips, zoom, selection)
+- ✅ Responsive design
+- ✅ Export individual charts as PNG
+- ⏳ Conditional formatting (Planned)
+- ⏳ Drill-down capabilities (Planned)
+- ⏳ Cross-filtering between charts (Planned)
+
+**Total Chart Types:** 20 (10 original + 10 new advanced)
+**Status**: 100% Complete | **Date**: December 2024
+
+#### 5. **Export & Sharing** ✅ **COMPLETE**
+- ✅ Export dashboards as PDF (server-side with reportlab)
+- ✅ Export charts as PNG (client-side screenshot with html2canvas)
+- ✅ Export data as CSV (query results)
+- ✅ Export data as Excel/XLSX (formatted with headers)
+- ✅ Export dashboard config as JSON
+- ✅ Public dashboard links with secure tokens
+- ✅ Password protection for shared links (bcrypt hashed)
+- ✅ Link expiration dates (1, 7, 30, 90 days, or never)
+- ✅ Embed codes for external websites (iframe)
+- ✅ Interactive vs view-only mode toggle
+- ✅ Share link management (view, revoke)
+- ✅ Public dashboard viewer (no authentication)
+- ⏳ Scheduled exports (Planned)
+
+**Features:**
+- ShareModal component with full configuration
+- PublicDashboardPage for public access
+- Export/Share buttons in DashboardViewerPage
+- Complete backend API for exports and sharing
+- SharedDashboard database model with relationships
+
+**Status**: 100% Complete | **Date**: December 2024
+
 ### 🔄 Planned Features
-
-#### 4. **Advanced Visualizations**
-- 10 additional chart types:
-  - Bubble Chart (3D data)
-  - Heatmap (correlation matrix)
-  - Box Plot (statistical distribution)
-  - Treemap (hierarchical data)
-  - Sunburst (hierarchical proportions)
-  - Waterfall (cumulative effect)
-  - Funnel Chart (conversion stages)
-  - Radar Chart (multivariate data)
-  - Candlestick (financial data)
-  - Sankey Diagram (flow visualization)
-- Conditional formatting
-- Drill-down capabilities
-- Cross-filtering between charts
-- Export charts (PNG, SVG)
-
-#### 5. **Export & Sharing**
-- Export dashboards as PDF
-- Export charts as PNG/SVG
-- Export data as CSV/Excel
-- Scheduled exports
-- Public dashboard links with passwords
-- Link expiration dates
-- Embed codes for external websites
 
 #### 6. **Collaboration Features**
 - Email subscriptions (daily, weekly, monthly)
