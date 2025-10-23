@@ -49,9 +49,18 @@ async def export_query_to_csv(
     if not query:
         raise HTTPException(status_code=404, detail="Query not found")
     
+    # Get datasource
+    datasource = db.query(DataSource).filter(DataSource.id == query.datasource_id).first()
+    if not datasource:
+        raise HTTPException(status_code=404, detail="Data source not found")
+    
     # Execute query
     try:
-        result = await execute_query_internal(query.datasource_id, query.sql_query, db)
+        result = await query_service.execute_query(
+            datasource.type,
+            datasource.config,
+            query.sql_query
+        )
         
         # Create CSV in memory
         output = io.StringIO()
@@ -62,8 +71,8 @@ async def export_query_to_csv(
             writer.writerow(result['columns'])
         
         # Write data
-        if result.get('data'):
-            for row in result['data']:
+        if result.get('rows'):
+            for row in result['rows']:
                 writer.writerow(row)
         
         output.seek(0)
