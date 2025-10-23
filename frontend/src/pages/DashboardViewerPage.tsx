@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Edit, Share2, RefreshCw, Download, FileText, Image } from 'lucide-react';
+import { ArrowLeft, Edit, Share2, RefreshCw, Download, FileText, Image, Mail, MessageCircle } from 'lucide-react';
 import { dashboardService } from '../services/dashboardService';
 import { queryService } from '../services/queryService';
 import { Dashboard } from '../types';
 import { ChartContainer } from '../components/Charts';
 import ShareModal from '../components/ShareModal';
+import SubscriptionModal from '../components/SubscriptionModal';
+import CommentsSection from '../components/CommentsSection';
 import exportService from '../services/exportService';
 
 const DashboardViewerPage: React.FC = () => {
