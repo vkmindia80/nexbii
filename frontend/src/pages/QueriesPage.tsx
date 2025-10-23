@@ -141,6 +141,18 @@ const QueriesPage: React.FC = () => {
     }
   };
 
+  const handleEdit = async (query: Query) => {
+    setEditingQuery(query);
+    setFormData({
+      name: query.name,
+      description: query.description || '',
+      datasource_id: query.datasource_id,
+      sql_query: query.sql_query || 'SELECT * FROM customers LIMIT 10;'
+    });
+    setResult(null);
+    setShowModal(true);
+  };
+
   const handleDelete = async (id: string) => {
     if (window.confirm('Are you sure you want to delete this query?')) {
       try {
