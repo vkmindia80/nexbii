@@ -45,8 +45,14 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await demoService.generateDemoData();
+      const summary = response.summary || {};
+      const dbRecords = summary.database_records || {};
+      
       setSuccessMessage(
-        `Demo data generated successfully! Created ${response.data.datasources} data sources, ${response.data.queries} queries, and ${response.data.dashboards} dashboards.`
+        `✨ Demo data generated successfully!\n\n` +
+        `📊 Created: ${response.data.datasources} data sources, ${response.data.queries} SQL queries, ${response.data.dashboards} dashboards\n\n` +
+        `💾 Database includes: ${dbRecords.products || 25} products, ${dbRecords.customers || 200} customers, ${dbRecords.orders || 1500} orders with realistic business data\n\n` +
+        `🎯 Ready to explore! Login and check out the demo queries and dashboards.`
       );
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to generate demo data. Please try again.');
