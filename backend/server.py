@@ -80,6 +80,7 @@ app.include_router(comments.router, prefix="/api/comments", tags=["Comments"])
 app.include_router(activities.router, prefix="/api/activities", tags=["Activities"])
 app.include_router(alerts.router, prefix="/api/alerts", tags=["Alerts"])
 app.include_router(integrations.router, prefix="/api/integrations", tags=["Integrations"])
+app.include_router(ai.router, prefix="/api/ai", tags=["AI Features"])
 
 @app.get("/api/health")
 async def health_check():
