@@ -431,14 +431,18 @@ const QueriesPage: React.FC = () => {
           <button
             onClick={() => {
               setEditingQuery(null);
+              const defaultDatasourceId = datasources[0]?.id || '';
               setFormData({
                 name: '',
                 description: '',
-                datasource_id: datasources[0]?.id || '',
+                datasource_id: defaultDatasourceId,
                 sql_query: 'SELECT * FROM customers LIMIT 10;'
               });
               setResult(null);
               setShowModal(true);
+              if (defaultDatasourceId) {
+                loadSchema(defaultDatasourceId);
+              }
             }}
             disabled={datasources.length === 0}
             className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
