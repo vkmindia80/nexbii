@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Bell, Plus, Play, Pause, Trash2, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 import alertService, { Alert, CreateAlertRequest } from '../services/alertService';
-import queryService, { Query } from '../services/queryService';
+import { queryService } from '../services/queryService';
+import { Query } from '../types';
 
 const AlertsPage: React.FC = () => {
   const [alerts, setAlerts] = useState<Alert[]>([]);
