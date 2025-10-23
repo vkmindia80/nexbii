@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, X, Trash2, Copy, ChevronDown, Database, Table2, Columns3, Filter, Link, BarChart3 } from 'lucide-react';
 
-interface Column {
+export interface Column {
   column_name: string;
   data_type: string;
 }
 
-interface TableSchema {
+export interface TableSchema {
   table_name: string;
   columns: Column[];
 }
 
-interface SelectedColumn {
+export interface SelectedColumn {
   id: string;
   table: string;
   column: string;
@@ -19,14 +19,14 @@ interface SelectedColumn {
   aggregation?: string;
 }
 
-interface FilterCondition {
+export interface FilterCondition {
   id: string;
   column: string;
   operator: string;
   value: string;
 }
 
-interface JoinCondition {
+export interface JoinCondition {
   id: string;
   type: string;
   leftTable: string;
@@ -35,15 +35,26 @@ interface JoinCondition {
   rightColumn: string;
 }
 
-interface GroupByColumn {
+export interface GroupByColumn {
   id: string;
   column: string;
 }
 
-interface OrderByColumn {
+export interface OrderByColumn {
   id: string;
   column: string;
   direction: 'ASC' | 'DESC';
+}
+
+export interface VisualQueryConfig {
+  selectedTable: string;
+  selectedColumns: SelectedColumn[];
+  filters: FilterCondition[];
+  joins: JoinCondition[];
+  groupBy: GroupByColumn[];
+  orderBy: OrderByColumn[];
+  limit: number;
+  distinct: boolean;
 }
 
 interface VisualQueryBuilderProps {
