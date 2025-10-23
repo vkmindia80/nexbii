@@ -104,9 +104,18 @@ async def export_query_to_excel(
     if not query:
         raise HTTPException(status_code=404, detail="Query not found")
     
+    # Get datasource
+    datasource = db.query(DataSource).filter(DataSource.id == query.datasource_id).first()
+    if not datasource:
+        raise HTTPException(status_code=404, detail="Data source not found")
+    
     # Execute query
     try:
-        result = await execute_query_internal(query.datasource_id, query.sql_query, db)
+        result = await query_service.execute_query(
+            datasource.type,
+            datasource.config,
+            query.sql_query
+        )
         
         # Create Excel workbook
         wb = Workbook()
@@ -125,8 +134,8 @@ async def export_query_to_excel(
                 cell.font = header_font
         
         # Write data
-        if result.get('data'):
-            for row_idx, row_data in enumerate(result['data'], start=2):
+        if result.get('rows'):
+            for row_idx, row_data in enumerate(result['rows'], start=2):
                 for col_idx, value in enumerate(row_data, start=1):
                     ws.cell(row=row_idx, column=col_idx, value=value)
         
