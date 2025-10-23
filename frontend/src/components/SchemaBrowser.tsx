@@ -9,11 +9,12 @@ interface SchemaBrowserProps {
 }
 
 interface TableSchema {
-  table_name: string;
+  name: string;
   columns: Array<{
-    column_name: string;
-    data_type: string;
+    name: string;
+    type: string;
   }>;
+  row_count?: number;
 }
 
 const SchemaBrowser: React.FC<SchemaBrowserProps> = ({ datasourceId, datasourceName, onClose }) => {
@@ -51,8 +52,8 @@ const SchemaBrowser: React.FC<SchemaBrowserProps> = ({ datasourceId, datasourceN
   };
 
   const filteredSchema = schema.filter(table =>
-    table.table_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    table.columns.some(col => col.column_name.toLowerCase().includes(searchQuery.toLowerCase()))
+    (table.name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (table.columns || []).some(col => (col.name || '').toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
   return (
