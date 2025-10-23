@@ -122,11 +122,20 @@ def create_demo_database():
     regions = ['North America', 'Europe', 'Asia Pacific', 'Latin America']
     
     customer_ids = []
+    first_names = ['John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Robert', 'Lisa', 'James', 'Maria', 
+                   'William', 'Jennifer', 'Richard', 'Linda', 'Thomas', 'Patricia', 'Charles', 'Barbara', 
+                   'Daniel', 'Susan', 'Matthew', 'Jessica', 'Anthony', 'Karen', 'Mark', 'Nancy']
+    last_names = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 
+                  'Martinez', 'Hernandez', 'Lopez', 'Gonzalez', 'Wilson', 'Anderson', 'Thomas', 'Taylor', 
+                  'Moore', 'Jackson', 'Martin', 'Lee', 'Thompson', 'White', 'Harris', 'Clark', 'Lewis']
+    
     for i in range(200):
         customer_id = str(uuid.uuid4())
         customer_ids.append(customer_id)
-        name = f'Customer {i+1}'
-        email = f'customer{i+1}@example.com'
+        first_name = random.choice(first_names)
+        last_name = random.choice(last_names)
+        name = f'{first_name} {last_name}'
+        email = f'{first_name.lower()}.{last_name.lower()}{random.randint(1, 999)}@example.com'
         segment = random.choice(segments)
         region = random.choice(regions)
         joined_date = (datetime.now() - timedelta(days=random.randint(30, 730))).strftime('%Y-%m-%d')
