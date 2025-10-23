@@ -65,13 +65,33 @@ async def execute_query(
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    # Get datasource
-    datasource = db.query(DataSource).filter(DataSource.id == execute_data.datasource_id).first()
-    if not datasource:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Data source not found"
-        )
+    # Check if query_id is provided
+    if hasattr(execute_data, 'query_id') and execute_data.query_id:
+        # Execute saved query by ID
+        query = db.query(Query).filter(Query.id == execute_data.query_id).first()
+        if not query:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Query not found"
+            )
+        
+        datasource = db.query(DataSource).filter(DataSource.id == query.datasource_id).first()
+        if not datasource:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Data source not found"
+            )
+        
+        sql_to_execute = query.sql_query
+    else:
+        # Execute ad-hoc query
+        datasource = db.query(DataSource).filter(DataSource.id == execute_data.datasource_id).first()
+        if not datasource:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="Data source not found"
+            )
+        sql_to_execute = execute_data.sql_query
     
     # Execute query
     service = QueryService()
@@ -81,7 +101,7 @@ async def execute_query(
         result = await service.execute_query(
             datasource.type,
             datasource.connection_config,
-            execute_data.sql_query,
+            sql_to_execute,
             limit=execute_data.limit
         )
     except Exception as e:
