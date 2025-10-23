@@ -78,7 +78,11 @@ class QueryService:
         }
     
     async def _execute_sqlite(self, config: Dict[str, Any], query: str, limit: int) -> Dict[str, Any]:
-        conn = sqlite3.connect(config.get("database_path"))
+        # Support both 'database_path' and 'database' field names
+        db_path = config.get("database_path") or config.get("database")
+        if not db_path:
+            raise ValueError("SQLite database path not specified in configuration")
+        conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
         
         # Add limit if not present
