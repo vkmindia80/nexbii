@@ -7,7 +7,7 @@
 
 | Phase | Status | Completion | Key Info |
 |-------|--------|------------|----------|
-| **Phase 1: Foundation (MVP)** | 🚧 In Progress | **~67%** | Auth ✅, Datasources ✅, Charts ✅, Dashboard Viewer ✅, Dashboard Builder 🚧 |
+| **Phase 1: Foundation (MVP)** | 🚧 In Progress | **~75%** | Auth ✅, Datasources ✅, SQL Editor ✅, Charts ✅, Dashboard Viewer ✅, Dashboard Builder 🚧 |
 | **Phase 2: Enhancement** | ❌ Not Started | **0%** | Waiting for Phase 1 |
 | **Phase 3: Advanced** | ❌ Not Started | **0%** | Waiting for Phase 1 |
 | **Phase 4: Enterprise** | ❌ Not Started | **0%** | Waiting for Phase 1 |
