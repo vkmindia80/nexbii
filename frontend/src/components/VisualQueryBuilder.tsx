@@ -50,6 +50,19 @@ interface VisualQueryBuilderProps {
   schema: { tables: TableSchema[] } | null;
   onQueryGenerated: (sql: string) => void;
   darkMode?: boolean;
+  initialConfig?: VisualQueryConfig | null;
+  onConfigChange?: (config: VisualQueryConfig) => void;
+}
+
+interface VisualQueryConfig {
+  selectedTable: string;
+  selectedColumns: SelectedColumn[];
+  filters: FilterCondition[];
+  joins: JoinCondition[];
+  groupBy: GroupByColumn[];
+  orderBy: OrderByColumn[];
+  limit: number;
+  distinct: boolean;
 }
 
 const OPERATORS = [
