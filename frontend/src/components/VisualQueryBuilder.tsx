@@ -439,7 +439,7 @@ const VisualQueryBuilder: React.FC<VisualQueryBuilderProps> = ({
           <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
             <div className="flex items-center justify-between mb-3">
               <label className="text-sm font-medium flex items-center">
-                <Columns3 className="w-4 h-4 mr-2" />
+                <Columns className="w-4 h-4 mr-2" />
                 Select Columns {selectedColumns.length === 0 && <span className="text-gray-500 ml-2">(* all columns)</span>}
               </label>
               <button
