@@ -28,6 +28,7 @@ const Layout: React.FC = () => {
     { path: '/datasources', icon: Database, label: 'Data Sources' },
     { path: '/queries', icon: FileText, label: 'Queries' },
     { path: '/dashboards', icon: BarChart3, label: 'Dashboards' },
+    { path: '/charts-showcase', icon: PieChart, label: 'Charts Showcase' },
   ];
 
   return (
