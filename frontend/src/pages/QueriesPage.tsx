@@ -630,6 +630,76 @@ const QueriesPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* View Query Modal (Read-only) */}
+      {viewingQuery && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">{viewingQuery.name}</h2>
+                  {viewingQuery.description && (
+                    <p className="text-gray-600 mt-1">{viewingQuery.description}</p>
+                  )}
+                </div>
+                <button
+                  onClick={() => setViewingQuery(null)}
+                  className="text-gray-400 hover:text-gray-600"
+                >
+                  <span className="text-2xl">&times;</span>
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <Database className="w-4 h-4 inline mr-1" />
+                    Data Source
+                  </label>
+                  <div className="p-3 bg-gray-50 rounded-lg">
+                    <span className="text-gray-900">
+                      {datasources.find(ds => ds.id === viewingQuery.datasource_id)?.name || 'Unknown'}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">SQL Query</label>
+                  <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+                    <pre className="text-sm text-gray-900 font-mono whitespace-pre-wrap">
+                      {viewingQuery.sql_query}
+                    </pre>
+                  </div>
+                </div>
+
+                <div className="text-sm text-gray-500">
+                  <p>Created: {new Date(viewingQuery.created_at).toLocaleString()}</p>
+                  <p>Type: {viewingQuery.query_type}</p>
+                </div>
+
+                <div className="flex space-x-3 pt-4">
+                  <button
+                    onClick={() => {
+                      setViewingQuery(null);
+                      handleEdit(viewingQuery);
+                    }}
+                    className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
+                  >
+                    Edit Query
+                  </button>
+                  <button
+                    onClick={() => setViewingQuery(null)}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
