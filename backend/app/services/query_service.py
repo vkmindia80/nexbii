@@ -37,6 +37,9 @@ class QueryService:
         )
         cursor = conn.cursor()
         
+        # Strip trailing semicolons and whitespace
+        query = query.strip().rstrip(';').strip()
+        
         # Add limit if not present
         if "LIMIT" not in query.upper():
             query = f"{query} LIMIT {limit}"
