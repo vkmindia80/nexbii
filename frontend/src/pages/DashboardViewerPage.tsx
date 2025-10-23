@@ -126,9 +126,9 @@ const DashboardViewerPage: React.FC = () => {
         
         let value = 0;
         if (config.aggregation === 'sum') {
-          value = rows.reduce((sum, row) => sum + (Number(row[metricIndex]) || 0), 0);
+          value = rows.reduce((sum: number, row: any) => sum + (Number(row[metricIndex]) || 0), 0);
         } else if (config.aggregation === 'avg') {
-          const sum = rows.reduce((sum, row) => sum + (Number(row[metricIndex]) || 0), 0);
+          const sum = rows.reduce((sum: number, row: any) => sum + (Number(row[metricIndex]) || 0), 0);
           value = rows.length > 0 ? sum / rows.length : 0;
         } else if (config.aggregation === 'count') {
           value = rows.length;
