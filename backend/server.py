@@ -57,6 +57,7 @@ app.include_router(datasources.router, prefix="/api/datasources", tags=["Data So
 app.include_router(queries.router, prefix="/api/queries", tags=["Queries"])
 app.include_router(dashboards.router, prefix="/api/dashboards", tags=["Dashboards"])
 app.include_router(demo.router, prefix="/api/demo", tags=["Demo Data"])
+app.include_router(cache.router, prefix="/api/cache", tags=["Cache Management"])
 
 @app.get("/api/health")
 async def health_check():
