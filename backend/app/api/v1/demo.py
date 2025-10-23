@@ -373,20 +373,19 @@ FROM customers;""",
             name="Demo: Customer Analytics Dashboard",
             description="Customer behavior, segments, and engagement metrics",
             layout={
-                "grid": "2x2",
-                "widgets": [
-                    {"id": "w1", "x": 0, "y": 0, "w": 1, "h": 1},
-                    {"id": "w2", "x": 1, "y": 0, "w": 1, "h": 1},
-                    {"id": "w3", "x": 0, "y": 1, "w": 2, "h": 1}
-                ]
+                "layouts": []
             },
             widgets=[
                 {
                     "id": "w1",
                     "type": "chart",
-                    "title": "Customer Segments",
+                    "title": "Customer Segments Distribution",
                     "query_id": q3.id,
-                    "chart_type": "pie",
+                    "chart_type": "donut",
+                    "x": 0,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
                     "config": {
                         "label": "customer_segment",
                         "value": "customer_count"
@@ -394,25 +393,31 @@ FROM customers;""",
                 },
                 {
                     "id": "w2",
-                    "type": "metric",
-                    "title": "Average Order Value",
-                    "query_id": q3.id,
+                    "type": "chart",
+                    "title": "Revenue by Region",
+                    "query_id": q5.id,
+                    "chart_type": "column",
+                    "x": 6,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
                     "config": {
-                        "aggregation": "avg",
-                        "field": "avg_order_value",
-                        "prefix": "$",
-                        "format": "currency"
+                        "x_axis": "region",
+                        "y_axis": "revenue"
                     }
                 },
                 {
                     "id": "w3",
                     "type": "chart",
-                    "title": "Regional Performance",
-                    "query_id": q5.id,
-                    "chart_type": "bar",
+                    "title": "Customer Segment Details",
+                    "query_id": q3.id,
+                    "chart_type": "table",
+                    "x": 0,
+                    "y": 3,
+                    "w": 12,
+                    "h": 3,
                     "config": {
-                        "x_axis": "region",
-                        "y_axis": "revenue"
+                        "pageSize": 10
                     }
                 }
             ],
