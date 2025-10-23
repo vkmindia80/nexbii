@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Plus, FileText, Play, Trash2, Download, Clock, Database, Moon, Sun, History, Edit } from 'lucide-react';
+import { Plus, FileText, Play, Trash2, Download, Clock, Database, Moon, Sun, History, Edit, Eye } from 'lucide-react';
 import Editor from '@monaco-editor/react';
 import { queryService } from '../services/queryService';
 import { datasourceService } from '../services/datasourceService';
