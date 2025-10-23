@@ -654,10 +654,10 @@ const QueriesPage: React.FC = () => {
         </div>
       )}
 
-      {/* View Query Modal (Read-only) */}
+      {/* View Query Modal (Read-only with Results) */}
       {viewingQuery && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <div>
@@ -667,8 +667,12 @@ const QueriesPage: React.FC = () => {
                   )}
                 </div>
                 <button
-                  onClick={() => setViewingQuery(null)}
+                  onClick={() => {
+                    setViewingQuery(null);
+                    setViewQueryResult(null);
+                  }}
                   className="text-gray-400 hover:text-gray-600"
+                  data-testid="close-view-modal"
                 >
                   <span className="text-2xl">&times;</span>
                 </button>
@@ -701,18 +705,87 @@ const QueriesPage: React.FC = () => {
                   <p>Type: {viewingQuery.query_type}</p>
                 </div>
 
+                {/* Query Results Section */}
+                <div className="border-t pt-4">
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="text-lg font-semibold text-gray-900">Query Results</h3>
+                    {viewQueryResult && !viewQueryExecuting && (
+                      <div className="flex items-center space-x-4">
+                        <span className="text-sm font-medium text-gray-700 flex items-center">
+                          <Clock className="w-4 h-4 mr-1" />
+                          {viewQueryResult.execution_time?.toFixed(3)}s
+                        </span>
+                        <span className="text-sm font-medium text-gray-700">
+                          {viewQueryResult.total_rows} rows
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {viewQueryExecuting ? (
+                    <div className="flex items-center justify-center h-48 bg-gray-50 rounded-lg">
+                      <div className="text-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600 mx-auto mb-3"></div>
+                        <p className="text-gray-600">Executing query...</p>
+                      </div>
+                    </div>
+                  ) : viewQueryResult ? (
+                    (viewQueryResult as any).error ? (
+                      <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p className="text-red-800 font-medium">Failed to execute query</p>
+                        <p className="text-sm text-red-600 mt-1">{(viewQueryResult as any).error}</p>
+                      </div>
+                    ) : (
+                      <div className="border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="overflow-x-auto max-h-96 overflow-y-auto">
+                          <table className="min-w-full divide-y divide-gray-200">
+                            <thead className="bg-gray-50 sticky top-0">
+                              <tr>
+                                {viewQueryResult.columns.map((col, idx) => (
+                                  <th
+                                    key={idx}
+                                    className="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider"
+                                  >
+                                    {col}
+                                  </th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody className="bg-white divide-y divide-gray-200">
+                              {viewQueryResult.rows.map((row, rowIdx) => (
+                                <tr key={rowIdx} className="hover:bg-gray-50">
+                                  {row.map((cell, cellIdx) => (
+                                    <td key={cellIdx} className="px-4 py-2 text-sm text-gray-900 whitespace-nowrap">
+                                      {cell !== null ? String(cell) : <span className="text-gray-400 italic">null</span>}
+                                    </td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    )
+                  ) : null}
+                </div>
+
                 <div className="flex space-x-3 pt-4">
                   <button
                     onClick={() => {
                       setViewingQuery(null);
+                      setViewQueryResult(null);
                       handleEdit(viewingQuery);
                     }}
                     className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium"
+                    data-testid="edit-from-view-button"
                   >
                     Edit Query
                   </button>
                   <button
-                    onClick={() => setViewingQuery(null)}
+                    onClick={() => {
+                      setViewingQuery(null);
+                      setViewQueryResult(null);
+                    }}
                     className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
                   >
                     Close
