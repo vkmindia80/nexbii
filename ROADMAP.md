@@ -106,17 +106,23 @@ All 10 essential chart types fully implemented using Apache ECharts:
 - ✅ **Enhanced Demo Data Generation** covering all modules:
   - **Users:** Demo admin account
   - **Data Sources:** 3 sources (SQLite with data, PostgreSQL, MongoDB placeholders)
-  - **Queries:** 14 comprehensive SQL queries
-  - **Dashboards:** 3 dashboards with 13 widgets
-  - **Charts:** All 10 chart types represented
-  - **Database:** 25 products, 200 customers, 1,500 orders, ~3,750 order items, 5,000 user activities
+  - **Queries:** 25 comprehensive SQL queries (updated January 2025) 🆕
+  - **Dashboards:** 6 dashboards with 20+ widgets (updated January 2025) 🆕
+  - **Charts:** All 20 chart types represented (10 basic + 10 advanced)
+  - **Database:** 9 tables with comprehensive data: 🆕
+    • 25 products, 200 customers, 1,500 orders, ~3,750 order items
+    • 8 departments, ~80 employees, 48 sales targets
+    • 500 product reviews, 5,000 user activities
 - ✅ One-click demo data generation from login page
-- ✅ Comprehensive success messaging
+- ✅ Comprehensive success messaging with AI feature highlights
 
 **Demo Dashboards:**
 1. **Sales Analytics Dashboard** - Revenue, orders, product performance
 2. **Customer Analytics Dashboard** - Segments, regions, behavior
 3. **Operational Metrics Dashboard** - Categories, inventory, activities
+4. **HR & Employee Analytics Dashboard** - Performance, tenure, departments 🆕
+5. **Product & Review Analytics Dashboard** - Ratings, reviews, sentiment 🆕
+6. **Sales Target Performance Dashboard** - Targets vs achievements, heatmaps 🆕
 
 ---
 
