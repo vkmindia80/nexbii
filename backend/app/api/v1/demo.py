@@ -260,6 +260,125 @@ def create_demo_database():
             (activity_id, user_id, activity_type, activity_timestamp, region)
         )
     
+    # Insert Departments
+    departments_data = [
+        ('Sales', 500000, 'New York', 'Sarah Johnson'),
+        ('Marketing', 350000, 'San Francisco', 'Michael Chen'),
+        ('Engineering', 750000, 'Seattle', 'David Kim'),
+        ('Customer Success', 280000, 'Austin', 'Emily Rodriguez'),
+        ('Operations', 420000, 'Chicago', 'James Williams'),
+        ('Finance', 320000, 'Boston', 'Linda Martinez'),
+        ('HR', 180000, 'Denver', 'Robert Brown'),
+        ('Product', 450000, 'Los Angeles', 'Maria Garcia')
+    ]
+    
+    department_ids = []
+    for dept_name, budget, location, manager in departments_data:
+        dept_id = str(uuid.uuid4())
+        department_ids.append((dept_id, dept_name))
+        cursor.execute(
+            'INSERT INTO departments VALUES (?, ?, ?, ?, ?)',
+            (dept_id, dept_name, budget, location, manager)
+        )
+    
+    # Insert Employees
+    positions = {
+        'Sales': ['Sales Representative', 'Account Executive', 'Sales Manager'],
+        'Marketing': ['Marketing Specialist', 'Content Writer', 'Marketing Manager'],
+        'Engineering': ['Software Engineer', 'Senior Engineer', 'Tech Lead'],
+        'Customer Success': ['Support Specialist', 'Customer Success Manager'],
+        'Operations': ['Operations Analyst', 'Operations Manager'],
+        'Finance': ['Financial Analyst', 'Accountant', 'Finance Manager'],
+        'HR': ['HR Specialist', 'Recruiter', 'HR Manager'],
+        'Product': ['Product Manager', 'Product Designer', 'Product Analyst']
+    }
+    
+    for dept_id, dept_name in department_ids:
+        num_employees = random.randint(8, 15)
+        dept_positions = positions.get(dept_name, ['Employee'])
+        
+        for _ in range(num_employees):
+            emp_id = str(uuid.uuid4())
+            first_name = random.choice(first_names)
+            last_name = random.choice(last_names)
+            emp_name = f'{first_name} {last_name}'
+            position = random.choice(dept_positions)
+            
+            # Salary based on position
+            if 'Manager' in position or 'Lead' in position:
+                salary = random.uniform(90000, 150000)
+            elif 'Senior' in position:
+                salary = random.uniform(70000, 110000)
+            else:
+                salary = random.uniform(45000, 85000)
+            
+            hire_date = (datetime.now() - timedelta(days=random.randint(90, 1825))).strftime('%Y-%m-%d')
+            performance = round(random.uniform(3.0, 5.0), 1)
+            
+            cursor.execute(
+                'INSERT INTO employees VALUES (?, ?, ?, ?, ?, ?, ?)',
+                (emp_id, emp_name, dept_id, salary, hire_date, position, performance)
+            )
+    
+    # Insert Sales Targets
+    for month_offset in range(12):
+        target_date = (datetime.now() - timedelta(days=month_offset * 30))
+        month = target_date.strftime('%Y-%m')
+        
+        for region in regions:
+            target_id = str(uuid.uuid4())
+            target_amount = random.uniform(100000, 500000)
+            # Achievement rate between 70% and 120%
+            achievement_rate = random.uniform(0.7, 1.2)
+            achieved_amount = target_amount * achievement_rate
+            
+            cursor.execute(
+                'INSERT INTO sales_targets VALUES (?, ?, ?, ?, ?)',
+                (target_id, month, target_amount, achieved_amount, region)
+            )
+    
+    # Insert Product Reviews
+    for _ in range(500):  # 500 reviews
+        review_id = str(uuid.uuid4())
+        product_id, _, _, _ = random.choice(product_ids)
+        customer_id = random.choice(customer_ids)
+        rating = random.randint(1, 5)
+        
+        # Generate review text based on rating
+        positive_reviews = [
+            "Great product! Highly recommended.",
+            "Excellent quality and fast shipping.",
+            "Very satisfied with this purchase.",
+            "Perfect! Exactly what I needed.",
+            "Outstanding product and service."
+        ]
+        neutral_reviews = [
+            "Good product overall.",
+            "Decent quality for the price.",
+            "Works as expected.",
+            "Satisfactory purchase."
+        ]
+        negative_reviews = [
+            "Not as described.",
+            "Quality could be better.",
+            "Disappointed with this product.",
+            "Expected more for the price."
+        ]
+        
+        if rating >= 4:
+            review_text = random.choice(positive_reviews)
+        elif rating == 3:
+            review_text = random.choice(neutral_reviews)
+        else:
+            review_text = random.choice(negative_reviews)
+        
+        review_date = (datetime.now() - timedelta(days=random.randint(1, 365))).strftime('%Y-%m-%d')
+        
+        cursor.execute(
+            'INSERT INTO product_reviews VALUES (?, ?, ?, ?, ?, ?)',
+            (review_id, product_id, customer_id, rating, review_text, review_date)
+        )
+    
     conn.commit()
     conn.close()
     
