@@ -51,6 +51,8 @@ function App() {
           <Route path="/dashboards/:id" element={<DashboardViewerPage />} />
           <Route path="/dashboards/:id/edit" element={<DashboardBuilderPage />} />
           <Route path="/charts-showcase" element={<ChartsShowcasePage />} />
+          <Route path="/alerts" element={<AlertsPage />} />
+          <Route path="/activity" element={<ActivityFeedPage />} />
         </Route>
       </Routes>
     </Router>
