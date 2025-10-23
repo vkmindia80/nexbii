@@ -12,7 +12,10 @@ from app.core.security import get_current_user
 from app.models.user import User
 from app.models.dashboard import Dashboard
 from app.models.query import Query
-from app.services.query_service import execute_query_internal
+from app.models.datasource import DataSource
+from app.services.query_service import QueryService
+
+query_service = QueryService()
 
 try:
     from openpyxl import Workbook
