@@ -13,6 +13,7 @@ import ChartsShowcasePage from './pages/ChartsShowcasePage';
 import PublicDashboardPage from './pages/PublicDashboardPage';
 import AlertsPage from './pages/AlertsPage';
 import ActivityFeedPage from './pages/ActivityFeedPage';
+import IntegrationsPage from './pages/IntegrationsPage';
 import Layout from './components/Layout';
 
 function App() {
