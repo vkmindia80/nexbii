@@ -211,6 +211,9 @@ const QueriesPage: React.FC = () => {
     });
     setResult(null);
     setShowModal(true);
+    if (query.datasource_id) {
+      loadSchema(query.datasource_id);
+    }
   };
 
   const handleDelete = async (id: string) => {
