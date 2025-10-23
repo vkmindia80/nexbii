@@ -129,14 +129,23 @@ const DashboardsPage: React.FC = () => {
                   </span>
                 )}
               </div>
-              <button
-                onClick={() => navigate(`/dashboards/${dashboard.id}`)}
-                className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-                data-testid={`view-dashboard-${dashboard.id}`}
-              >
-                <Eye className="w-4 h-4" />
-                <span>View Dashboard</span>
-              </button>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => navigate(`/dashboards/${dashboard.id}`)}
+                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+                  data-testid={`view-dashboard-${dashboard.id}`}
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>View</span>
+                </button>
+                <button
+                  onClick={() => navigate(`/dashboards/${dashboard.id}/edit`)}
+                  className="flex-1 flex items-center justify-center space-x-2 px-4 py-2 border border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors"
+                  data-testid={`edit-dashboard-${dashboard.id}`}
+                >
+                  <span>Edit</span>
+                </button>
+              </div>
             </div>
           ))}
         </div>
