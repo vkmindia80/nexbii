@@ -581,6 +581,14 @@ Click "Generate Demo Data" on login page to create sample data for all modules.
 - `GET /api/activities/` - Get activity feed
 - `GET /api/activities/user/{user_id}` - Get user activities
 
+### AI Features 🆕 (January 2025)
+- `POST /api/ai/natural-query` - Convert natural language to SQL
+- `POST /api/ai/validate-query` - Validate SQL query with suggestions
+- `POST /api/ai/optimize-query` - Optimize query for performance
+- `POST /api/ai/recommend-chart` - Recommend chart type for data
+- `POST /api/ai/generate-insights` - Generate automated insights
+- `GET /api/ai/health` - Check AI service health
+
 ---
 
 ## 🎨 Key Features Highlights
