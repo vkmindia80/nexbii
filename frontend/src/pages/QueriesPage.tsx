@@ -620,28 +620,67 @@ const QueriesPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">SQL Query</label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-sm font-medium text-gray-700">SQL Query</label>
+                    <div className="flex items-center space-x-2">
+                      {loadingSchema && (
+                        <span className="text-xs text-gray-500 flex items-center">
+                          <div className="animate-spin rounded-full h-3 w-3 border-b border-primary-600 mr-1"></div>
+                          Loading schema...
+                        </span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={formatQuery}
+                        className="flex items-center space-x-1 text-sm text-primary-600 hover:text-primary-700 px-3 py-1 rounded border border-primary-300 hover:bg-primary-50"
+                        title="Format SQL (Shift+Alt+F)"
+                        data-testid="format-sql-button"
+                      >
+                        <Wand2 className="w-4 h-4" />
+                        <span>Format</span>
+                      </button>
+                    </div>
+                  </div>
                   <div className="border border-gray-300 rounded-lg overflow-hidden">
                     <Editor
-                      height="300px"
+                      height="350px"
                       defaultLanguage="sql"
                       value={formData.sql_query}
                       onChange={(value) => setFormData({ ...formData, sql_query: value || '' })}
                       onMount={handleEditorDidMount}
                       theme={darkMode ? 'vs-dark' : 'light'}
                       options={{
-                        minimap: { enabled: false },
+                        minimap: { enabled: true },
                         fontSize: 14,
                         lineNumbers: 'on',
                         scrollBeyondLastLine: false,
                         automaticLayout: true,
                         tabSize: 2,
                         wordWrap: 'on',
+                        formatOnPaste: true,
+                        formatOnType: true,
+                        quickSuggestions: true,
+                        suggestOnTriggerCharacters: true,
+                        acceptSuggestionOnEnter: 'on',
+                        tabCompletion: 'on',
                         suggest: {
                           showKeywords: true,
-                        }
+                          showSnippets: true,
+                          showFunctions: true,
+                        },
+                        parameterHints: {
+                          enabled: true,
+                        },
+                        folding: true,
+                        bracketPairColorization: {
+                          enabled: true,
+                        },
                       }}
                     />
+                  </div>
+                  <div className="mt-1 text-xs text-gray-500">
+                    💡 Tip: Press <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded">Ctrl+Enter</kbd> to execute query, 
+                    <kbd className="px-1.5 py-0.5 bg-gray-100 border border-gray-300 rounded ml-1">Shift+Alt+F</kbd> to format
                   </div>
                 </div>
 
