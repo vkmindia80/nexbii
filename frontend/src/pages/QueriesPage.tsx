@@ -45,11 +45,11 @@ const QueriesPage: React.FC = () => {
     setExecuting(true);
     setResult(null);
     try {
-      const queryResult = await queryService.execute(
-        formData.datasource_id,
-        formData.sql_query,
-        100
-      );
+      const queryResult = await queryService.execute({
+        datasource_id: formData.datasource_id,
+        sql_query: formData.sql_query,
+        limit: 100
+      });
       setResult(queryResult);
     } catch (error: any) {
       alert(`Query execution failed: ${error.response?.data?.detail || error.message}`);
