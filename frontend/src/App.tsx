@@ -11,6 +11,8 @@ import DashboardViewerPage from './pages/DashboardViewerPage';
 import DashboardBuilderPage from './pages/DashboardBuilderPage';
 import ChartsShowcasePage from './pages/ChartsShowcasePage';
 import PublicDashboardPage from './pages/PublicDashboardPage';
+import AlertsPage from './pages/AlertsPage';
+import ActivityFeedPage from './pages/ActivityFeedPage';
 import Layout from './components/Layout';
 
 function App() {
