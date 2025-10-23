@@ -150,8 +150,8 @@ LIMIT 10;""",
             sql_query="""SELECT 
     customer_segment,
     COUNT(DISTINCT customer_id) as customer_count,
-    AVG(order_value) as avg_order_value,
-    SUM(order_value) as total_revenue
+    AVG(amount) as avg_order_value,
+    SUM(amount) as total_revenue
 FROM customers
 JOIN orders ON customers.id = orders.customer_id
 GROUP BY customer_segment
