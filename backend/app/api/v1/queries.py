@@ -8,6 +8,7 @@ from ...models.query import Query
 from ...models.datasource import DataSource
 from ...schemas.query import (
     QueryCreate,
+    QueryUpdate,
     QueryResponse,
     QueryExecute,
     QueryResult
