@@ -754,6 +754,8 @@ const QueriesPage: React.FC = () => {
                       schema={schemaCache}
                       onQueryGenerated={(sql) => setFormData({ ...formData, sql_query: sql })}
                       darkMode={darkMode}
+                      initialConfig={visualConfig}
+                      onConfigChange={(config) => setVisualConfig(config)}
                     />
                   </div>
                 )}
