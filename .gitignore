@@ -1,0 +1,149 @@
+# NexBII - Comprehensive .gitignore
+
+# ==========================================
+# Node.js / Frontend
+# ==========================================
+frontend/node_modules/
+frontend/.cache/
+frontend/build/
+frontend/dist/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnp
+frontend/.pnp.js
+frontend/.DS_Store
+
+# Testing
+frontend/coverage/
+
+# Production
+frontend/build/
+
+# Misc
+frontend/.eslintcache
+
+# ==========================================
+# Python / Backend
+# ==========================================
+backend/__pycache__/
+backend/**/__pycache__/
+backend/*.py[cod]
+backend/*$py.class
+backend/*.so
+backend/.Python
+backend/env/
+backend/venv/
+backend/ENV/
+backend/env.bak/
+backend/venv.bak/
+backend/pip-log.txt
+backend/pip-delete-this-directory.txt
+backend/.tox/
+backend/.coverage
+backend/.coverage.*
+backend/.pytest_cache/
+backend/nosetests.xml
+backend/coverage.xml
+backend/*.cover
+backend/*.log
+backend/.mypy_cache/
+backend/.dmypy.json
+backend/dmypy.json
+
+# ==========================================
+# Databases (Important!)
+# ==========================================
+backend/*.db
+backend/*.sqlite
+backend/*.sqlite3
+backend/nexbii.db
+
+# ==========================================
+# IDEs and Editors
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Environment Variables (CRITICAL)
+# ==========================================
+.env
+.env.local
+.env.*.local
+backend/.env
+frontend/.env
+
+# ==========================================
+# Logs
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+/var/log/
+supervisord.log
+supervisord.pid
+
+# ==========================================
+# OS Files
+# ==========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ==========================================
+# Temporary Files
+# ==========================================
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# ==========================================
+# Build Artifacts
+# ==========================================
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# ==========================================
+# Docker (if used later)
+# ==========================================
+docker-compose.override.yml
+
+# ==========================================
+# Testing Reports
+# ==========================================
+test_reports/
+.pytest_cache/
+htmlcov/
+
+# ==========================================
+# Emergent Platform Files (DO NOT COMMIT)
+# ==========================================
+.emergent/
+supervisord.conf
+
+# ==========================================
+# Git LFS (Large File Storage)
+# ==========================================
+# If you need to commit large files in the future,
+# use Git LFS instead of committing them directly
