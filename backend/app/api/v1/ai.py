@@ -11,7 +11,7 @@ from ...core.security import get_current_user
 from ...models.user import User
 from ...models.datasource import DataSource
 from ...services.ai_service import ai_service
-from ...services.datasource_service import DatasourceService
+from ...services.datasource_service import DataSourceService
 
 router = APIRouter()
 
