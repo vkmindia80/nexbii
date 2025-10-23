@@ -43,6 +43,7 @@ function App() {
           <Route path="/queries" element={<QueriesPage />} />
           <Route path="/dashboards" element={<DashboardsPage />} />
           <Route path="/dashboards/:id" element={<DashboardViewerPage />} />
+          <Route path="/dashboards/:id/edit" element={<DashboardBuilderPage />} />
           <Route path="/charts-showcase" element={<ChartsShowcasePage />} />
         </Route>
       </Routes>
