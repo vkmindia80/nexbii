@@ -196,9 +196,17 @@ Add professional features and improve user experience for production deployment.
 
 **Status**: 85% Complete | **Date**: October 23, 2025
 
-### Planned Features
+### 🔄 In Progress / Planned Features
 
-#### 2. **Advanced Visualizations**
+#### 2. **Visual Query Builder** (Next Priority)
+- Drag-and-drop table/column selection
+- Filter builder (10+ operators)
+- Join operations UI
+- Aggregation builder
+- Visual-to-SQL conversion
+- Live SQL preview
+
+#### 3. **Advanced Visualizations**
 - 10 additional chart types:
   - Bubble Chart (3D data)
   - Heatmap (correlation matrix)
