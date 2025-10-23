@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://bi-core-unlock.preview.emergentagent.com",
-        "https://bi-core-unlock.preview.emergentagent.com",
-        "https://bi-core-unlock.preview.emergentagent.com"
+        "https://metrics-view-17.preview.emergentagent.com",
+        "https://metrics-view-17.preview.emergentagent.com",
+        "https://metrics-view-17.preview.emergentagent.com"
     ]
     
     # App
