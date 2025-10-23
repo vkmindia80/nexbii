@@ -1,0 +1,192 @@
+import sqlite3
+import random
+from datetime import datetime, timedelta
+import uuid
+
+def create_demo_database():
+    """Create a comprehensive demo SQLite database with realistic sales data"""
+    
+    db_path = '/app/backend/demo_database.db'
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    
+    # Drop existing tables if they exist
+    cursor.execute('DROP TABLE IF EXISTS order_items')
+    cursor.execute('DROP TABLE IF EXISTS orders')
+    cursor.execute('DROP TABLE IF EXISTS products')
+    cursor.execute('DROP TABLE IF EXISTS customers')
+    cursor.execute('DROP TABLE IF EXISTS user_activities')
+    
+    # Create Products table
+    cursor.execute('''
+        CREATE TABLE products (
+            id TEXT PRIMARY KEY,
+            product_name TEXT NOT NULL,
+            category TEXT NOT NULL,
+            price REAL NOT NULL,
+            cost REAL NOT NULL,
+            stock_quantity INTEGER NOT NULL
+        )
+    ''')
+    
+    # Create Customers table
+    cursor.execute('''
+        CREATE TABLE customers (
+            id TEXT PRIMARY KEY,
+            customer_name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            customer_segment TEXT NOT NULL,
+            region TEXT NOT NULL,
+            joined_date TEXT NOT NULL
+        )
+    ''')
+    
+    # Create Orders table
+    cursor.execute('''
+        CREATE TABLE orders (
+            id TEXT PRIMARY KEY,
+            customer_id TEXT NOT NULL,
+            order_date TEXT NOT NULL,
+            amount REAL NOT NULL,
+            status TEXT NOT NULL,
+            region TEXT NOT NULL,
+            FOREIGN KEY (customer_id) REFERENCES customers(id)
+        )
+    ''')
+    
+    # Create Order Items table
+    cursor.execute('''
+        CREATE TABLE order_items (
+            id TEXT PRIMARY KEY,
+            order_id TEXT NOT NULL,
+            product_id TEXT NOT NULL,
+            quantity INTEGER NOT NULL,
+            price REAL NOT NULL,
+            FOREIGN KEY (order_id) REFERENCES orders(id),
+            FOREIGN KEY (product_id) REFERENCES products(id)
+        )
+    ''')
+    
+    # Create User Activities table
+    cursor.execute('''
+        CREATE TABLE user_activities (
+            id TEXT PRIMARY KEY,
+            user_id TEXT NOT NULL,
+            activity_type TEXT NOT NULL,
+            activity_timestamp TEXT NOT NULL,
+            region TEXT NOT NULL
+        )
+    ''')
+    
+    # Insert Products
+    products = [
+        ('Laptop Pro 15', 'Electronics', 1299.99, 800),
+        ('Wireless Mouse', 'Electronics', 29.99, 15),
+        ('USB-C Cable', 'Accessories', 19.99, 8),
+        ('Desk Chair', 'Furniture', 299.99, 150),
+        ('Standing Desk', 'Furniture', 599.99, 350),
+        ('Monitor 27"', 'Electronics', 349.99, 200),
+        ('Keyboard Mechanical', 'Electronics', 149.99, 80),
+        ('Webcam HD', 'Electronics', 89.99, 45),
+        ('Desk Lamp', 'Accessories', 49.99, 25),
+        ('Notebook Set', 'Office Supplies', 14.99, 5),
+        ('Phone Stand', 'Accessories', 24.99, 12),
+        ('Headphones', 'Electronics', 199.99, 100),
+        ('Tablet 10"', 'Electronics', 449.99, 280),
+        ('External SSD 1TB', 'Electronics', 129.99, 70),
+        ('Wireless Charger', 'Accessories', 39.99, 18),
+    ]
+    
+    product_ids = []
+    for name, category, price, cost in products:
+        product_id = str(uuid.uuid4())
+        product_ids.append((product_id, name, category, price))
+        stock = random.randint(50, 500)
+        cursor.execute(
+            'INSERT INTO products VALUES (?, ?, ?, ?, ?, ?)',
+            (product_id, name, category, price, cost, stock)
+        )
+    
+    # Insert Customers
+    segments = ['Enterprise', 'SMB', 'Startup', 'Individual']
+    regions = ['North America', 'Europe', 'Asia Pacific', 'Latin America']
+    
+    customer_ids = []
+    for i in range(200):
+        customer_id = str(uuid.uuid4())
+        customer_ids.append(customer_id)
+        name = f'Customer {i+1}'
+        email = f'customer{i+1}@example.com'
+        segment = random.choice(segments)
+        region = random.choice(regions)
+        joined_date = (datetime.now() - timedelta(days=random.randint(30, 730))).strftime('%Y-%m-%d')
+        
+        cursor.execute(
+            'INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)',
+            (customer_id, name, email, segment, region, joined_date)
+        )
+    
+    # Insert Orders and Order Items
+    start_date = datetime.now() - timedelta(days=365)
+    
+    for i in range(1000):
+        order_id = str(uuid.uuid4())
+        customer_id = random.choice(customer_ids)
+        order_date = (start_date + timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d')
+        status = random.choice(['completed', 'completed', 'completed', 'pending', 'cancelled'])
+        region = random.choice(regions)
+        
+        # Get customer's region
+        cursor.execute('SELECT region FROM customers WHERE id = ?', (customer_id,))
+        customer_region = cursor.fetchone()[0]
+        
+        # Generate 1-5 items per order
+        num_items = random.randint(1, 5)
+        order_total = 0
+        
+        for _ in range(num_items):
+            item_id = str(uuid.uuid4())
+            product_id, product_name, category, price = random.choice(product_ids)
+            quantity = random.randint(1, 3)
+            item_total = price * quantity
+            order_total += item_total
+            
+            cursor.execute(
+                'INSERT INTO order_items VALUES (?, ?, ?, ?, ?)',
+                (item_id, order_id, product_id, quantity, price)
+            )
+        
+        cursor.execute(
+            'INSERT INTO orders VALUES (?, ?, ?, ?, ?, ?)',
+            (order_id, customer_id, order_date, order_total, status, customer_region)
+        )
+    
+    # Insert User Activities
+    activity_types = ['login', 'view_product', 'add_to_cart', 'purchase', 'logout']
+    
+    for i in range(5000):
+        activity_id = str(uuid.uuid4())
+        user_id = f'user_{random.randint(1, 300)}'
+        activity_type = random.choice(activity_types)
+        activity_timestamp = (datetime.now() - timedelta(days=random.randint(0, 90), 
+                                                         hours=random.randint(0, 23),
+                                                         minutes=random.randint(0, 59))).strftime('%Y-%m-%d %H:%M:%S')
+        region = random.choice(regions)
+        
+        cursor.execute(
+            'INSERT INTO user_activities VALUES (?, ?, ?, ?, ?)',
+            (activity_id, user_id, activity_type, activity_timestamp, region)
+        )
+    
+    conn.commit()
+    conn.close()
+    
+    print(f'✅ Demo database created successfully at {db_path}')
+    print(f'   - Products: 15')
+    print(f'   - Customers: 200')
+    print(f'   - Orders: 1000')
+    print(f'   - Order Items: ~2500')
+    print(f'   - User Activities: 5000')
+
+if __name__ == '__main__':
+    create_demo_database()
