@@ -145,10 +145,10 @@ def create_demo_database():
             (customer_id, name, email, segment, region, joined_date)
         )
     
-    # Insert Orders and Order Items
+    # Insert Orders and Order Items - More realistic distribution
     start_date = datetime.now() - timedelta(days=365)
     
-    for i in range(1000):
+    for i in range(1500):  # Increased from 1000 to 1500 orders
         order_id = str(uuid.uuid4())
         customer_id = random.choice(customer_ids)
         order_date = (start_date + timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d')
