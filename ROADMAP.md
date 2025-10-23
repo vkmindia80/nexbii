@@ -263,7 +263,7 @@ Add professional features and improve user experience for production deployment.
 - Activity feed
 - Real-time collaboration
 
-#### 6. **Alert System**
+#### 7. **Alert System**
 - Threshold-based alerts
 - Email/Slack/Webhook notifications
 - Alert scheduling
