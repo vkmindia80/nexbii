@@ -35,6 +35,24 @@ const LoginPage: React.FC = () => {
     setEmail('admin@nexbii.demo');
     setPassword('demo123');
     setError('');
+    setSuccessMessage('');
+  };
+
+  const handleGenerateDemoData = async () => {
+    setGeneratingData(true);
+    setError('');
+    setSuccessMessage('');
+
+    try {
+      const response = await demoService.generateDemoData();
+      setSuccessMessage(
+        `Demo data generated successfully! Created ${response.data.datasources} data sources, ${response.data.queries} queries, and ${response.data.dashboards} dashboards.`
+      );
+    } catch (err: any) {
+      setError(err.response?.data?.detail || 'Failed to generate demo data. Please try again.');
+    } finally {
+      setGeneratingData(false);
+    }
   };
 
   return (
