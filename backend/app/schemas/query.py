@@ -40,3 +40,5 @@ class QueryResult(BaseModel):
     rows: list[list[Any]]
     total_rows: int
     execution_time: float
+    from_cache: Optional[bool] = False
+    cached_at: Optional[str] = None
