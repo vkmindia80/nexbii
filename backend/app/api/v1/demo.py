@@ -1297,6 +1297,207 @@ ORDER BY month, region;""",
         dashboards.append(d3)
         db.add(d3)
         
+        # Dashboard 4: HR & Employee Analytics
+        d4 = Dashboard(
+            id=str(uuid.uuid4()),
+            name="Demo: HR & Employee Analytics Dashboard",
+            description="Employee performance, tenure, and department analysis",
+            layout={
+                "layouts": []
+            },
+            widgets=[
+                {
+                    "id": "w1",
+                    "type": "chart",
+                    "title": "Employee Performance by Department",
+                    "query_id": q15.id,
+                    "chart_type": "bar",
+                    "x": 0,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "department",
+                        "y_axis": "avg_performance"
+                    }
+                },
+                {
+                    "id": "w2",
+                    "type": "chart",
+                    "title": "Department Budget Overview",
+                    "query_id": q18.id,
+                    "chart_type": "column",
+                    "x": 6,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "dept_name",
+                        "y_axis": "budget"
+                    }
+                },
+                {
+                    "id": "w3",
+                    "type": "chart",
+                    "title": "Employee Tenure Analysis",
+                    "query_id": q23.id,
+                    "chart_type": "table",
+                    "x": 0,
+                    "y": 3,
+                    "w": 12,
+                    "h": 3,
+                    "config": {
+                        "pageSize": 10
+                    }
+                }
+            ],
+            filters={},
+            is_public=False,
+            created_by=user_id
+        )
+        dashboards.append(d4)
+        db.add(d4)
+        
+        # Dashboard 5: Product & Review Analytics
+        d5 = Dashboard(
+            id=str(uuid.uuid4()),
+            name="Demo: Product & Review Analytics Dashboard",
+            description="Product ratings, reviews, and performance metrics",
+            layout={
+                "layouts": []
+            },
+            widgets=[
+                {
+                    "id": "w1",
+                    "type": "chart",
+                    "title": "Top Rated Products",
+                    "query_id": q17.id,
+                    "chart_type": "bar",
+                    "x": 0,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "product_name",
+                        "y_axis": "avg_rating"
+                    }
+                },
+                {
+                    "id": "w2",
+                    "type": "chart",
+                    "title": "Review Sentiment Over Time",
+                    "query_id": q24.id,
+                    "chart_type": "area",
+                    "x": 6,
+                    "y": 0,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "month",
+                        "y_axis": "avg_rating"
+                    }
+                },
+                {
+                    "id": "w3",
+                    "type": "chart",
+                    "title": "Product Performance by Category",
+                    "query_id": q21.id,
+                    "chart_type": "treemap",
+                    "x": 0,
+                    "y": 3,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "label": "category",
+                        "value": "revenue"
+                    }
+                },
+                {
+                    "id": "w4",
+                    "type": "chart",
+                    "title": "Product Ratings Detail",
+                    "query_id": q17.id,
+                    "chart_type": "table",
+                    "x": 6,
+                    "y": 3,
+                    "w": 6,
+                    "h": 3,
+                    "config": {
+                        "pageSize": 10
+                    }
+                }
+            ],
+            filters={},
+            is_public=True,
+            created_by=user_id
+        )
+        dashboards.append(d5)
+        db.add(d5)
+        
+        # Dashboard 6: Sales Target Performance
+        d6 = Dashboard(
+            id=str(uuid.uuid4()),
+            name="Demo: Sales Target Performance Dashboard",
+            description="Sales targets vs achievements with regional breakdown",
+            layout={
+                "layouts": []
+            },
+            widgets=[
+                {
+                    "id": "w1",
+                    "type": "chart",
+                    "title": "Target Achievement by Region",
+                    "query_id": q16.id,
+                    "chart_type": "gauge",
+                    "x": 0,
+                    "y": 0,
+                    "w": 3,
+                    "h": 2,
+                    "config": {
+                        "field": "achievement_percentage",
+                        "min": 0,
+                        "max": 150
+                    }
+                },
+                {
+                    "id": "w2",
+                    "type": "chart",
+                    "title": "Regional Sales Performance",
+                    "query_id": q16.id,
+                    "chart_type": "column",
+                    "x": 3,
+                    "y": 0,
+                    "w": 9,
+                    "h": 3,
+                    "config": {
+                        "x_axis": "region",
+                        "y_axis": "total_achieved"
+                    }
+                },
+                {
+                    "id": "w3",
+                    "type": "chart",
+                    "title": "Sales Heatmap - Region vs Month",
+                    "query_id": q25.id,
+                    "chart_type": "heatmap",
+                    "x": 0,
+                    "y": 3,
+                    "w": 12,
+                    "h": 4,
+                    "config": {
+                        "x_axis": "month",
+                        "y_axis": "region",
+                        "value": "revenue"
+                    }
+                }
+            ],
+            filters={},
+            is_public=False,
+            created_by=user_id
+        )
+        dashboards.append(d6)
+        db.add(d6)
+        
         db.commit()
         
         return {
