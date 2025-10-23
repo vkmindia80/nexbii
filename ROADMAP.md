@@ -255,7 +255,7 @@ Add professional features and improve user experience for production deployment.
 - Link expiration dates
 - Embed codes for external websites
 
-#### 5. **Collaboration Features**
+#### 6. **Collaboration Features**
 - Email subscriptions (daily, weekly, monthly)
 - Slack/Teams integration
 - Dashboard comments
