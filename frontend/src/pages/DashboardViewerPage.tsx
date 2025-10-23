@@ -255,13 +255,66 @@ const DashboardViewerPage: React.FC = () => {
               onClick={handleRefresh}
               disabled={refreshing}
               className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+              data-testid="refresh-button"
             >
               <RefreshCw className={`w-4 h-4 ${refreshing ? 'animate-spin' : ''}`} />
               <span>Refresh</span>
             </button>
+            
+            {/* Export Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowExportMenu(!showExportMenu)}
+                className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                data-testid="export-button"
+              >
+                <Download className="w-4 h-4" />
+                <span>Export</span>
+              </button>
+              
+              {showExportMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                  <button
+                    onClick={handleExportPDF}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-2"
+                    data-testid="export-pdf-button"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>Export as PDF</span>
+                  </button>
+                  <button
+                    onClick={handleExportPNG}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-2"
+                    data-testid="export-png-button"
+                  >
+                    <Image className="w-4 h-4" />
+                    <span>Export as PNG</span>
+                  </button>
+                  <button
+                    onClick={handleExportJSON}
+                    className="w-full text-left px-4 py-2 hover:bg-gray-50 flex items-center space-x-2 border-t"
+                    data-testid="export-json-button"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>Export Config (JSON)</span>
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            <button
+              onClick={() => setShowShareModal(true)}
+              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              data-testid="share-button"
+            >
+              <Share2 className="w-4 h-4" />
+              <span>Share</span>
+            </button>
+            
             <button
               onClick={() => navigate(`/dashboards/${id}/edit`)}
               className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              data-testid="edit-button"
             >
               <Edit className="w-4 h-4" />
               <span>Edit</span>
