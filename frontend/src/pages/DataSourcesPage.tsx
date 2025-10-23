@@ -187,7 +187,19 @@ const DataSourcesPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal */}
+      {/* Schema Browser Modal */}
+      {showSchemaBrowser && selectedDatasource && (
+        <SchemaBrowser
+          datasourceId={selectedDatasource.id}
+          datasourceName={selectedDatasource.name}
+          onClose={() => {
+            setShowSchemaBrowser(false);
+            setSelectedDatasource(null);
+          }}
+        />
+      )}
+
+      {/* Add Data Source Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
