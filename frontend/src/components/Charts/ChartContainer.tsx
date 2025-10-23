@@ -9,8 +9,19 @@ import ScatterChart from './ScatterChart';
 import GaugeChart from './GaugeChart';
 import MetricCard from './MetricCard';
 import DataTable from './DataTable';
+import BubbleChart from './BubbleChart';
+import HeatmapChart from './HeatmapChart';
+import BoxPlotChart from './BoxPlotChart';
+import TreemapChart from './TreemapChart';
+import SunburstChart from './SunburstChart';
+import WaterfallChart from './WaterfallChart';
+import FunnelChart from './FunnelChart';
+import RadarChart from './RadarChart';
+import CandlestickChart from './CandlestickChart';
+import SankeyChart from './SankeyChart';
 
-export type ChartType = 'line' | 'bar' | 'column' | 'area' | 'pie' | 'donut' | 'scatter' | 'gauge' | 'metric' | 'table';
+export type ChartType = 'line' | 'bar' | 'column' | 'area' | 'pie' | 'donut' | 'scatter' | 'gauge' | 'metric' | 'table' | 
+  'bubble' | 'heatmap' | 'boxplot' | 'treemap' | 'sunburst' | 'waterfall' | 'funnel' | 'radar' | 'candlestick' | 'sankey';
 
 interface ChartContainerProps {
   type: ChartType;
