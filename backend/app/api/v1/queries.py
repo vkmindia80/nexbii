@@ -14,6 +14,7 @@ from ...schemas.query import (
     QueryResult
 )
 from ...services.query_service import QueryService
+from ...services.cache_service import CacheService
 
 router = APIRouter()
 
