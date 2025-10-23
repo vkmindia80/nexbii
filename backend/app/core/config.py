@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://git-branch-resolve.preview.emergentagent.com",
-        "https://git-branch-resolve.preview.emergentagent.com",
-        "https://git-branch-resolve.preview.emergentagent.com"
+        "https://repohelper.preview.emergentagent.com",
+        "https://repohelper.preview.emergentagent.com",
+        "https://repohelper.preview.emergentagent.com"
     ]
     
     # App
