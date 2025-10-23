@@ -593,17 +593,28 @@ Click "Generate Demo Data" on login page to create sample data for all modules.
 
 ## 🎨 Key Features Highlights
 
-### 1. Schema Browser 🆕
+### 1. AI-Powered Query Assistant 🆕 (January 2025)
+- **Natural Language Queries**: Convert plain English to SQL
+  - "Show me top 10 customers by revenue"
+  - "What are monthly sales trends for last year?"
+  - Confidence scoring and explanation
+- **Query Validation**: Syntax, schema, and security checks
+- **Query Optimization**: Performance improvements and index recommendations
+- **Chart Recommendations**: AI suggests best visualization types
+- **Automated Insights**: Generate key findings and business recommendations
+- **Powered by**: Emergent LLM Key with OpenAI GPT-4o
+
+### 2. Schema Browser
 - Interactive tree view of database structure
 - Search tables and columns
 - View data types
 - One-click access from data sources
 - Modal popup interface
 
-### 2. Dashboard Builder
+### 3. Dashboard Builder
 - Drag-and-drop widget placement
 - Grid-based responsive layout
-- 10 chart types available
+- 20 chart types available (10 basic + 10 advanced)
 - Widget resize and move
 - Live data preview
 
