@@ -591,7 +591,11 @@ const QueriesPage: React.FC = () => {
                     </label>
                     <select
                       value={formData.datasource_id}
-                      onChange={(e) => setFormData({ ...formData, datasource_id: e.target.value })}
+                      onChange={(e) => {
+                        const newDatasourceId = e.target.value;
+                        setFormData({ ...formData, datasource_id: newDatasourceId });
+                        loadSchema(newDatasourceId);
+                      }}
                       className="input"
                       required
                     >
