@@ -224,12 +224,97 @@ const QueriesPage: React.FC = () => {
     }
   };
 
-  const handleEditorDidMount = (editor: any) => {
+  const handleEditorDidMount = (editor: any, monaco: any) => {
     editorRef.current = editor;
     
-    // Add SQL keywords and functions for auto-completion
-    editor.onDidChangeCursorPosition(() => {
-      // Trigger auto-completion
+    // Add keyboard shortcut for query execution (Ctrl+Enter / Cmd+Enter)
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+      handleExecute();
+    });
+
+    // Add keyboard shortcut for SQL formatting (Shift+Alt+F)
+    editor.addCommand(monaco.KeyMod.Shift | monaco.KeyMod.Alt | monaco.KeyCode.KeyF, () => {
+      formatQuery();
+    });
+
+    // Register SQL auto-completion provider
+    monaco.languages.registerCompletionItemProvider('sql', {
+      triggerCharacters: ['.', ' '],
+      provideCompletionItems: (model: any, position: any) => {
+        const suggestions: any[] = [];
+        
+        // Add table names from schema
+        if (schemaCache && schemaCache.tables) {
+          schemaCache.tables.forEach((table: any) => {
+            suggestions.push({
+              label: table.table_name,
+              kind: monaco.languages.CompletionItemKind.Class,
+              insertText: table.table_name,
+              detail: 'Table',
+              documentation: `Table: ${table.table_name}`,
+            });
+
+            // Add column names with table prefix
+            if (table.columns) {
+              table.columns.forEach((column: any) => {
+                suggestions.push({
+                  label: `${table.table_name}.${column.column_name}`,
+                  kind: monaco.languages.CompletionItemKind.Field,
+                  insertText: `${table.table_name}.${column.column_name}`,
+                  detail: `${column.data_type}`,
+                  documentation: `Column: ${column.column_name} (${column.data_type})`,
+                });
+
+                // Also add column names without table prefix
+                suggestions.push({
+                  label: column.column_name,
+                  kind: monaco.languages.CompletionItemKind.Field,
+                  insertText: column.column_name,
+                  detail: `${table.table_name}.${column.data_type}`,
+                  documentation: `Column: ${column.column_name} from ${table.table_name}`,
+                });
+              });
+            }
+          });
+        }
+
+        // Add common SQL keywords
+        const keywords = [
+          'SELECT', 'FROM', 'WHERE', 'JOIN', 'INNER JOIN', 'LEFT JOIN', 'RIGHT JOIN',
+          'GROUP BY', 'HAVING', 'ORDER BY', 'LIMIT', 'OFFSET', 'INSERT INTO',
+          'UPDATE', 'DELETE', 'CREATE TABLE', 'ALTER TABLE', 'DROP TABLE',
+          'COUNT', 'SUM', 'AVG', 'MIN', 'MAX', 'DISTINCT', 'AS', 'ON',
+          'AND', 'OR', 'NOT', 'IN', 'BETWEEN', 'LIKE', 'IS NULL', 'IS NOT NULL'
+        ];
+
+        keywords.forEach(keyword => {
+          suggestions.push({
+            label: keyword,
+            kind: monaco.languages.CompletionItemKind.Keyword,
+            insertText: keyword,
+            detail: 'SQL Keyword',
+          });
+        });
+
+        // Add SQL functions
+        const functions = [
+          'COUNT()', 'SUM()', 'AVG()', 'MIN()', 'MAX()', 'ROUND()',
+          'UPPER()', 'LOWER()', 'CONCAT()', 'SUBSTRING()', 'TRIM()',
+          'NOW()', 'CURRENT_DATE', 'CURRENT_TIMESTAMP', 'DATE_FORMAT()',
+          'COALESCE()', 'CAST()', 'CASE WHEN THEN ELSE END'
+        ];
+
+        functions.forEach(func => {
+          suggestions.push({
+            label: func,
+            kind: monaco.languages.CompletionItemKind.Function,
+            insertText: func,
+            detail: 'SQL Function',
+          });
+        });
+
+        return { suggestions };
+      },
     });
   };
 
