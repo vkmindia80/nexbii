@@ -269,6 +269,7 @@ async def generate_demo_data(db: Session = Depends(get_db)):
             name="Demo SQLite Database",
             type=DataSourceType.SQLITE,
             connection_config={
+                "database_path": "/app/backend/demo_database.db",
                 "database": "/app/backend/demo_database.db",
                 "description": "Local SQLite demo database with sample data"
             },
