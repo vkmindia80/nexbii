@@ -400,12 +400,28 @@ const DashboardViewerPage: React.FC = () => {
         )}
       </div>
       
+      {/* Comments Section */}
+      {showComments && dashboard && (
+        <div className="mt-6">
+          <CommentsSection dashboardId={dashboard.id} />
+        </div>
+      )}
+      
       {/* Share Modal */}
       {showShareModal && dashboard && (
         <ShareModal
           dashboardId={dashboard.id}
           dashboardName={dashboard.name}
           onClose={() => setShowShareModal(false)}
+        />
+      )}
+      
+      {/* Subscription Modal */}
+      {showSubscriptionModal && dashboard && (
+        <SubscriptionModal
+          dashboardId={dashboard.id}
+          dashboardName={dashboard.name}
+          onClose={() => setShowSubscriptionModal(false)}
         />
       )}
     </div>
