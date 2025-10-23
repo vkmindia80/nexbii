@@ -18,9 +18,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://insight-hub-100.preview.emergentagent.com",
-        "https://insight-hub-100.preview.emergentagent.com",
-        "https://insight-hub-100.preview.emergentagent.com"
+        "https://email-slack-setup.preview.emergentagent.com",
+        "https://email-slack-setup.preview.emergentagent.com",
+        "https://email-slack-setup.preview.emergentagent.com"
     ]
     
     # App
