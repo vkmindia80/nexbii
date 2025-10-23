@@ -32,6 +32,8 @@ const QueriesPage: React.FC = () => {
   const [viewQueryResult, setViewQueryResult] = useState<QueryResult | null>(null);
   const [viewQueryExecuting, setViewQueryExecuting] = useState(false);
   const editorRef = useRef<any>(null);
+  const [schemaCache, setSchemaCache] = useState<any>(null);
+  const [loadingSchema, setLoadingSchema] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
