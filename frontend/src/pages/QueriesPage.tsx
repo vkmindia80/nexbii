@@ -459,6 +459,8 @@ const QueriesPage: React.FC = () => {
                 sql_query: 'SELECT * FROM customers LIMIT 10;'
               });
               setResult(null);
+              setQueryMode('sql');
+              setVisualConfig(null);
               setShowModal(true);
               if (defaultDatasourceId) {
                 loadSchema(defaultDatasourceId);
