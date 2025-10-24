@@ -33,6 +33,20 @@ const DashboardViewerPage: React.FC = () => {
     }
   }, [id]);
 
+  // Listen for real-time dashboard updates
+  useEffect(() => {
+    if (updates.length > 0) {
+      const latestUpdate = updates[updates.length - 1];
+      console.log('📡 Dashboard update received:', latestUpdate);
+      
+      // Auto-refresh dashboard when someone else updates it
+      if (latestUpdate.updated_by !== websocketService.getUserId()) {
+        console.log('🔄 Auto-refreshing dashboard due to remote update');
+        loadDashboard();
+      }
+    }
+  }, [updates]);
+
   const loadDashboard = async () => {
     try {
       setLoading(true);
