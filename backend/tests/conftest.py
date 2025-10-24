@@ -92,3 +92,22 @@ def test_datasource(db_session, test_user):
     db_session.commit()
     db_session.refresh(datasource)
     return datasource
+
+
+@pytest.fixture(scope="function")
+def test_query(db_session, test_user, test_datasource):
+    """Create a test query"""
+    from app.models.query import Query
+    
+    query = Query(
+        name="Test Query",
+        description="A test SQL query",
+        datasource_id=test_datasource.id,
+        query_type="sql",
+        sql_query="SELECT 1 as test_column",
+        created_by=test_user.email
+    )
+    db_session.add(query)
+    db_session.commit()
+    db_session.refresh(query)
+    return query
