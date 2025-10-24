@@ -19,10 +19,12 @@ import ActivityFeedPage from './pages/ActivityFeedPage';
 import IntegrationsPage from './pages/IntegrationsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import Layout from './components/Layout';
+import { useWebSocket } from './hooks/useWebSocket';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { isConnected } = useWebSocket();
 
   useEffect(() => {
     // Check if user is authenticated
@@ -30,6 +32,12 @@ function App() {
     setIsAuthenticated(!!token);
     setLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (isConnected) {
+      console.log('✅ WebSocket connected and ready');
+    }
+  }, [isConnected]);
 
   if (loading) {
     return (
