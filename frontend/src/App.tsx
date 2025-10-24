@@ -44,12 +44,15 @@ function App() {
       <Routes>
         <Route path="/login" element={!isAuthenticated ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/register" element={!isAuthenticated ? <RegisterPage /> : <Navigate to="/" />} />
+        <Route path="/forgot-password" element={!isAuthenticated ? <ForgotPasswordPage /> : <Navigate to="/" />} />
+        <Route path="/reset-password" element={!isAuthenticated ? <ResetPasswordPage /> : <Navigate to="/" />} />
         
         {/* Public routes (no authentication required) */}
         <Route path="/public/dashboard/:shareToken" element={<PublicDashboardPage />} />
         
         <Route element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/datasources" element={<DataSourcesPage />} />
           <Route path="/queries" element={<QueriesPage />} />
           <Route path="/dashboards" element={<DashboardsPage />} />
