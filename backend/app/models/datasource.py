@@ -1,4 +1,5 @@
 from sqlalchemy import Column, String, JSON, Boolean, DateTime, Enum as SQLEnum
+from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import uuid
 import enum
