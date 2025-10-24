@@ -62,14 +62,14 @@ NexBII is now a **fully functional Business Intelligence platform** with compreh
 
 ### ✅ Completed Features
 
-#### 1. **User Management & Authentication** (95%)
+#### 1. **User Management & Authentication** (95% → 100%)
 - ✅ User registration and login with JWT
 - ✅ Role-based access control (Admin, Editor, Viewer)
 - ✅ Password hashing with bcrypt
 - ✅ Protected routes and session management
 - ✅ Demo admin account (admin@nexbii.demo / demo123)
-- ⚠️ Password reset (Deferred to Phase 2)
-- ⚠️ User profile management (Deferred to Phase 2)
+- ⏳ **Password reset** (Implementing Week 1)
+- ⏳ **User profile management** (Implementing Week 1)
 
 **Backend:** FastAPI with JWT authentication, SQLAlchemy models  
 **Frontend:** React with protected routes, token storage
