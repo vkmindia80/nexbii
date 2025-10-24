@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://dev-pathfinder-4.preview.emergentagent.com",
-        "https://dev-pathfinder-4.preview.emergentagent.com",
-        "https://dev-pathfinder-4.preview.emergentagent.com"
+        "https://repo-adviser.preview.emergentagent.com",
+        "https://repo-adviser.preview.emergentagent.com",
+        "https://repo-adviser.preview.emergentagent.com"
     ]
     
     # App
