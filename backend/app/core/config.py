@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://nlp-explorer.preview.emergentagent.com",
-        "https://nlp-explorer.preview.emergentagent.com",
-        "https://nlp-explorer.preview.emergentagent.com"
+        "https://ai-ui-connect.preview.emergentagent.com",
+        "https://ai-ui-connect.preview.emergentagent.com",
+        "https://ai-ui-connect.preview.emergentagent.com"
     ]
     
     # App
