@@ -14,6 +14,7 @@ import PublicDashboardPage from './pages/PublicDashboardPage';
 import AlertsPage from './pages/AlertsPage';
 import ActivityFeedPage from './pages/ActivityFeedPage';
 import IntegrationsPage from './pages/IntegrationsPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 import Layout from './components/Layout';
 
 function App() {
