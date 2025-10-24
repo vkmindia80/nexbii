@@ -6,6 +6,7 @@ import { queryService } from '../services/queryService';
 import { datasourceService } from '../services/datasourceService';
 import { Query, QueryResult, DataSource } from '../types';
 import VisualQueryBuilder, { VisualQueryConfig } from '../components/VisualQueryBuilder';
+import AIQueryPanel from '../components/AIQueryPanel';
 
 interface QueryHistoryItem {
   sql: string;
