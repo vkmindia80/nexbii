@@ -7,6 +7,7 @@ from .subscription import EmailSubscription, SubscriptionFrequency
 from .comment import Comment
 from .activity import Activity, ActivityType
 from .alert import Alert, AlertHistory, AlertConditionType, AlertFrequency, AlertStatus
+from .analytics import SavedAnalysis, MLModel
 
 __all__ = [
     "User", "UserRole", 
@@ -17,5 +18,6 @@ __all__ = [
     "EmailSubscription", "SubscriptionFrequency",
     "Comment",
     "Activity", "ActivityType",
-    "Alert", "AlertHistory", "AlertConditionType", "AlertFrequency", "AlertStatus"
+    "Alert", "AlertHistory", "AlertConditionType", "AlertFrequency", "AlertStatus",
+    "SavedAnalysis", "MLModel"
 ]
