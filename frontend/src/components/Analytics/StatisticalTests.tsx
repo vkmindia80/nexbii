@@ -230,7 +230,7 @@ const StatisticalTests: React.FC<Props> = ({ dataSources }) => {
           {/* Alpha Level */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Significance Level (α)
+              Significance Level (alpha)
             </label>
             <select
               value={alpha}
