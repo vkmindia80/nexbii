@@ -56,6 +56,7 @@ function App() {
           <Route path="/alerts" element={<AlertsPage />} />
           <Route path="/activity" element={<ActivityFeedPage />} />
           <Route path="/integrations" element={<IntegrationsPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
         </Route>
       </Routes>
     </Router>
