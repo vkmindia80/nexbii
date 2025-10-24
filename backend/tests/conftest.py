@@ -111,3 +111,22 @@ def test_query(db_session, test_user, test_datasource):
     db_session.commit()
     db_session.refresh(query)
     return query
+
+
+@pytest.fixture(scope="function")
+def test_dashboard(db_session, test_user):
+    """Create a test dashboard"""
+    from app.models.dashboard import Dashboard
+    
+    dashboard = Dashboard(
+        name="Test Dashboard",
+        description="A test dashboard",
+        layout=[],
+        widgets=[],
+        is_public=False,
+        created_by=test_user.email
+    )
+    db_session.add(dashboard)
+    db_session.commit()
+    db_session.refresh(dashboard)
+    return dashboard
