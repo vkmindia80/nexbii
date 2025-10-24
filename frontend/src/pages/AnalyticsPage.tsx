@@ -46,7 +46,7 @@ const AnalyticsPage: React.FC = () => {
 
   const loadDataSources = async () => {
     try {
-      const sources = await datasourceService.getDataSources();
+      const sources = await datasourceService.list();
       setDataSources(sources);
     } catch (error) {
       console.error('Failed to load data sources:', error);
