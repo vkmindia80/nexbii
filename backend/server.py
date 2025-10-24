@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import Base, engine, SessionLocal
-from app.api.v1 import auth, datasources, queries, dashboards, demo, cache, exports, sharing, subscriptions, comments, activities, alerts, integrations, ai
+from app.api.v1 import auth, datasources, queries, dashboards, demo, cache, exports, sharing, subscriptions, comments, activities, alerts, integrations, ai, analytics
 from app.models.user import User, UserRole
 from app.core.security import get_password_hash
 import uvicorn
