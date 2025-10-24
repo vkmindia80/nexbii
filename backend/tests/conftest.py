@@ -58,7 +58,7 @@ def test_user(db_session):
     
     user = User(
         email="test@example.com",
-        name="Test User",
+        full_name="Test User",
         hashed_password=get_password_hash("testpass123"),
         role="admin",
         is_active=True
