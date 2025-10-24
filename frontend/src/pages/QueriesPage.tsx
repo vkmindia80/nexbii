@@ -800,12 +800,13 @@ const QueriesPage: React.FC = () => {
                 )}
 
                 {/* AI Query Panel */}
-                {showAIPanel && (
-                  <div className="border border-purple-200 rounded-lg p-4 bg-purple-50">
+                {showAIPanel && formData.datasource_id && (
+                  <div className="border-2 border-purple-200 rounded-lg bg-purple-50/30 p-1">
                     <AIQueryPanel
-                      onSQLGenerated={handleAIGeneratedSQL}
-                      schema={schemaCache}
                       datasourceId={formData.datasource_id}
+                      onSQLGenerated={handleAIGeneratedSQL}
+                      currentSQL={formData.sql_query}
+                      queryResult={result}
                     />
                   </div>
                 )}
