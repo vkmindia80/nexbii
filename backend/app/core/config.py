@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://insight-forge-61.preview.emergentagent.com",
-        "https://insight-forge-61.preview.emergentagent.com",
-        "https://insight-forge-61.preview.emergentagent.com"
+        "https://git-workflow.preview.emergentagent.com",
+        "https://git-workflow.preview.emergentagent.com",
+        "https://git-workflow.preview.emergentagent.com"
     ]
     
     # App
