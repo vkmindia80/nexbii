@@ -799,6 +799,17 @@ const QueriesPage: React.FC = () => {
                   </div>
                 )}
 
+                {/* AI Query Panel */}
+                {showAIPanel && (
+                  <div className="border border-purple-200 rounded-lg p-4 bg-purple-50">
+                    <AIQueryPanel
+                      onSQLGenerated={handleAIGeneratedSQL}
+                      schema={schemaCache}
+                      datasourceId={formData.datasource_id}
+                    />
+                  </div>
+                )}
+
                 <button
                   type="button"
                   onClick={handleExecute}
