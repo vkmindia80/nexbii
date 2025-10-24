@@ -12,7 +12,8 @@ import {
   PieChart,
   Bell,
   Activity,
-  Plug
+  Plug,
+  Brain
 } from 'lucide-react';
 import { authService } from '../services/authService';
 
