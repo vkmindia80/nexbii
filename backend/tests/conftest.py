@@ -130,3 +130,67 @@ def test_dashboard(db_session, test_user):
     db_session.commit()
     db_session.refresh(dashboard)
     return dashboard
+
+
+@pytest.fixture(scope="function")
+def test_shared_dashboard(db_session, test_user, test_dashboard):
+    """Create a test shared dashboard (no password)"""
+    from app.models.share import SharedDashboard
+    
+    share = SharedDashboard(
+        dashboard_id=test_dashboard.id,
+        share_token=SharedDashboard.generate_token(),
+        password=None,
+        expires_at=None,
+        allow_interactions=True,
+        created_by=test_user.id,
+        is_active=True
+    )
+    db_session.add(share)
+    db_session.commit()
+    db_session.refresh(share)
+    return share
+
+
+@pytest.fixture(scope="function")
+def test_password_protected_share(db_session, test_user, test_dashboard):
+    """Create a password-protected shared dashboard"""
+    from app.models.share import SharedDashboard
+    from passlib.context import CryptContext
+    
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+    
+    share = SharedDashboard(
+        dashboard_id=test_dashboard.id,
+        share_token=SharedDashboard.generate_token(),
+        password=pwd_context.hash("test_password"),
+        expires_at=None,
+        allow_interactions=True,
+        created_by=test_user.id,
+        is_active=True
+    )
+    db_session.add(share)
+    db_session.commit()
+    db_session.refresh(share)
+    return share
+
+
+@pytest.fixture(scope="function")
+def test_expired_share(db_session, test_user, test_dashboard):
+    """Create an expired shared dashboard"""
+    from app.models.share import SharedDashboard
+    from datetime import datetime, timedelta
+    
+    share = SharedDashboard(
+        dashboard_id=test_dashboard.id,
+        share_token=SharedDashboard.generate_token(),
+        password=None,
+        expires_at=datetime.utcnow() - timedelta(days=1),  # Expired yesterday
+        allow_interactions=True,
+        created_by=test_user.id,
+        is_active=True
+    )
+    db_session.add(share)
+    db_session.commit()
+    db_session.refresh(share)
+    return share
