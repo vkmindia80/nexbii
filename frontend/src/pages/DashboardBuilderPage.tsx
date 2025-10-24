@@ -387,17 +387,16 @@ const DashboardBuilderPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        // @ts-expect-error - React 18 type compatibility issue with react-grid-layout
-        <ResponsiveGridLayout
-          className="layout"
-          layouts={{ lg: layout }}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-          rowHeight={150}
-          onLayoutChange={handleLayoutChange}
-          draggableHandle=".drag-handle"
-        >
-          {widgets.map((widget) => {
+        React.createElement(ResponsiveGridLayout as any, {
+          className: "layout",
+          layouts: { lg: layout },
+          breakpoints: { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 },
+          cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+          rowHeight: 150,
+          onLayoutChange: handleLayoutChange,
+          draggableHandle: ".drag-handle"
+        },
+          widgets.map((widget) => {
             const data = widgetData[widget.id];
             const chartType = widget.chart_type || widget.type;
 
@@ -433,8 +432,8 @@ const DashboardBuilderPage: React.FC = () => {
                 </div>
               </div>
             );
-          })}
-        </ResponsiveGridLayout>
+          })
+        )
       )}
 
       {/* Add Widget Modal */}
