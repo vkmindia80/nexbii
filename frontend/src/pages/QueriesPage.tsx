@@ -106,6 +106,12 @@ const QueriesPage: React.FC = () => {
     }
   };
 
+  const handleAIGeneratedSQL = (sql: string, explanation: string) => {
+    setFormData({ ...formData, sql_query: sql });
+    setQueryMode('sql'); // Switch to SQL mode to show the generated query
+    // Optionally show a notification about the explanation
+  };
+
   const saveQueryToHistory = (sql: string, executionTime: number, rowCount: number) => {
     const historyItem: QueryHistoryItem = {
       sql,
