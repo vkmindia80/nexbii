@@ -34,5 +34,10 @@ export const queryService = {
 
   async delete(id: string): Promise<void> {
     await api.delete(`/api/queries/${id}`);
+  },
+
+  // Alias for backward compatibility
+  async getQueries(): Promise<Query[]> {
+    return this.list();
   }
 };
