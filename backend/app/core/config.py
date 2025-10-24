@@ -26,6 +26,9 @@ class Settings(BaseSettings):
         "https://repo-adviser.preview.emergentagent.com"
     ]
     
+    # Frontend URL (for password reset links)
+    FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    
     # App
     APP_NAME: str = "NexBII"
     VERSION: str = "0.1.0"
