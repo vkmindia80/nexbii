@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://repo-adviser.preview.emergentagent.com",
-        "https://repo-adviser.preview.emergentagent.com",
-        "https://repo-adviser.preview.emergentagent.com"
+        "https://codebase-navigator-2.preview.emergentagent.com",
+        "https://codebase-navigator-2.preview.emergentagent.com",
+        "https://codebase-navigator-2.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
