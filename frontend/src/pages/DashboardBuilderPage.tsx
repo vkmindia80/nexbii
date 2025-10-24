@@ -9,7 +9,7 @@ import { queryService } from '../services/queryService';
 import { Dashboard, Query } from '../types';
 import { ChartContainer } from '../components/Charts';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+const ResponsiveGridLayout = WidthProvider(Responsive) as any;
 
 interface Widget {
   id: string;
