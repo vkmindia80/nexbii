@@ -13,7 +13,8 @@ import {
   Bell,
   Activity,
   Plug,
-  Brain
+  Brain,
+  User
 } from 'lucide-react';
 import { authService } from '../services/authService';
 
