@@ -32,5 +32,10 @@ export const datasourceService = {
 
   async delete(id: string): Promise<void> {
     await api.delete(`/api/datasources/${id}`);
+  },
+
+  // Alias for backward compatibility
+  async getDataSources(): Promise<DataSource[]> {
+    return this.list();
   }
 };
