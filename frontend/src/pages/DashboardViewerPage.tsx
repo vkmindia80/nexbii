@@ -8,6 +8,8 @@ import { ChartContainer } from '../components/Charts';
 import ShareModal from '../components/ShareModal';
 import SubscriptionModal from '../components/SubscriptionModal';
 import CommentsSection from '../components/CommentsSection';
+import PresenceIndicator from '../components/PresenceIndicator';
+import { useDashboardCollaboration } from '../hooks/useWebSocket';
 import exportService from '../services/exportService';
 
 const DashboardViewerPage: React.FC = () => {
@@ -21,6 +23,9 @@ const DashboardViewerPage: React.FC = () => {
   const [showExportMenu, setShowExportMenu] = useState(false);
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  
+  // WebSocket collaboration
+  const { viewers, updates, notifyUpdate } = useDashboardCollaboration(id);
 
   useEffect(() => {
     if (id) {
