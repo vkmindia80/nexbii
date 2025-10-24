@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Plus, FileText, Play, Trash2, Download, Clock, Database, Moon, Sun, History, Edit, Eye, Wand2, Code, BarChart3 } from 'lucide-react';
+import { Plus, FileText, Play, Trash2, Download, Clock, Database, Moon, Sun, History, Edit, Eye, Wand2, Code, BarChart3, Sparkles } from 'lucide-react';
 import Editor from '@monaco-editor/react';
 import { format as formatSQL } from 'sql-formatter';
 import { queryService } from '../services/queryService';
