@@ -3,7 +3,7 @@ import {
   TrendingUp, Users, Target, BarChart3, Table, Database, 
   Brain, AlertTriangle, Layers, UserX, Activity
 } from 'lucide-react';
-import datasourceService from '../services/datasourceService';
+import { datasourceService } from '../services/datasourceService';
 
 // Import analytics components (we'll create these next)
 import CohortAnalysis from '../components/Analytics/CohortAnalysis';
