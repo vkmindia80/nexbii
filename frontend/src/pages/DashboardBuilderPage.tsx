@@ -387,8 +387,8 @@ const DashboardBuilderPage: React.FC = () => {
           </button>
         </div>
       ) : (
+        // @ts-expect-error - React 18 type compatibility issue with react-grid-layout
         <ResponsiveGridLayout
-          // @ts-ignore React 18 type compatibility issue
           className="layout"
           layouts={{ lg: layout }}
           breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
