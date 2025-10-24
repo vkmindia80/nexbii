@@ -50,7 +50,11 @@ const ChartsShowcasePage: React.FC = () => {
     { name: 'Individual', value: 178 }
   ];
 
-  const scatterData = [
+  const scatterData: Array<{
+    name: string;
+    data: Array<[number, number]>;
+    color: string;
+  }> = [
     {
       name: 'Dataset 1',
       data: [[10, 20], [15, 30], [20, 25], [25, 40], [30, 35]],
