@@ -292,7 +292,7 @@ const StatisticalTests: React.FC<Props> = ({ dataSources }) => {
               <div className="flex items-center justify-between pb-4 border-b border-gray-200">
                 <div>
                   <h4 className="font-medium text-gray-900">{result.test_type}</h4>
-                  <p className="text-sm text-gray-500">Significance level: α = {alpha}</p>
+                  <p className="text-sm text-gray-500">Significance level: alpha = {alpha}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   {result.significant ? (
