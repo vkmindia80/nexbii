@@ -16,7 +16,8 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "build"]
