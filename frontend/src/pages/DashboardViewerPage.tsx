@@ -258,6 +258,8 @@ const DashboardViewerPage: React.FC = () => {
                 <p className="text-gray-600 mt-1">{dashboard.description}</p>
               )}
             </div>
+            {/* Presence Indicator */}
+            <PresenceIndicator viewers={viewers} />
           </div>
           <div className="flex items-center space-x-3">
             <button
