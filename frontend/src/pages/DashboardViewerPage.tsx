@@ -10,6 +10,7 @@ import SubscriptionModal from '../components/SubscriptionModal';
 import CommentsSection from '../components/CommentsSection';
 import PresenceIndicator from '../components/PresenceIndicator';
 import { useDashboardCollaboration } from '../hooks/useWebSocket';
+import { websocketService } from '../services/websocketService';
 import exportService from '../services/exportService';
 
 const DashboardViewerPage: React.FC = () => {
