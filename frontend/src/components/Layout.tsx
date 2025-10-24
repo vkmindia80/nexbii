@@ -38,6 +38,7 @@ const Layout: React.FC = () => {
     { path: '/activity', icon: Activity, label: 'Activity Feed' },
     { path: '/integrations', icon: Plug, label: 'Integrations' },
     { path: '/charts-showcase', icon: PieChart, label: 'Charts Showcase' },
+    { path: '/profile', icon: User, label: 'Profile' },
   ];
 
   return (
