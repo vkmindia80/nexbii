@@ -610,13 +610,28 @@ const QueriesPage: React.FC = () => {
                 <h2 className="text-2xl font-bold text-gray-900">
                   {editingQuery ? 'Edit Query' : 'SQL Editor'}
                 </h2>
-                <button
-                  onClick={() => setDarkMode(!darkMode)}
-                  className="p-2 rounded-lg hover:bg-gray-100"
-                  title="Toggle theme"
-                >
-                  {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-                </button>
+                <div className="flex items-center space-x-2">
+                  <button
+                    onClick={() => setShowAIPanel(!showAIPanel)}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                      showAIPanel 
+                        ? 'bg-purple-600 text-white' 
+                        : 'bg-purple-50 text-purple-600 hover:bg-purple-100'
+                    }`}
+                    title="Toggle AI Assistant"
+                    data-testid="toggle-ai-panel-button"
+                  >
+                    <Sparkles className="w-5 h-5" />
+                    <span className="font-medium">AI Assistant</span>
+                  </button>
+                  <button
+                    onClick={() => setDarkMode(!darkMode)}
+                    className="p-2 rounded-lg hover:bg-gray-100"
+                    title="Toggle theme"
+                  >
+                    {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  </button>
+                </div>
               </div>
               
               <form onSubmit={handleSubmit} className="space-y-4">
