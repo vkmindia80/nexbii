@@ -101,5 +101,8 @@ async def root():
         "docs": "/docs"
     }
 
+# Mount Socket.IO app for WebSocket support
+app.mount("/socket.io", socket_app)
+
 if __name__ == "__main__":
     uvicorn.run("server:app", host="0.0.0.0", port=8001, reload=True)
