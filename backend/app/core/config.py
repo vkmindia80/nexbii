@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://comment-fix-3.preview.emergentagent.com",
-        "https://comment-fix-3.preview.emergentagent.com",
-        "https://comment-fix-3.preview.emergentagent.com"
+        "https://git-connect-6.preview.emergentagent.com",
+        "https://git-connect-6.preview.emergentagent.com",
+        "https://git-connect-6.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
