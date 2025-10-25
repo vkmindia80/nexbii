@@ -59,7 +59,7 @@ async def get_dashboard(
 async def update_dashboard(
     dashboard_id: str,
     dashboard_data: DashboardUpdate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     dashboard = db.query(Dashboard).filter(Dashboard.id == dashboard_id).first()
