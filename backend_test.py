@@ -120,6 +120,40 @@ class TenantBrandingAPITester:
             print("   ❌ Failed to obtain authentication token")
             return False
 
+    def test_tenant_provisioning(self) -> bool:
+        """Test tenant provisioning if no tenant exists"""
+        print("\n" + "="*60)
+        print("🏗️  TENANT PROVISIONING TESTS")
+        print("="*60)
+        
+        # Try to provision a tenant for testing
+        provision_data = {
+            "organization_name": "Demo Organization",
+            "admin_name": "Demo Admin",
+            "admin_email": "admin@nexbii.demo",
+            "admin_password": "demo123",
+            "plan": "enterprise",
+            "custom_slug": "demo"
+        }
+        
+        success, response = self.run_api_test(
+            "Provision Demo Tenant",
+            "POST",
+            "/api/tenants/provision",
+            200,
+            data=provision_data
+        )
+        
+        if success and 'tenant' in response:
+            tenant_data = response['tenant']
+            self.tenant_id = tenant_data['id']
+            print(f"   ✅ Tenant provisioned: {tenant_data.get('name')}")
+            print(f"   ✅ Tenant ID: {self.tenant_id}")
+            return True
+        else:
+            print("   ℹ️  Tenant provisioning failed (may already exist)")
+            return False
+
     def test_tenant_management(self) -> bool:
         """Test core tenant management APIs"""
         print("\n" + "="*60)
