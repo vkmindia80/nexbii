@@ -50,7 +50,7 @@ async def list_queries(
 @router.get("/{query_id}", response_model=QueryResponse)
 async def get_query(
     query_id: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     query = db.query(Query).filter(Query.id == query_id).first()
