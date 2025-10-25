@@ -94,7 +94,7 @@ async def get_datasource_schema(
 @router.delete("/{datasource_id}")
 async def delete_datasource(
     datasource_id: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     datasource = db.query(DataSource).filter(DataSource.id == datasource_id).first()
