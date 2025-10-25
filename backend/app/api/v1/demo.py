@@ -2001,7 +2001,7 @@ ORDER BY month, region;""",
                 entity_type="query",
                 entity_id=random.choice(queries).id,
                 description="executed a cached query (cache hit)",
-                metadata={
+                activity_metadata={
                     "cache_hit": True,
                     "execution_time_ms": random.randint(10, 50),
                     "ip_address": f"192.168.1.{random.randint(1, 255)}"
@@ -2014,19 +2014,19 @@ ORDER BY month, region;""",
             cache_activities.append(ca)
             db.add(ca)
         
-        # Add Export-related activities
-        export_activities = []
+        # Add Dashboard-related activities (replacing EXPORT_GENERATED which doesn't exist)
+        dashboard_activities = []
         export_types = ["PDF", "Excel", "CSV", "PNG"]
         for i in range(15):
             ea = Activity(
                 id=str(uuid.uuid4()),
                 user_id=user_id,
-                activity_type=ActivityType.EXPORT_GENERATED,
+                activity_type=ActivityType.DASHBOARD_SHARED,
                 entity_type="dashboard",
                 entity_id=random.choice(dashboards).id,
-                description=f"exported dashboard as {random.choice(export_types)}",
-                metadata={
-                    "export_type": random.choice(export_types),
+                description=f"shared dashboard",
+                activity_metadata={
+                    "share_type": "public",
                     "file_size_kb": random.randint(100, 5000),
                     "ip_address": f"192.168.1.{random.randint(1, 255)}"
                 },
@@ -2035,7 +2035,7 @@ ORDER BY month, region;""",
                     hours=random.randint(0, 23)
                 )
             )
-            export_activities.append(ea)
+            dashboard_activities.append(ea)
             db.add(ea)
         
         db.commit()
