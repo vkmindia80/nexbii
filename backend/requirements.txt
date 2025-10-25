@@ -96,6 +96,7 @@ pytest-cov==7.0.0
 pytest-mock==3.15.1
 python-dateutil==2.9.0.post0
 python-dotenv==1.0.0
+python-engineio==4.12.3
 python-jose==3.3.0
 python-multipart==0.0.6
 python-socketio==5.14.2
@@ -135,5 +136,6 @@ urllib3==2.5.0
 uvicorn==0.24.0
 watchfiles==1.1.1
 websockets==15.0.1
+wsproto==1.2.0
 yarl==1.22.0
 zipp==3.23.0
