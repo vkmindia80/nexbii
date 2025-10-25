@@ -68,7 +68,7 @@ async def get_datasource(
 @router.post("/test", response_model=dict)
 async def test_datasource_connection(
     test_data: DataSourceTest,
-    current_user: dict = Depends(get_current_user)
+    current_user = Depends(get_current_user)
 ):
     service = DataSourceService()
     is_valid = await service.test_connection(test_data.type, test_data.connection_config)
