@@ -23,6 +23,10 @@ class DataSource(Base):
     connection_config = Column(JSON)  # Encrypted connection details
     created_by = Column(String)  # User ID
     is_active = Column(Boolean, default=True)
+    
+    # Multi-tenancy
+    tenant_id = Column(String, index=True, nullable=True)
+    
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
