@@ -1772,7 +1772,9 @@ ORDER BY month, region;""",
             "details": {
                 "datasources": [{"id": ds.id, "name": ds.name, "type": ds.type.value} for ds in datasources],
                 "queries": [{"id": q.id, "name": q.name} for q in queries],
-                "dashboards": [{"id": d.id, "name": d.name} for d in dashboards]
+                "dashboards": [{"id": d.id, "name": d.name} for d in dashboards],
+                "alerts": [{"id": a.id, "name": a.name} for a in alerts],
+                "subscriptions": [{"id": s.id, "frequency": s.frequency.value} for s in subscriptions]
             },
             "summary": {
                 "database_records": {
@@ -1791,6 +1793,10 @@ ORDER BY month, region;""",
                     "✅ Data Sources (3 types: SQLite, PostgreSQL, MongoDB)",
                     "✅ SQL Queries (25 comprehensive queries covering sales, customers, HR, products, reviews)",
                     "✅ Dashboards (6 dashboards: Sales, Customer, Operational, HR, Product Reviews, Sales Targets)",
+                    "✅ Alerts (3 alerts: Revenue threshold, Order volume, Customer segment monitoring)",
+                    "✅ Subscriptions (3 scheduled reports: Daily, Weekly, Monthly)",
+                    "✅ Comments (20+ comments on dashboards and queries)",
+                    "✅ Activities (100 activity log entries covering last 30 days)",
                     "✅ User Management (Demo admin user: admin@nexbii.demo)"
                 ]
             }
