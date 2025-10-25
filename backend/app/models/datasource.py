@@ -6,13 +6,45 @@ import enum
 from ..core.database import Base
 
 class DataSourceType(str, enum.Enum):
+    # Relational Databases
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
-    MONGODB = "mongodb"
     SQLITE = "sqlite"
+    MSSQL = "mssql"  # Microsoft SQL Server
+    ORACLE = "oracle"
+    MARIADB = "mariadb"
+    
+    # NoSQL Databases
+    MONGODB = "mongodb"
+    CASSANDRA = "cassandra"
+    DYNAMODB = "dynamodb"
+    COUCHDB = "couchdb"
+    
+    # Cloud Data Warehouses
+    SNOWFLAKE = "snowflake"
+    REDSHIFT = "redshift"
+    BIGQUERY = "bigquery"
+    SYNAPSE = "synapse"  # Azure Synapse Analytics
+    
+    # Analytics & Search
+    ELASTICSEARCH = "elasticsearch"
+    CLICKHOUSE = "clickhouse"
+    DRUID = "druid"
+    
+    # Time Series
+    TIMESCALEDB = "timescaledb"
+    INFLUXDB = "influxdb"
+    
+    # Other Popular Sources
+    REDIS = "redis"
+    PRESTO = "presto"
+    TRINO = "trino"
+    
+    # File-based
     CSV = "csv"
     EXCEL = "excel"
     JSON_FILE = "json"
+    PARQUET = "parquet"
 
 class DataSource(Base):
     __tablename__ = "datasources"
