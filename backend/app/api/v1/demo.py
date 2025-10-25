@@ -1512,21 +1512,16 @@ ORDER BY month, region;""",
             id=str(uuid.uuid4()),
             name="Daily Revenue Alert",
             description="Alert when daily revenue falls below $10,000",
+            user_id=user_id,
             query_id=q1.id,
             condition_type=AlertConditionType.LESS_THAN,
-            condition_config={
-                "field": "total_revenue",
-                "value": 10000,
-                "aggregation": "sum"
-            },
-            notification_channels=["email", "slack"],
-            notification_config={
-                "email_recipients": ["admin@nexbii.demo"],
-                "slack_webhook": "#alerts"
-            },
-            schedule="0 9 * * *",  # Daily at 9 AM
-            is_active=True,
-            created_by=user_id
+            threshold_value=10000,
+            metric_column="total_revenue",
+            frequency=AlertFrequency.DAILY,
+            notify_emails=["admin@nexbii.demo"],
+            notify_slack=True,
+            slack_webhook="#alerts",
+            is_active=True
         )
         alerts.append(a1)
         db.add(a1)
@@ -1536,45 +1531,33 @@ ORDER BY month, region;""",
             id=str(uuid.uuid4()),
             name="Low Order Volume Alert",
             description="Alert when hourly order count is below 5",
+            user_id=user_id,
             query_id=q1.id,
             condition_type=AlertConditionType.LESS_THAN,
-            condition_config={
-                "field": "total_orders",
-                "value": 5,
-                "aggregation": "count"
-            },
-            notification_channels=["email"],
-            notification_config={
-                "email_recipients": ["admin@nexbii.demo"]
-            },
-            schedule="0 */3 * * *",  # Every 3 hours
-            is_active=True,
-            created_by=user_id
+            threshold_value=5,
+            metric_column="total_orders",
+            frequency=AlertFrequency.HOURLY,
+            notify_emails=["admin@nexbii.demo"],
+            is_active=True
         )
         alerts.append(a2)
         db.add(a2)
         
-        # Alert 3: Customer segment change
+        # Alert 3: High revenue alert
         a3 = Alert(
             id=str(uuid.uuid4()),
-            name="New Customer Segment Alert",
-            description="Alert when Enterprise customer count increases significantly",
-            query_id=q3.id,
-            condition_type=AlertConditionType.CHANGES_BY,
-            condition_config={
-                "field": "customer_count",
-                "change_type": "percentage",
-                "threshold": 10,
-                "direction": "increase"
-            },
-            notification_channels=["email", "slack"],
-            notification_config={
-                "email_recipients": ["admin@nexbii.demo"],
-                "slack_webhook": "#sales"
-            },
-            schedule="0 0 * * MON",  # Weekly on Monday
-            is_active=True,
-            created_by=user_id
+            name="High Revenue Achievement",
+            description="Alert when daily revenue exceeds $50,000",
+            user_id=user_id,
+            query_id=q1.id,
+            condition_type=AlertConditionType.GREATER_THAN,
+            threshold_value=50000,
+            metric_column="total_revenue",
+            frequency=AlertFrequency.DAILY,
+            notify_emails=["admin@nexbii.demo"],
+            notify_slack=True,
+            slack_webhook="#sales",
+            is_active=True
         )
         alerts.append(a3)
         db.add(a3)
