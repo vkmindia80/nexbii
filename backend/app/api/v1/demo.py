@@ -9,7 +9,7 @@ from ...models.datasource import DataSource, DataSourceType
 from ...models.query import Query
 from ...models.dashboard import Dashboard
 from ...models.user import User
-from ...models.alert import Alert, AlertConditionType
+from ...models.alert import Alert, AlertConditionType, AlertFrequency
 from ...models.subscription import EmailSubscription, SubscriptionFrequency
 from ...models.comment import Comment
 from ...models.activity import Activity, ActivityType
