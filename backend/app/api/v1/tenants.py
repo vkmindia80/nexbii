@@ -517,6 +517,379 @@ async def invite_user_to_tenant(
     db.commit()
     db.refresh(invite)
     
-    # TODO: Send invitation email
+    # Send invitation email with branding
+    from app.services.email_template_service import EmailTemplateService
+    from app.services.email_service import EmailService
+    
+    tenant = db.query(Tenant).filter(Tenant.id == tenant_id).first()
+    invitation_url = f"https://{tenant.slug}.nexbii.com/accept-invitation?token={invite.token}"
+    
+    email_data = EmailTemplateService.generate_invitation_email(
+        invitee_email=invitation.email,
+        inviter_name=current_user.full_name,
+        organization_name=tenant.name,
+        invitation_url=invitation_url,
+        role=invitation.role,
+        tenant_branding={**tenant.branding, "company_name": tenant.name}
+    )
+    
+    EmailService.send_email(
+        to_emails=[invitation.email],
+        subject=email_data["subject"],
+        html_content=email_data["html"],
+        text_content=email_data["text"]
+    )
     
     return invite
+
+
+# ========== DNS Verification & SSL Management ==========
+
+from pydantic import BaseModel
+
+class DomainVerificationRequest(BaseModel):
+    """Request to verify domain ownership"""
+    pass
+
+class DomainVerificationInstructions(BaseModel):
+    """DNS verification instructions"""
+    method: str
+    title: str
+    instructions: str
+    record_type: Optional[str] = None
+    host: Optional[str] = None
+    value: Optional[str] = None
+
+class SSLCertificateUpload(BaseModel):
+    """Manual SSL certificate upload"""
+    certificate_pem: str
+    private_key_pem: str
+    chain_pem: Optional[str] = None
+
+class LetsEncryptRequest(BaseModel):
+    """Request Let's Encrypt certificate"""
+    email: str
+    staging: bool = False
+
+
+@router.get("/{tenant_id}/domains/{domain_id}/verification-instructions", response_model=DomainVerificationInstructions)
+async def get_domain_verification_instructions(
+    tenant_id: str,
+    domain_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    📋 Get DNS verification instructions for custom domain.
+    """
+    check_admin_access(current_user, tenant_id)
+    
+    domain = db.query(TenantDomain).filter(
+        TenantDomain.id == domain_id,
+        TenantDomain.tenant_id == tenant_id
+    ).first()
+    
+    if not domain:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Domain not found"
+        )
+    
+    from app.services.dns_verification_service import DNSVerificationService
+    
+    instructions = DNSVerificationService.get_verification_instructions(
+        domain.domain,
+        domain.verification_method,
+        domain.verification_token
+    )
+    
+    return instructions
+
+
+@router.post("/{tenant_id}/domains/{domain_id}/verify")
+async def verify_custom_domain(
+    tenant_id: str,
+    domain_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    ✅ Verify custom domain ownership via DNS.
+    """
+    check_admin_access(current_user, tenant_id)
+    
+    domain = db.query(TenantDomain).filter(
+        TenantDomain.id == domain_id,
+        TenantDomain.tenant_id == tenant_id
+    ).first()
+    
+    if not domain:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Domain not found"
+        )
+    
+    if domain.is_verified:
+        return {
+            "success": True,
+            "message": "Domain is already verified",
+            "verified_at": domain.verified_at.isoformat()
+        }
+    
+    from app.services.dns_verification_service import DNSVerificationService
+    
+    result = DNSVerificationService.verify_domain(
+        domain.domain,
+        domain.verification_method,
+        domain.verification_token
+    )
+    
+    if result["verified"]:
+        domain.is_verified = True
+        domain.verified_at = datetime.utcnow()
+        db.commit()
+        
+        return {
+            "success": True,
+            "message": f"Domain {domain.domain} verified successfully!",
+            "verified_at": domain.verified_at.isoformat()
+        }
+    else:
+        return {
+            "success": False,
+            "message": f"Verification failed: {result['error']}",
+            "actual_value": result.get("actual_value"),
+            "error": result["error"]
+        }
+
+
+@router.post("/{tenant_id}/domains/{domain_id}/ssl/upload")
+async def upload_ssl_certificate(
+    tenant_id: str,
+    domain_id: str,
+    cert_data: SSLCertificateUpload,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔒 Upload SSL certificate manually.
+    """
+    check_admin_access(current_user, tenant_id)
+    
+    domain = db.query(TenantDomain).filter(
+        TenantDomain.id == domain_id,
+        TenantDomain.tenant_id == tenant_id
+    ).first()
+    
+    if not domain:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Domain not found"
+        )
+    
+    if not domain.is_verified:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Domain must be verified before uploading SSL certificate"
+        )
+    
+    from app.services.ssl_certificate_service import SSLCertificateService
+    
+    ssl_service = SSLCertificateService()
+    
+    # Validate certificate
+    validation = ssl_service.validate_certificate(
+        cert_data.certificate_pem,
+        cert_data.private_key_pem,
+        domain.domain
+    )
+    
+    if not validation["valid"]:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Invalid certificate: {validation['error']}"
+        )
+    
+    # Store certificate
+    try:
+        paths = ssl_service.store_certificate(
+            tenant_id,
+            domain.domain,
+            cert_data.certificate_pem,
+            cert_data.private_key_pem,
+            cert_data.chain_pem
+        )
+        
+        # Update domain record
+        domain.ssl_enabled = True
+        domain.ssl_certificate = cert_data.certificate_pem
+        domain.ssl_private_key = cert_data.private_key_pem  # In production, encrypt this!
+        db.commit()
+        
+        return {
+            "success": True,
+            "message": "SSL certificate uploaded successfully",
+            "certificate_info": {
+                "subject": validation["subject"],
+                "issuer": validation["issuer"],
+                "not_before": validation["not_before"],
+                "not_after": validation["not_after"],
+                "days_until_expiry": validation["days_until_expiry"]
+            }
+        }
+    
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to store certificate: {str(e)}"
+        )
+
+
+@router.post("/{tenant_id}/domains/{domain_id}/ssl/letsencrypt")
+async def request_letsencrypt_certificate(
+    tenant_id: str,
+    domain_id: str,
+    request_data: LetsEncryptRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔐 Request Let's Encrypt SSL certificate automatically.
+    """
+    check_admin_access(current_user, tenant_id)
+    
+    domain = db.query(TenantDomain).filter(
+        TenantDomain.id == domain_id,
+        TenantDomain.tenant_id == tenant_id
+    ).first()
+    
+    if not domain:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Domain not found"
+        )
+    
+    if not domain.is_verified:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Domain must be verified before requesting SSL certificate"
+        )
+    
+    from app.services.ssl_certificate_service import SSLCertificateService
+    
+    result = SSLCertificateService.request_letsencrypt_certificate(
+        domain.domain,
+        request_data.email,
+        request_data.staging
+    )
+    
+    if result["success"]:
+        domain.ssl_enabled = True
+        db.commit()
+        
+        return {
+            "success": True,
+            "message": result["message"],
+            "certificate_path": result["certificate_path"],
+            "private_key_path": result["private_key_path"]
+        }
+    else:
+        return {
+            "success": False,
+            "error": result["error"],
+            "message": "Failed to obtain Let's Encrypt certificate. Make sure domain points to this server and port 80 is accessible."
+        }
+
+
+@router.get("/{tenant_id}/domains/{domain_id}/ssl/info")
+async def get_ssl_certificate_info(
+    tenant_id: str,
+    domain_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    ℹ️ Get SSL certificate information.
+    """
+    check_admin_access(current_user, tenant_id)
+    
+    domain = db.query(TenantDomain).filter(
+        TenantDomain.id == domain_id,
+        TenantDomain.tenant_id == tenant_id
+    ).first()
+    
+    if not domain:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Domain not found"
+        )
+    
+    if not domain.ssl_enabled:
+        return {
+            "ssl_enabled": False,
+            "message": "SSL certificate not configured for this domain"
+        }
+    
+    from app.services.ssl_certificate_service import SSLCertificateService
+    
+    if domain.ssl_certificate:
+        # Certificate stored in database
+        validation = SSLCertificateService.validate_certificate(
+            domain.ssl_certificate,
+            domain.ssl_private_key,
+            domain.domain
+        )
+        
+        return {
+            "ssl_enabled": True,
+            "source": "manual_upload",
+            "certificate_info": validation if validation["valid"] else None,
+            "error": validation.get("error")
+        }
+    else:
+        # Let's Encrypt certificate
+        cert_path = f"/etc/letsencrypt/live/{domain.domain}/fullchain.pem"
+        cert_info = SSLCertificateService.get_certificate_info(cert_path)
+        
+        if cert_info:
+            return {
+                "ssl_enabled": True,
+                "source": "letsencrypt",
+                "certificate_info": cert_info
+            }
+        else:
+            return {
+                "ssl_enabled": True,
+                "source": "unknown",
+                "message": "Certificate exists but info could not be retrieved"
+            }
+
+
+@router.post("/{tenant_id}/domains/{domain_id}/ssl/renew")
+async def renew_ssl_certificate(
+    tenant_id: str,
+    domain_id: str,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    🔄 Renew Let's Encrypt SSL certificate.
+    """
+    check_admin_access(current_user, tenant_id)
+    
+    domain = db.query(TenantDomain).filter(
+        TenantDomain.id == domain_id,
+        TenantDomain.tenant_id == tenant_id
+    ).first()
+    
+    if not domain:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Domain not found"
+        )
+    
+    from app.services.ssl_certificate_service import SSLCertificateService
+    
+    result = SSLCertificateService.renew_letsencrypt_certificate(domain.domain)
+    
+    return result
