@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://e2e-test-suite-2.preview.emergentagent.com",
-        "https://e2e-test-suite-2.preview.emergentagent.com",
-        "https://e2e-test-suite-2.preview.emergentagent.com"
+        "https://pending-items.preview.emergentagent.com",
+        "https://pending-items.preview.emergentagent.com",
+        "https://pending-items.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
