@@ -168,9 +168,7 @@ def run_migration():
         'comments',
         'activities',
         'shared_dashboards',
-        'subscriptions',
-        'email_integrations',
-        'slack_integrations',
+        'email_subscriptions',
         'saved_analyses'
     ]
     
