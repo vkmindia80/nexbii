@@ -91,7 +91,7 @@ async def update_dashboard(
 @router.delete("/{dashboard_id}")
 async def delete_dashboard(
     dashboard_id: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     dashboard = db.query(Dashboard).filter(Dashboard.id == dashboard_id).first()
