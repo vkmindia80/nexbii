@@ -416,7 +416,7 @@ async def generate_demo_data(db: Session = Depends(get_db)):
         # Step 1: Create the actual SQLite database with all tables and sample data
         print("🔄 Creating demo SQLite database with sample data...")
         db_stats = create_demo_database()
-        print(f"✅ Demo database created successfully!")
+        print("✅ Demo database created successfully!")
         print(f"   - Products: {db_stats['products']}")
         print(f"   - Customers: {db_stats['customers']}")
         print(f"   - Orders: {db_stats['orders']}")
