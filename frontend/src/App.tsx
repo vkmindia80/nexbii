@@ -18,6 +18,7 @@ import AlertsPage from './pages/AlertsPage';
 import ActivityFeedPage from './pages/ActivityFeedPage';
 import IntegrationsPage from './pages/IntegrationsPage';
 import AnalyticsPage from './pages/AnalyticsPage';
+import TenantSettingsPage from './pages/TenantSettingsPage';
 import Layout from './components/Layout';
 import { useWebSocket } from './hooks/useWebSocket';
 
