@@ -86,3 +86,7 @@ websockets==15.0.1
 wsproto==1.2.0
 yarl==1.22.0
 zipp==3.23.0
+mysql-connector-python==9.5.0
+psycopg2-binary==2.9.11
+python-socketio==5.14.2
+redis==7.0.0
