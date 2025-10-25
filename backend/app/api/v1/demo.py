@@ -1634,10 +1634,9 @@ ORDER BY month, region;""",
             for j in range(num_comments):
                 c = Comment(
                     id=str(uuid.uuid4()),
-                    entity_type="dashboard",
-                    entity_id=d.id,
+                    dashboard_id=d.id,
                     user_id=user_id,
-                    comment_text=random.choice(comment_texts),
+                    content=random.choice(comment_texts),
                     created_at=datetime.utcnow() - timedelta(days=random.randint(1, 30))
                 )
                 comments.append(c)
@@ -1647,10 +1646,9 @@ ORDER BY month, region;""",
         for i in range(10):
             c = Comment(
                 id=str(uuid.uuid4()),
-                entity_type="query",
-                entity_id=queries[i].id,
+                query_id=queries[i].id,
                 user_id=user_id,
-                comment_text=random.choice([
+                content=random.choice([
                     "This query is very efficient!",
                     "Could we optimize this further?",
                     "Great way to analyze customer behavior.",
