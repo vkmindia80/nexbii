@@ -8,6 +8,7 @@ from .comment import Comment
 from .activity import Activity, ActivityType
 from .alert import Alert, AlertHistory, AlertConditionType, AlertFrequency, AlertStatus
 from .analytics import SavedAnalysis, MLModel
+from .tenant import Tenant, TenantDomain, TenantInvitation, TenantUsage
 
 __all__ = [
     "User", "UserRole", 
@@ -19,5 +20,6 @@ __all__ = [
     "Comment",
     "Activity", "ActivityType",
     "Alert", "AlertHistory", "AlertConditionType", "AlertFrequency", "AlertStatus",
-    "SavedAnalysis", "MLModel"
+    "SavedAnalysis", "MLModel",
+    "Tenant", "TenantDomain", "TenantInvitation", "TenantUsage"
 ]
