@@ -13,10 +13,37 @@ import uuid
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
-# Initialize demo user if it doesn't exist
-def init_demo_user():
+# Initialize demo tenant and user if they don't exist
+def init_demo_data():
+    from app.models.tenant import Tenant
+    from datetime import datetime, timedelta
+    
     db = SessionLocal()
     try:
+        # Check if demo tenant exists
+        demo_tenant = db.query(Tenant).filter(Tenant.slug == 'demo').first()
+        if not demo_tenant:
+            demo_tenant = Tenant(
+                id=str(uuid.uuid4()),
+                name='Demo Organization',
+                slug='demo',
+                contact_email='admin@nexbii.demo',
+                contact_name='Demo Admin',
+                plan='enterprise',  # Give full features for demo
+                is_active=True,
+                features={
+                    "ai_enabled": True,
+                    "advanced_analytics": True,
+                    "white_labeling": True,
+                    "api_access": True
+                },
+                trial_ends_at=datetime.utcnow() + timedelta(days=365)  # 1 year trial
+            )
+            db.add(demo_tenant)
+            db.flush()
+            print('✅ Demo tenant created: demo')
+        
+        # Check if demo user exists
         demo_user = db.query(User).filter(User.email == 'admin@nexbii.demo').first()
         if not demo_user:
             demo_user = User(
@@ -25,18 +52,24 @@ def init_demo_user():
                 hashed_password=get_password_hash('demo123'),
                 full_name='Demo Admin',
                 role=UserRole.ADMIN,
-                is_active=True
+                is_active=True,
+                tenant_id=demo_tenant.id
             )
             db.add(demo_user)
             db.commit()
             print('✅ Demo user created: admin@nexbii.demo / demo123')
+        elif not demo_user.tenant_id:
+            # Update existing demo user to have tenant_id
+            demo_user.tenant_id = demo_tenant.id
+            db.commit()
+            print('✅ Demo user updated with tenant association')
     except Exception as e:
-        print(f'⚠️  Error creating demo user: {e}')
+        print(f'⚠️  Error creating demo data: {e}')
         db.rollback()
     finally:
         db.close()
 
-init_demo_user()
+init_demo_data()
 
 # Start background monitoring for alerts and subscriptions
 from app.services.background_monitor import background_monitor
