@@ -285,8 +285,7 @@ const TenantSettingsPage: React.FC = () => {
             {activeTab === 'branding' && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Left Column - Branding Form */}
-                <div className="space-y-6"
->
+                <div className="space-y-6">
                 {!hasWhitelabeling && (
                   <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4 mb-4">
                     <div className="flex items-start space-x-3">
