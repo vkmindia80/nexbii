@@ -40,7 +40,7 @@ class Tenant(Base):
     
     # Settings
     settings = Column(JSON, default=dict)  # Tenant-specific configuration
-    metadata = Column(JSON, default=dict)  # Additional metadata
+    extra_metadata = Column(JSON, default=dict)  # Additional metadata (renamed from metadata)
     
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())
