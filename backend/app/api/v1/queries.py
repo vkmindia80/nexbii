@@ -21,7 +21,7 @@ router = APIRouter()
 @router.post("/", response_model=QueryResponse)
 async def create_query(
     query_data: QueryCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     query = Query(
@@ -31,7 +31,7 @@ async def create_query(
         query_type=query_data.query_type,
         query_config=query_data.query_config,
         sql_query=query_data.sql_query,
-        created_by=current_user["sub"]
+        created_by=current_user.id
     )
     db.add(query)
     db.commit()
