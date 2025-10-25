@@ -54,7 +54,7 @@ async def list_datasources(
 @router.get("/{datasource_id}", response_model=DataSourceResponse)
 async def get_datasource(
     datasource_id: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     datasource = db.query(DataSource).filter(DataSource.id == datasource_id).first()
