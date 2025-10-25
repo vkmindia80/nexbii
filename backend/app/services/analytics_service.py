@@ -10,7 +10,12 @@ from sqlalchemy.orm import Session
 from scipy import stats
 from statsmodels.tsa.arima.model import ARIMA
 from statsmodels.tsa.seasonal import seasonal_decompose
-from prophet import Prophet
+try:
+    from prophet import Prophet
+    PROPHET_AVAILABLE = True
+except (ImportError, ModuleNotFoundError) as e:
+    print(f"⚠️  Prophet not available: {e}")
+    PROPHET_AVAILABLE = False
 import warnings
 warnings.filterwarnings('ignore')
 
