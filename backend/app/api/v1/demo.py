@@ -1849,6 +1849,12 @@ ORDER BY month, region;""",
         
         db.commit()
         
+        # Link demo user to the primary demo tenant
+        demo_user.tenant_id = t1.id
+        db.add(demo_user)
+        db.commit()
+        print(f"✅ Demo user linked to tenant: {t1.name}")
+        
         # Create Demo Tenant Domains
         tenant_domains = []
         
