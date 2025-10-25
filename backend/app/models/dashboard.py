@@ -15,6 +15,10 @@ class Dashboard(Base):
     filters = Column(JSON)  # Global filters
     is_public = Column(Boolean, default=False)
     created_by = Column(String)  # User ID
+    
+    # Multi-tenancy
+    tenant_id = Column(String, index=True, nullable=True)
+    
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
