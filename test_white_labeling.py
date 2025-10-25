@@ -96,8 +96,8 @@ def create_enterprise_tenant():
             # Login to get token
             login_response = requests.post(
                 f"{API_BASE}/auth/login",
-                data={
-                    "username": admin_email,
+                json={
+                    "email": admin_email,
                     "password": admin_password
                 }
             )
