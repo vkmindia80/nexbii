@@ -9,6 +9,7 @@ import {
   Upload, RefreshCw, Copy, ExternalLink, Shield
 } from 'lucide-react';
 import tenantService, { Tenant, TenantBranding, TenantDomain } from '../services/tenantService';
+import BrandingPreview from '../components/BrandingPreview';
 
 const TenantSettingsPage: React.FC = () => {
   const [tenant, setTenant] = useState<Tenant | null>(null);
