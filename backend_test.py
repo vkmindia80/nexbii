@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class TenantBrandingAPITester:
-    def __init__(self, base_url: str = "https://tenant-theme-test.preview.emergentagent.com"):
+    def __init__(self, base_url: str = "https://empty-settings.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tenant_id = None
