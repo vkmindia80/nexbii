@@ -131,7 +131,7 @@ class TenantBrandingAPITester:
             "organization_name": "Demo Organization",
             "admin_name": "Demo Admin",
             "admin_email": "admin@nexbii.demo",
-            "admin_password": "demo123",
+            "admin_password": "demo123456",
             "plan": "enterprise",
             "custom_slug": "demo"
         }
