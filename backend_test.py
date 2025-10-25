@@ -470,6 +470,9 @@ class TenantBrandingAPITester:
             print("\n❌ Authentication failed - cannot proceed with other tests")
             return False
         
+        # Try tenant provisioning if needed
+        self.test_tenant_provisioning()
+        
         # Run all test suites
         test_suites = [
             ("Tenant Management", self.test_tenant_management),
