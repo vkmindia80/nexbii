@@ -1742,9 +1742,323 @@ ORDER BY month, region;""",
         
         db.commit()
         
+        # Create Demo Tenants (Multi-tenancy)
+        tenants = []
+        
+        # Tenant 1: Default tenant for demo user
+        t1 = Tenant(
+            id=str(uuid.uuid4()),
+            name="NexBII Demo Organization",
+            slug="nexbii-demo",
+            contact_email="admin@nexbii.demo",
+            contact_name="Demo Admin",
+            plan="enterprise",
+            is_active=True,
+            max_users=50,
+            max_datasources=20,
+            max_dashboards=100,
+            max_queries=500,
+            storage_limit_mb=10000,
+            storage_used_mb=1800,
+            features={
+                "ai_enabled": True,
+                "advanced_analytics": True,
+                "api_access": True,
+                "white_labeling": True,
+                "custom_domains": True
+            },
+            branding={
+                "logo_url": "https://example.com/logo.png",
+                "primary_color": "#3b82f6",
+                "secondary_color": "#8b5cf6",
+                "font_family": "Inter"
+            },
+            settings={
+                "timezone": "UTC",
+                "date_format": "YYYY-MM-DD",
+                "currency": "USD"
+            },
+            created_at=datetime.utcnow() - timedelta(days=180)
+        )
+        tenants.append(t1)
+        db.add(t1)
+        
+        # Tenant 2: Professional Plan Example
+        t2 = Tenant(
+            id=str(uuid.uuid4()),
+            name="Acme Corporation",
+            slug="acme-corp",
+            contact_email="admin@acme.com",
+            contact_name="John Smith",
+            plan="professional",
+            is_active=True,
+            max_users=20,
+            max_datasources=10,
+            max_dashboards=50,
+            max_queries=200,
+            storage_limit_mb=5000,
+            storage_used_mb=850,
+            features={
+                "ai_enabled": True,
+                "advanced_analytics": True,
+                "api_access": True
+            },
+            branding={
+                "logo_url": "https://acme.com/logo.png",
+                "primary_color": "#10b981",
+                "secondary_color": "#059669"
+            },
+            created_at=datetime.utcnow() - timedelta(days=90)
+        )
+        tenants.append(t2)
+        db.add(t2)
+        
+        # Tenant 3: Starter Plan Example
+        t3 = Tenant(
+            id=str(uuid.uuid4()),
+            name="TechStart Inc",
+            slug="techstart",
+            contact_email="contact@techstart.io",
+            contact_name="Sarah Johnson",
+            plan="starter",
+            is_active=True,
+            max_users=10,
+            max_datasources=5,
+            max_dashboards=25,
+            max_queries=100,
+            storage_limit_mb=2000,
+            storage_used_mb=320,
+            features={
+                "ai_enabled": False,
+                "advanced_analytics": False
+            },
+            branding={},
+            created_at=datetime.utcnow() - timedelta(days=30),
+            trial_ends_at=datetime.utcnow() + timedelta(days=14)
+        )
+        tenants.append(t3)
+        db.add(t3)
+        
+        db.commit()
+        
+        # Create Demo Tenant Domains
+        tenant_domains = []
+        
+        td1 = TenantDomain(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            domain="analytics.nexbii.demo",
+            is_verified=True,
+            is_primary=True,
+            ssl_enabled=True,
+            verification_method="cname",
+            verified_at=datetime.utcnow() - timedelta(days=170)
+        )
+        tenant_domains.append(td1)
+        db.add(td1)
+        
+        td2 = TenantDomain(
+            id=str(uuid.uuid4()),
+            tenant_id=t2.id,
+            domain="bi.acme.com",
+            is_verified=True,
+            is_primary=True,
+            ssl_enabled=True,
+            verification_method="txt",
+            verified_at=datetime.utcnow() - timedelta(days=85)
+        )
+        tenant_domains.append(td2)
+        db.add(td2)
+        
+        db.commit()
+        
+        # Create Demo Tenant Invitations
+        tenant_invitations = []
+        
+        ti1 = TenantInvitation(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            email="user1@example.com",
+            role="editor",
+            invited_by=user_id,
+            token=secrets.token_urlsafe(32),
+            expires_at=datetime.utcnow() + timedelta(days=7),
+            created_at=datetime.utcnow() - timedelta(days=2)
+        )
+        tenant_invitations.append(ti1)
+        db.add(ti1)
+        
+        ti2 = TenantInvitation(
+            id=str(uuid.uuid4()),
+            tenant_id=t2.id,
+            email="analyst@acme.com",
+            role="viewer",
+            invited_by=user_id,
+            token=secrets.token_urlsafe(32),
+            expires_at=datetime.utcnow() + timedelta(days=7),
+            accepted_at=datetime.utcnow() - timedelta(days=1),
+            created_at=datetime.utcnow() - timedelta(days=3)
+        )
+        tenant_invitations.append(ti2)
+        db.add(ti2)
+        
+        db.commit()
+        
+        # Create Demo Tenant Usage Records
+        tenant_usage_records = []
+        
+        # Last 3 months of usage for main tenant
+        for month_offset in range(3):
+            period_start = datetime.utcnow() - timedelta(days=(month_offset + 1) * 30)
+            period_end = datetime.utcnow() - timedelta(days=month_offset * 30)
+            
+            tu = TenantUsage(
+                id=str(uuid.uuid4()),
+                tenant_id=t1.id,
+                period_start=period_start,
+                period_end=period_end,
+                queries_executed=random.randint(500, 2000),
+                dashboards_viewed=random.randint(200, 800),
+                api_calls=random.randint(1000, 5000),
+                storage_used_mb=random.randint(1500, 2000),
+                users_active=random.randint(5, 15),
+                ai_queries=random.randint(50, 200),
+                analytics_runs=random.randint(30, 100),
+                exports_generated=random.randint(20, 80),
+                billable_amount=random.randint(50000, 150000),  # $500-$1500 in cents
+                created_at=period_end
+            )
+            tenant_usage_records.append(tu)
+            db.add(tu)
+        
+        db.commit()
+        
+        # Create Demo Integrations
+        integrations = []
+        
+        # Email Integration
+        i1 = Integration(
+            id=str(uuid.uuid4()),
+            smtp_host="smtp.gmail.com",
+            smtp_port="587",
+            smtp_user="noreply@nexbii.demo",
+            smtp_password="demo_encrypted_password",
+            from_email="noreply@nexbii.demo",
+            from_name="NexBII Analytics",
+            mock_email=True,  # Mock mode for demo
+            mock_slack=True,
+            slack_webhook_url="https://hooks.slack.com/services/DEMO/WEBHOOK/URL",
+            created_by=user_id,
+            created_at=datetime.utcnow() - timedelta(days=150)
+        )
+        integrations.append(i1)
+        db.add(i1)
+        
+        db.commit()
+        
+        # Create Demo Shared Dashboards (Public Links)
+        shared_dashboards = []
+        
+        # Share dashboard 1 with password protection
+        sd1 = SharedDashboard(
+            id=str(uuid.uuid4()),
+            dashboard_id=dashboards[0].id,  # Sales Analytics Dashboard
+            share_token=SharedDashboard.generate_token(),
+            password=get_password_hash("demo123"),  # Password-protected
+            expires_at=datetime.utcnow() + timedelta(days=30),
+            is_active=True,
+            allow_interactions=True,
+            created_by=user_id,
+            created_at=datetime.utcnow() - timedelta(days=10)
+        )
+        shared_dashboards.append(sd1)
+        db.add(sd1)
+        
+        # Share dashboard 2 without password, expires in 7 days
+        sd2 = SharedDashboard(
+            id=str(uuid.uuid4()),
+            dashboard_id=dashboards[1].id,  # Customer Analytics Dashboard
+            share_token=SharedDashboard.generate_token(),
+            password=None,
+            expires_at=datetime.utcnow() + timedelta(days=7),
+            is_active=True,
+            allow_interactions=False,  # View-only
+            created_by=user_id,
+            created_at=datetime.utcnow() - timedelta(days=5)
+        )
+        shared_dashboards.append(sd2)
+        db.add(sd2)
+        
+        # Share dashboard 3 - no expiration
+        sd3 = SharedDashboard(
+            id=str(uuid.uuid4()),
+            dashboard_id=dashboards[4].id,  # Product & Review Analytics
+            share_token=SharedDashboard.generate_token(),
+            password=None,
+            expires_at=None,  # Never expires
+            is_active=True,
+            allow_interactions=True,
+            created_by=user_id,
+            created_at=datetime.utcnow() - timedelta(days=20)
+        )
+        shared_dashboards.append(sd3)
+        db.add(sd3)
+        
+        db.commit()
+        
+        # Note: Cache is handled in-memory by Redis, we'll add some activity logs for cache hits
+        # Add more activities for cache-related operations
+        cache_activities = []
+        for i in range(20):
+            ca = Activity(
+                id=str(uuid.uuid4()),
+                user_id=user_id,
+                activity_type=ActivityType.QUERY_EXECUTED,
+                entity_type="query",
+                entity_id=random.choice(queries).id,
+                description="executed a cached query (cache hit)",
+                metadata={
+                    "cache_hit": True,
+                    "execution_time_ms": random.randint(10, 50),
+                    "ip_address": f"192.168.1.{random.randint(1, 255)}"
+                },
+                created_at=datetime.utcnow() - timedelta(
+                    days=random.randint(0, 15),
+                    hours=random.randint(0, 23)
+                )
+            )
+            cache_activities.append(ca)
+            db.add(ca)
+        
+        # Add Export-related activities
+        export_activities = []
+        export_types = ["PDF", "Excel", "CSV", "PNG"]
+        for i in range(15):
+            ea = Activity(
+                id=str(uuid.uuid4()),
+                user_id=user_id,
+                activity_type=ActivityType.EXPORT_GENERATED,
+                entity_type="dashboard",
+                entity_id=random.choice(dashboards).id,
+                description=f"exported dashboard as {random.choice(export_types)}",
+                metadata={
+                    "export_type": random.choice(export_types),
+                    "file_size_kb": random.randint(100, 5000),
+                    "ip_address": f"192.168.1.{random.randint(1, 255)}"
+                },
+                created_at=datetime.utcnow() - timedelta(
+                    days=random.randint(0, 30),
+                    hours=random.randint(0, 23)
+                )
+            )
+            export_activities.append(ea)
+            db.add(ea)
+        
+        db.commit()
+        
         return {
             "success": True,
-            "message": "✨ Comprehensive demo data generated successfully for all modules!",
+            "message": "✨ Comprehensive demo data generated successfully for ALL modules!",
             "data": {
                 "sqlite_database": db_stats,
                 "datasources": len(datasources),
@@ -1753,7 +2067,15 @@ ORDER BY month, region;""",
                 "alerts": len(alerts),
                 "subscriptions": len(subscriptions),
                 "comments": len(comments),
-                "activities": len(activities)
+                "activities": len(activities) + len(cache_activities) + len(export_activities),
+                "tenants": len(tenants),
+                "tenant_domains": len(tenant_domains),
+                "tenant_invitations": len(tenant_invitations),
+                "tenant_usage": len(tenant_usage_records),
+                "integrations": len(integrations),
+                "shared_dashboards": len(shared_dashboards),
+                "cache_records": len(cache_activities),
+                "export_records": len(export_activities)
             },
             "details": {
                 "datasources": [{"id": ds.id, "name": ds.name, "type": ds.type.value} for ds in datasources],
