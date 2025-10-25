@@ -14,5 +14,9 @@ class Query(Base):
     query_config = Column(JSON)  # Visual query builder config
     sql_query = Column(Text)  # Raw SQL query
     created_by = Column(String)  # User ID
+    
+    # Multi-tenancy
+    tenant_id = Column(String, index=True, nullable=True)
+    
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
