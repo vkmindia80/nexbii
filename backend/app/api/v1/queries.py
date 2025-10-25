@@ -64,7 +64,7 @@ async def get_query(
 @router.post("/execute", response_model=QueryResult)
 async def execute_query(
     execute_data: QueryExecute,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     # Check if query_id is provided
