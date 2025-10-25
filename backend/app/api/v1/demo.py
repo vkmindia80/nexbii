@@ -2107,8 +2107,16 @@ ORDER BY month, region;""",
                     "✅ Alerts (3 alerts: Revenue threshold, Order volume, Customer segment monitoring)",
                     "✅ Subscriptions (3 scheduled reports: Daily, Weekly, Monthly)",
                     "✅ Comments (20+ comments on dashboards and queries)",
-                    "✅ Activities (100 activity log entries covering last 30 days)",
-                    "✅ User Management (Demo admin user: admin@nexbii.demo)"
+                    "✅ Activities (135 activity log entries: user actions, cache hits, exports)",
+                    "✅ User Management (Demo admin user: admin@nexbii.demo)",
+                    "✅ Multi-Tenancy (3 tenants: Enterprise, Professional, Starter plans)",
+                    "✅ Custom Domains (2 tenant domains with SSL verification)",
+                    "✅ Tenant Invitations (2 user invitations with tokens)",
+                    "✅ Usage Tracking (3 months of tenant usage records for billing)",
+                    "✅ Integrations (Email SMTP & Slack webhook configurations)",
+                    "✅ Shared Dashboards (3 public sharing links: password-protected, expiring, permanent)",
+                    "✅ Cache Activity (20 cached query execution records)",
+                    "✅ Export History (15 export records: PDF, Excel, CSV, PNG)"
                 ]
             }
         }
