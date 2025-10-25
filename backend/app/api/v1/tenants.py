@@ -5,7 +5,7 @@ Handles tenant CRUD operations, provisioning, and administration.
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import List
+from typing import List, Optional
 import uuid
 import secrets
 from datetime import datetime, timedelta
