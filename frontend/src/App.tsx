@@ -72,6 +72,7 @@ function App() {
           <Route path="/activity" element={<ActivityFeedPage />} />
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/tenant-settings" element={<TenantSettingsPage />} />
         </Route>
       </Routes>
     </Router>
