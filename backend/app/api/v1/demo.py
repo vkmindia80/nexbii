@@ -1575,17 +1575,11 @@ ORDER BY month, region;""",
         # Subscription 1: Daily sales report
         s1 = EmailSubscription(
             id=str(uuid.uuid4()),
+            user_id=user_id,
             dashboard_id=d1.id,
-            recipient_email="admin@nexbii.demo",
             frequency=SubscriptionFrequency.DAILY,
-            schedule_config={
-                "hour": 8,
-                "minute": 0,
-                "timezone": "UTC"
-            },
-            format="pdf",
             is_active=True,
-            created_by=user_id
+            next_send_date=datetime.utcnow() + timedelta(days=1)
         )
         subscriptions.append(s1)
         db.add(s1)
@@ -1593,18 +1587,12 @@ ORDER BY month, region;""",
         # Subscription 2: Weekly customer analytics
         s2 = EmailSubscription(
             id=str(uuid.uuid4()),
+            user_id=user_id,
             dashboard_id=d2.id,
-            recipient_email="admin@nexbii.demo",
             frequency=SubscriptionFrequency.WEEKLY,
-            schedule_config={
-                "day_of_week": 1,  # Monday
-                "hour": 9,
-                "minute": 0,
-                "timezone": "UTC"
-            },
-            format="pdf",
             is_active=True,
-            created_by=user_id
+            next_send_date=datetime.utcnow() + timedelta(days=7),
+            last_sent_date=datetime.utcnow() - timedelta(days=7)
         )
         subscriptions.append(s2)
         db.add(s2)
@@ -1612,18 +1600,11 @@ ORDER BY month, region;""",
         # Subscription 3: Monthly summary
         s3 = EmailSubscription(
             id=str(uuid.uuid4()),
+            user_id=user_id,
             dashboard_id=d3.id,
-            recipient_email="admin@nexbii.demo",
             frequency=SubscriptionFrequency.MONTHLY,
-            schedule_config={
-                "day_of_month": 1,
-                "hour": 10,
-                "minute": 0,
-                "timezone": "UTC"
-            },
-            format="excel",
             is_active=True,
-            created_by=user_id
+            next_send_date=datetime.utcnow() + timedelta(days=30)
         )
         subscriptions.append(s3)
         db.add(s3)
