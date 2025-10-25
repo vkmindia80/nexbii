@@ -193,8 +193,14 @@ const TenantSettingsPage: React.FC = () => {
 
   if (!tenant) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-gray-500">No tenant found</p>
+      <div className="flex flex-col items-center justify-center h-screen space-y-4">
+        <Building2 className="w-16 h-16 text-gray-400" />
+        <div className="text-center">
+          <p className="text-xl font-semibold text-gray-700 dark:text-gray-300">No Tenant Found</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            Please log in to access tenant settings
+          </p>
+        </div>
       </div>
     );
   }
