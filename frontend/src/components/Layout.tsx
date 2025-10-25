@@ -14,9 +14,11 @@ import {
   Activity,
   Plug,
   Brain,
-  User
+  User,
+  Building2
 } from 'lucide-react';
 import { authService } from '../services/authService';
+import TenantSwitcher from './TenantSwitcher';
 
 const Layout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
