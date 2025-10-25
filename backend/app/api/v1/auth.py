@@ -181,11 +181,11 @@ async def reset_password(reset_data: PasswordReset, db: Session = Depends(get_db
 @router.put("/profile", response_model=UserResponse)
 async def update_profile(
     profile_data: UserUpdate,
-    current_user: dict = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     """Update user profile"""
-    user = db.query(User).filter(User.id == current_user["sub"]).first()
+    user = db.query(User).filter(User.id == current_user.id).first()
     
     if not user:
         raise HTTPException(
