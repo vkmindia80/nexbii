@@ -1,0 +1,146 @@
+{
+  "passed": 11,
+  "failed": 3,
+  "warnings": 0,
+  "tests": [
+    {
+      "name": "Create Enterprise Tenant",
+      "status": "PASS",
+      "message": "Enterprise tenant created: WhiteLabel Test Corp",
+      "details": {
+        "tenant_id": "4e57e4be-13ee-4e2c-9109-98a8492e3e16",
+        "slug": "whitelabel-test-1761391955"
+      },
+      "timestamp": "2025-10-25T11:32:35.342827"
+    },
+    {
+      "name": "Add Custom Domain",
+      "status": "PASS",
+      "message": "Domain added: analytics.whitelabeltest.com",
+      "details": {
+        "domain_id": "6323d3eb-1d0a-4d9b-b787-69a50af614d9",
+        "verification_method": "cname"
+      },
+      "timestamp": "2025-10-25T11:32:35.599980"
+    },
+    {
+      "name": "Get Verification Instructions",
+      "status": "PASS",
+      "message": "Instructions retrieved for CNAME Record",
+      "details": {
+        "method": "CNAME Record",
+        "record_type": "CNAME",
+        "host": "analytics.whitelabeltest.com",
+        "value": "verify-KtgxhKj7zPt-o-X9swAXN4MsKhu3gXnzhsPT5sWuzLc..."
+      },
+      "timestamp": "2025-10-25T11:32:35.606546"
+    },
+    {
+      "name": "List Custom Domains",
+      "status": "PASS",
+      "message": "Found 1 domain(s)",
+      "details": {
+        "domains": [
+          "analytics.whitelabeltest.com"
+        ]
+      },
+      "timestamp": "2025-10-25T11:32:35.610742"
+    },
+    {
+      "name": "Domain Verification (Expected Failure)",
+      "status": "PASS",
+      "message": "Verification failed as expected (no DNS setup)",
+      "details": {
+        "error": "Domain analytics.whitelabeltest.com does not exist"
+      },
+      "timestamp": "2025-10-25T11:32:35.697792"
+    },
+    {
+      "name": "DNS Verification Service",
+      "status": "FAIL",
+      "message": "Exception: No module named 'app'",
+      "details": null,
+      "timestamp": "2025-10-25T11:32:35.698021"
+    },
+    {
+      "name": "SSL Certificate Management",
+      "status": "FAIL",
+      "message": "Exception: No module named 'app'",
+      "details": null,
+      "timestamp": "2025-10-25T11:32:35.698079"
+    },
+    {
+      "name": "Get SSL Certificate Info",
+      "status": "PASS",
+      "message": "SSL info retrieved: Not configured",
+      "details": {
+        "ssl_enabled": false,
+        "message": "SSL certificate not configured for this domain"
+      },
+      "timestamp": "2025-10-25T11:32:35.702218"
+    },
+    {
+      "name": "Email Templates",
+      "status": "FAIL",
+      "message": "Exception: No module named 'app'",
+      "details": null,
+      "timestamp": "2025-10-25T11:32:35.702452"
+    },
+    {
+      "name": "Update Tenant Branding",
+      "status": "PASS",
+      "message": "Tenant branding updated successfully",
+      "details": {
+        "logo_url": "https://cdn.example.com/whitelabel-logo.png",
+        "primary_color": "#FF6B6B",
+        "custom_css_length": 33
+      },
+      "timestamp": "2025-10-25T11:32:35.713620"
+    },
+    {
+      "name": "Get Current Tenant with Branding",
+      "status": "PASS",
+      "message": "Tenant retrieved with branding",
+      "details": {
+        "tenant_id": "4e57e4be-13ee-4e2c-9109-98a8492e3e16",
+        "name": "WhiteLabel Test Corp",
+        "plan": "enterprise",
+        "has_white_labeling": true
+      },
+      "timestamp": "2025-10-25T11:32:35.717298"
+    },
+    {
+      "name": "Check White-Labeling Feature Access",
+      "status": "PASS",
+      "message": "Feature access check: Enabled",
+      "details": {
+        "feature": "white_labeling",
+        "has_access": true,
+        "reason": null
+      },
+      "timestamp": "2025-10-25T11:32:35.720079"
+    },
+    {
+      "name": "Get Tenant Limits",
+      "status": "PASS",
+      "message": "Tenant limits retrieved (used by frontend)",
+      "details": {
+        "within_user_limit": true,
+        "within_datasource_limit": true,
+        "within_dashboard_limit": true
+      },
+      "timestamp": "2025-10-25T11:32:35.731957"
+    },
+    {
+      "name": "Get Tenant Usage Stats",
+      "status": "PASS",
+      "message": "Tenant usage stats retrieved (used by tenant switcher)",
+      "details": {
+        "current_users": 1,
+        "current_datasources": 0,
+        "current_dashboards": 0
+      },
+      "timestamp": "2025-10-25T11:32:35.739211"
+    }
+  ]
+}
