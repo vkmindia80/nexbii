@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post("/", response_model=DashboardResponse)
 async def create_dashboard(
     dashboard_data: DashboardCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     dashboard = Dashboard(
@@ -25,7 +25,7 @@ async def create_dashboard(
         widgets=dashboard_data.widgets,
         filters=dashboard_data.filters,
         is_public=dashboard_data.is_public,
-        created_by=current_user["sub"]
+        created_by=current_user.id
     )
     db.add(dashboard)
     db.commit()
