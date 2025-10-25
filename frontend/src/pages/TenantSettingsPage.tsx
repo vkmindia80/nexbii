@@ -300,6 +300,23 @@ const TenantSettingsPage: React.FC = () => {
                   </div>
                 )}
 
+                {hasWhitelabeling && Object.keys(tenant.branding || {}).length === 0 && (
+                  <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+                    <div className="flex items-start space-x-3">
+                      <Palette className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-semibold text-blue-800 dark:text-blue-200 mb-1">
+                          Customize Your Brand
+                        </h4>
+                        <p className="text-sm text-blue-700 dark:text-blue-300">
+                          Get started by adding your company logo, colors, and custom styling below. 
+                          Your branding will be applied across the entire platform.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
