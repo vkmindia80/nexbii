@@ -41,7 +41,7 @@ async def create_query(
 
 @router.get("/", response_model=List[QueryResponse])
 async def list_queries(
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     queries = db.query(Query).all()
