@@ -21,11 +21,13 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import TenantSettingsPage from './pages/TenantSettingsPage';
 import Layout from './components/Layout';
 import { useWebSocket } from './hooks/useWebSocket';
+import { useTenantBranding } from './hooks/useTenantBranding';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const { isConnected } = useWebSocket();
+  const { branding, loading: brandingLoading } = useTenantBranding();
 
   useEffect(() => {
     // Check if user is authenticated
@@ -39,6 +41,12 @@ function App() {
       console.log('✅ WebSocket connected and ready');
     }
   }, [isConnected]);
+
+  useEffect(() => {
+    if (branding) {
+      console.log('✅ Tenant branding applied:', branding);
+    }
+  }, [branding]);
 
   if (loading) {
     return (
