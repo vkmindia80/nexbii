@@ -111,6 +111,11 @@ const Layout: React.FC = () => {
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
+        {/* Top Header Bar with Tenant Switcher */}
+        <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-end">
+          <TenantSwitcher onSettingsClick={() => navigate('/tenant-settings')} />
+        </div>
+        
         <div className="p-8">
           <Outlet />
         </div>
