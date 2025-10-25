@@ -38,14 +38,26 @@ const TenantSettingsPage: React.FC = () => {
   const loadTenantData = async () => {
     try {
       const currentTenant = await tenantService.getCurrentTenant();
+      console.log('Loaded tenant:', currentTenant);
       setTenant(currentTenant);
-      setBranding(currentTenant.branding || {});
+      
+      // Initialize branding with default values if empty
+      const initialBranding = currentTenant.branding && Object.keys(currentTenant.branding).length > 0
+        ? currentTenant.branding
+        : {
+            primary_color: '#667eea',
+            secondary_color: '#764ba2',
+            accent_color: '#3b82f6',
+            font_family: 'Inter, sans-serif'
+          };
+      setBranding(initialBranding);
       
       const tenantDomains = await tenantService.listCustomDomains(currentTenant.id);
+      console.log('Loaded domains:', tenantDomains);
       setDomains(tenantDomains);
     } catch (error) {
       console.error('Failed to load tenant data:', error);
-      showMessage('error', 'Failed to load tenant settings');
+      showMessage('error', `Failed to load tenant settings: ${error}`);
     } finally {
       setLoading(false);
     }
