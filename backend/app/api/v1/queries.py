@@ -196,7 +196,7 @@ async def update_query(
 @router.delete("/{query_id}")
 async def delete_query(
     query_id: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     query = db.query(Query).filter(Query.id == query_id).first()
