@@ -18,7 +18,7 @@ router = APIRouter()
 @router.post("/", response_model=DataSourceResponse)
 async def create_datasource(
     datasource_data: DataSourceCreate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     # Test connection first
@@ -35,7 +35,7 @@ async def create_datasource(
         name=datasource_data.name,
         type=datasource_data.type,
         connection_config=datasource_data.connection_config,
-        created_by=current_user["sub"]
+        created_by=current_user.id
     )
     db.add(datasource)
     db.commit()
