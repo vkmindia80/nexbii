@@ -41,6 +41,7 @@ const Layout: React.FC = () => {
     { path: '/integrations', icon: Plug, label: 'Integrations' },
     { path: '/charts-showcase', icon: PieChart, label: 'Charts Showcase' },
     { path: '/profile', icon: User, label: 'Profile' },
+    { path: '/tenant-settings', icon: Building2, label: 'Tenant Settings' },
   ];
 
   return (
