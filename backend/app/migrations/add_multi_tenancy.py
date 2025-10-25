@@ -13,8 +13,7 @@ from app.models.alert import Alert
 from app.models.comment import Comment
 from app.models.activity import Activity
 from app.models.share import SharedDashboard
-from app.models.subscription import Subscription
-from app.models.integration import EmailIntegration, SlackIntegration
+from app.models.subscription import EmailSubscription
 from app.models.analytics import SavedAnalysis
 from app.models.tenant import Tenant, TenantDomain, TenantInvitation, TenantUsage
 import uuid
