@@ -253,6 +253,10 @@ class AnalyticsService:
     def _forecast_prophet(self, df: pd.DataFrame, date_col: str, value_col: str, 
                          periods: int, confidence: float) -> Dict[str, Any]:
         """Prophet forecasting"""
+        if not PROPHET_AVAILABLE:
+            print("⚠️  Prophet not available, falling back to simple moving average")
+            return self._forecast_simple_ma(df[value_col], periods)
+        
         try:
             # Prepare data for Prophet
             prophet_df = df.reset_index()[[date_col, value_col]]
