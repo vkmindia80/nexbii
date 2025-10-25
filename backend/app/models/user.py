@@ -19,6 +19,10 @@ class User(Base):
     full_name = Column(String)
     role = Column(SQLEnum(UserRole), default=UserRole.VIEWER)
     is_active = Column(Boolean, default=True)
+    
+    # Multi-tenancy
+    tenant_id = Column(String, index=True, nullable=True)  # Foreign key to tenants table
+    
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     
