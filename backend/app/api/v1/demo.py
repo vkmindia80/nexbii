@@ -1587,7 +1587,7 @@ ORDER BY month, region;""",
         subscriptions = []
         
         # Subscription 1: Daily sales report
-        s1 = Subscription(
+        s1 = EmailSubscription(
             id=str(uuid.uuid4()),
             dashboard_id=d1.id,
             recipient_email="admin@nexbii.demo",
@@ -1605,7 +1605,7 @@ ORDER BY month, region;""",
         db.add(s1)
         
         # Subscription 2: Weekly customer analytics
-        s2 = Subscription(
+        s2 = EmailSubscription(
             id=str(uuid.uuid4()),
             dashboard_id=d2.id,
             recipient_email="admin@nexbii.demo",
@@ -1624,7 +1624,7 @@ ORDER BY month, region;""",
         db.add(s2)
         
         # Subscription 3: Monthly summary
-        s3 = Subscription(
+        s3 = EmailSubscription(
             id=str(uuid.uuid4()),
             dashboard_id=d3.id,
             recipient_email="admin@nexbii.demo",
