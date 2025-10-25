@@ -444,11 +444,35 @@ async def generate_demo_data(db: Session = Depends(get_db)):
         ).count()
         
         if existing_datasources > 0:
-            # Clean up existing demo data
-            db.query(Dashboard).filter(Dashboard.name.like('Demo%')).delete()
-            db.query(Query).filter(Query.name.like('Demo%')).delete()
-            db.query(DataSource).filter(DataSource.name.like('Demo%')).delete()
+            # Clean up existing demo data in proper order (respecting foreign keys)
+            print("🔄 Cleaning up existing demo data...")
+            
+            # Delete in order of dependencies
+            db.query(Activity).filter(Activity.description.like('%demo%') | Activity.description.like('%Demo%')).delete(synchronize_session=False)
+            db.query(Comment).filter(Comment.dashboard_id.in_(
+                db.query(Dashboard.id).filter(Dashboard.name.like('Demo%'))
+            )).delete(synchronize_session=False)
+            db.query(Comment).filter(Comment.query_id.in_(
+                db.query(Query.id).filter(Query.name.like('Demo%'))
+            )).delete(synchronize_session=False)
+            db.query(EmailSubscription).filter(EmailSubscription.dashboard_id.in_(
+                db.query(Dashboard.id).filter(Dashboard.name.like('Demo%'))
+            )).delete(synchronize_session=False)
+            db.query(Alert).filter(Alert.query_id.in_(
+                db.query(Query.id).filter(Query.name.like('Demo%'))
+            )).delete(synchronize_session=False)
+            db.query(Dashboard).filter(Dashboard.name.like('Demo%')).delete(synchronize_session=False)
+            db.query(Query).filter(Query.name.like('Demo%')).delete(synchronize_session=False)
+            db.query(DataSource).filter(DataSource.name.like('Demo%')).delete(synchronize_session=False)
+            
+            # Delete demo tenants
+            db.query(TenantDomain).filter(TenantDomain.tenant_id.in_(
+                db.query(Tenant.id).filter(Tenant.slug.in_(['nexbii-demo', 'acme-corp', 'techstart']))
+            )).delete(synchronize_session=False)
+            db.query(Tenant).filter(Tenant.slug.in_(['nexbii-demo', 'acme-corp', 'techstart'])).delete(synchronize_session=False)
+            
             db.commit()
+            print("✅ Existing demo data cleaned up")
         
         # Create Demo Data Sources
         datasources = []
