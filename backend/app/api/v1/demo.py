@@ -2082,7 +2082,10 @@ ORDER BY month, region;""",
                 "queries": [{"id": q.id, "name": q.name} for q in queries],
                 "dashboards": [{"id": d.id, "name": d.name} for d in dashboards],
                 "alerts": [{"id": a.id, "name": a.name} for a in alerts],
-                "subscriptions": [{"id": s.id, "frequency": s.frequency.value} for s in subscriptions]
+                "subscriptions": [{"id": s.id, "frequency": s.frequency.value} for s in subscriptions],
+                "tenants": [{"id": t.id, "name": t.name, "plan": t.plan} for t in tenants],
+                "shared_dashboards": [{"id": sd.id, "dashboard_id": sd.dashboard_id, "expires_at": str(sd.expires_at) if sd.expires_at else "Never"} for sd in shared_dashboards],
+                "integrations": [{"id": i.id, "smtp_configured": bool(i.smtp_host), "slack_configured": bool(i.slack_webhook_url)} for i in integrations]
             },
             "summary": {
                 "database_records": {
