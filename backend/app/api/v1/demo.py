@@ -2075,7 +2075,7 @@ ORDER BY month, region;""",
                 "alerts": len(alerts),
                 "subscriptions": len(subscriptions),
                 "comments": len(comments),
-                "activities": len(activities) + len(cache_activities) + len(export_activities),
+                "activities": len(activities) + len(cache_activities) + len(dashboard_activities),
                 "tenants": len(tenants),
                 "tenant_domains": len(tenant_domains),
                 "tenant_invitations": len(tenant_invitations),
@@ -2083,7 +2083,7 @@ ORDER BY month, region;""",
                 "integrations": len(integrations),
                 "shared_dashboards": len(shared_dashboards),
                 "cache_records": len(cache_activities),
-                "export_records": len(export_activities)
+                "dashboard_share_records": len(dashboard_activities)
             },
             "details": {
                 "datasources": [{"id": ds.id, "name": ds.name, "type": ds.type.value} for ds in datasources],
