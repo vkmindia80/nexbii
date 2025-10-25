@@ -115,7 +115,7 @@ def migrate_existing_data(default_tenant_id: str):
             'comments',
             'activities',
             'shared_dashboards',
-            'subscriptions',
+            'email_subscriptions',
             'saved_analyses'
         ]
         
