@@ -1666,16 +1666,21 @@ ORDER BY month, region;""",
         activities = []
         
         activity_descriptions = {
-            ActivityType.USER_LOGIN: "logged in to the system",
-            ActivityType.USER_LOGOUT: "logged out from the system",
             ActivityType.DASHBOARD_CREATED: "created a new dashboard",
             ActivityType.DASHBOARD_UPDATED: "updated a dashboard",
-            ActivityType.DASHBOARD_VIEWED: "viewed a dashboard",
+            ActivityType.DASHBOARD_DELETED: "deleted a dashboard",
+            ActivityType.DASHBOARD_SHARED: "shared a dashboard",
             ActivityType.QUERY_CREATED: "created a new query",
             ActivityType.QUERY_EXECUTED: "executed a query",
+            ActivityType.QUERY_UPDATED: "updated a query",
+            ActivityType.QUERY_DELETED: "deleted a query",
             ActivityType.DATASOURCE_CREATED: "connected a new data source",
+            ActivityType.DATASOURCE_UPDATED: "updated a data source",
+            ActivityType.DATASOURCE_DELETED: "deleted a data source",
             ActivityType.ALERT_TRIGGERED: "triggered an alert",
-            ActivityType.EXPORT_GENERATED: "generated an export"
+            ActivityType.COMMENT_ADDED: "added a comment",
+            ActivityType.USER_MENTIONED: "mentioned a user",
+            ActivityType.SUBSCRIPTION_CREATED: "created a subscription"
         }
         
         # Generate activities for the last 30 days
@@ -1710,7 +1715,7 @@ ORDER BY month, region;""",
                 entity_type=entity_type,
                 entity_id=entity_id,
                 description=activity_descriptions.get(activity_type, "performed an action"),
-                metadata={
+                activity_metadata={
                     "ip_address": f"192.168.1.{random.randint(1, 255)}",
                     "user_agent": "Mozilla/5.0 (Demo Activity)"
                 },
