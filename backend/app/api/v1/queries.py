@@ -164,7 +164,7 @@ async def execute_query(
 async def update_query(
     query_id: str,
     query_data: QueryUpdate,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     query = db.query(Query).filter(Query.id == query_id).first()
