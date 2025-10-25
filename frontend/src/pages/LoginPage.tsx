@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
       const data = response.data || {};
       
       setSuccessMessage(
-        `✨ Demo Data Generated Successfully for All Modules!\n\n` +
+        `✨ Demo Data Generated Successfully for ALL Modules!\n\n` +
         `📊 Complete Analytics Platform Ready:\n\n` +
         `🗄️ Sample Database (SQLite):\n` +
         `   • ${dbRecords.products || 25} products | ${dbRecords.customers || 200} customers\n` +
@@ -68,7 +68,20 @@ const LoginPage: React.FC = () => {
         `📧 Subscriptions: ${data.subscriptions || 3} scheduled reports\n` +
         `   • Daily, weekly, and monthly email reports\n\n` +
         `💬 Comments: ${data.comments || '20+'} dashboard/query comments\n\n` +
-        `📈 Activities: ${data.activities || 100} activity log entries\n\n` +
+        `📈 Activities: ${data.activities || 135} activity log entries\n` +
+        `   • User actions, cache hits, export history\n\n` +
+        `🏢 Multi-Tenancy: ${data.tenants || 3} sample tenants\n` +
+        `   • Enterprise, Professional, and Starter plans\n` +
+        `   • Custom domains: ${data.tenant_domains || 2} configured\n` +
+        `   • User invitations: ${data.tenant_invitations || 2} active\n` +
+        `   • Usage tracking: ${data.tenant_usage || 3} months of billing data\n\n` +
+        `🔗 Integrations: ${data.integrations || 1} configured\n` +
+        `   • Email SMTP & Slack webhook ready\n\n` +
+        `🌐 Public Sharing: ${data.shared_dashboards || 3} shared dashboard links\n` +
+        `   • Password-protected, expiring, and permanent links\n\n` +
+        `⚡ Cache Records: ${data.cache_records || 20} cached query executions\n\n` +
+        `📤 Export History: ${data.export_records || 15} export records\n` +
+        `   • PDF, Excel, CSV, PNG formats\n\n` +
         `🤖 AI Features Available:\n` +
         `   • Natural language to SQL queries\n` +
         `   • Query validation & optimization\n` +
