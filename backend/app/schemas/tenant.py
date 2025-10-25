@@ -65,7 +65,7 @@ class Tenant(TenantBase):
     branding: Dict[str, Any]
     custom_domain: Optional[str]
     settings: Dict[str, Any]
-    metadata: Dict[str, Any]
+    extra_metadata: Dict[str, Any]
     created_at: datetime
     updated_at: Optional[datetime]
     trial_ends_at: Optional[datetime]
