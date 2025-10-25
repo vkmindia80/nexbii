@@ -40,9 +40,9 @@ class TenantUpdate(BaseModel):
 class TenantBranding(BaseModel):
     logo_url: Optional[str] = None
     logo_dark_url: Optional[str] = None  # For dark mode
-    primary_color: Optional[str] = Field(None, regex=r'^#[0-9A-Fa-f]{6}$')
-    secondary_color: Optional[str] = Field(None, regex=r'^#[0-9A-Fa-f]{6}$')
-    accent_color: Optional[str] = Field(None, regex=r'^#[0-9A-Fa-f]{6}$')
+    primary_color: Optional[str] = Field(None, pattern=r'^#[0-9A-Fa-f]{6}$')
+    secondary_color: Optional[str] = Field(None, pattern=r'^#[0-9A-Fa-f]{6}$')
+    accent_color: Optional[str] = Field(None, pattern=r'^#[0-9A-Fa-f]{6}$')
     font_family: Optional[str] = None
     custom_css: Optional[str] = None
     favicon_url: Optional[str] = None
