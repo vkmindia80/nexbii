@@ -1504,6 +1504,258 @@ ORDER BY month, region;""",
         
         db.commit()
         
+        # Create Demo Alerts
+        alerts = []
+        
+        # Alert 1: Revenue threshold
+        a1 = Alert(
+            id=str(uuid.uuid4()),
+            name="Daily Revenue Alert",
+            description="Alert when daily revenue falls below $10,000",
+            query_id=q1.id,
+            condition_type=AlertConditionType.THRESHOLD,
+            condition_config={
+                "field": "total_revenue",
+                "operator": "<",
+                "value": 10000,
+                "aggregation": "sum"
+            },
+            notification_channels=["email", "slack"],
+            notification_config={
+                "email_recipients": ["admin@nexbii.demo"],
+                "slack_webhook": "#alerts"
+            },
+            schedule="0 9 * * *",  # Daily at 9 AM
+            is_active=True,
+            created_by=user_id
+        )
+        alerts.append(a1)
+        db.add(a1)
+        
+        # Alert 2: Order volume
+        a2 = Alert(
+            id=str(uuid.uuid4()),
+            name="Low Order Volume Alert",
+            description="Alert when hourly order count is below 5",
+            query_id=q1.id,
+            condition_type=AlertConditionType.THRESHOLD,
+            condition_config={
+                "field": "total_orders",
+                "operator": "<",
+                "value": 5,
+                "aggregation": "count"
+            },
+            notification_channels=["email"],
+            notification_config={
+                "email_recipients": ["admin@nexbii.demo"]
+            },
+            schedule="0 */3 * * *",  # Every 3 hours
+            is_active=True,
+            created_by=user_id
+        )
+        alerts.append(a2)
+        db.add(a2)
+        
+        # Alert 3: Customer segment change
+        a3 = Alert(
+            id=str(uuid.uuid4()),
+            name="New Customer Segment Alert",
+            description="Alert when Enterprise customer count increases by 10%",
+            query_id=q3.id,
+            condition_type=AlertConditionType.CHANGE,
+            condition_config={
+                "field": "customer_count",
+                "change_type": "percentage",
+                "threshold": 10,
+                "direction": "increase"
+            },
+            notification_channels=["email", "slack"],
+            notification_config={
+                "email_recipients": ["admin@nexbii.demo"],
+                "slack_webhook": "#sales"
+            },
+            schedule="0 0 * * MON",  # Weekly on Monday
+            is_active=True,
+            created_by=user_id
+        )
+        alerts.append(a3)
+        db.add(a3)
+        
+        db.commit()
+        
+        # Create Demo Subscriptions
+        subscriptions = []
+        
+        # Subscription 1: Daily sales report
+        s1 = Subscription(
+            id=str(uuid.uuid4()),
+            dashboard_id=d1.id,
+            recipient_email="admin@nexbii.demo",
+            frequency=SubscriptionFrequency.DAILY,
+            schedule_config={
+                "hour": 8,
+                "minute": 0,
+                "timezone": "UTC"
+            },
+            format="pdf",
+            is_active=True,
+            created_by=user_id
+        )
+        subscriptions.append(s1)
+        db.add(s1)
+        
+        # Subscription 2: Weekly customer analytics
+        s2 = Subscription(
+            id=str(uuid.uuid4()),
+            dashboard_id=d2.id,
+            recipient_email="admin@nexbii.demo",
+            frequency=SubscriptionFrequency.WEEKLY,
+            schedule_config={
+                "day_of_week": 1,  # Monday
+                "hour": 9,
+                "minute": 0,
+                "timezone": "UTC"
+            },
+            format="pdf",
+            is_active=True,
+            created_by=user_id
+        )
+        subscriptions.append(s2)
+        db.add(s2)
+        
+        # Subscription 3: Monthly summary
+        s3 = Subscription(
+            id=str(uuid.uuid4()),
+            dashboard_id=d3.id,
+            recipient_email="admin@nexbii.demo",
+            frequency=SubscriptionFrequency.MONTHLY,
+            schedule_config={
+                "day_of_month": 1,
+                "hour": 10,
+                "minute": 0,
+                "timezone": "UTC"
+            },
+            format="excel",
+            is_active=True,
+            created_by=user_id
+        )
+        subscriptions.append(s3)
+        db.add(s3)
+        
+        db.commit()
+        
+        # Create Demo Comments
+        comments = []
+        
+        # Comments on dashboards
+        comment_texts = [
+            "Great dashboard! The sales trends are very insightful.",
+            "Can we add a filter for region?",
+            "The revenue chart shows interesting patterns in Q3.",
+            "Would be nice to see year-over-year comparison.",
+            "Excellent work on the customer segmentation analysis!",
+            "The product performance metrics are really helpful.",
+            "Could we drill down into individual product categories?",
+            "Love the new HR analytics dashboard!",
+            "The employee performance trends look promising.",
+            "Sales targets visualization is very clear."
+        ]
+        
+        # Add comments to various dashboards
+        for i, d in enumerate(dashboards):
+            num_comments = random.randint(2, 5)
+            for j in range(num_comments):
+                c = Comment(
+                    id=str(uuid.uuid4()),
+                    entity_type="dashboard",
+                    entity_id=d.id,
+                    user_id=user_id,
+                    comment_text=random.choice(comment_texts),
+                    created_at=datetime.utcnow() - timedelta(days=random.randint(1, 30))
+                )
+                comments.append(c)
+                db.add(c)
+        
+        # Add comments to some queries
+        for i in range(10):
+            c = Comment(
+                id=str(uuid.uuid4()),
+                entity_type="query",
+                entity_id=queries[i].id,
+                user_id=user_id,
+                comment_text=random.choice([
+                    "This query is very efficient!",
+                    "Could we optimize this further?",
+                    "Great way to analyze customer behavior.",
+                    "The results are exactly what we needed.",
+                    "Very useful for our weekly reports."
+                ]),
+                created_at=datetime.utcnow() - timedelta(days=random.randint(1, 15))
+            )
+            comments.append(c)
+            db.add(c)
+        
+        db.commit()
+        
+        # Create Demo Activities
+        activities = []
+        
+        activity_descriptions = {
+            ActivityType.USER_LOGIN: "logged in to the system",
+            ActivityType.USER_LOGOUT: "logged out from the system",
+            ActivityType.DASHBOARD_CREATED: "created a new dashboard",
+            ActivityType.DASHBOARD_UPDATED: "updated a dashboard",
+            ActivityType.DASHBOARD_VIEWED: "viewed a dashboard",
+            ActivityType.QUERY_CREATED: "created a new query",
+            ActivityType.QUERY_EXECUTED: "executed a query",
+            ActivityType.DATASOURCE_CREATED: "connected a new data source",
+            ActivityType.ALERT_TRIGGERED: "triggered an alert",
+            ActivityType.EXPORT_GENERATED: "generated an export"
+        }
+        
+        # Generate activities for the last 30 days
+        for i in range(100):
+            activity_type = random.choice(list(ActivityType))
+            activity_timestamp = datetime.utcnow() - timedelta(
+                days=random.randint(0, 30),
+                hours=random.randint(0, 23),
+                minutes=random.randint(0, 59)
+            )
+            
+            # Pick a related entity
+            entity_type = None
+            entity_id = None
+            if 'DASHBOARD' in activity_type.value:
+                entity_type = "dashboard"
+                entity_id = random.choice(dashboards).id
+            elif 'QUERY' in activity_type.value:
+                entity_type = "query"
+                entity_id = random.choice(queries).id
+            elif 'DATASOURCE' in activity_type.value:
+                entity_type = "datasource"
+                entity_id = random.choice(datasources).id
+            elif 'ALERT' in activity_type.value:
+                entity_type = "alert"
+                entity_id = random.choice(alerts).id if alerts else None
+            
+            a = Activity(
+                id=str(uuid.uuid4()),
+                user_id=user_id,
+                activity_type=activity_type,
+                entity_type=entity_type,
+                entity_id=entity_id,
+                description=activity_descriptions.get(activity_type, "performed an action"),
+                metadata={
+                    "ip_address": f"192.168.1.{random.randint(1, 255)}",
+                    "user_agent": "Mozilla/5.0 (Demo Activity)"
+                },
+                created_at=activity_timestamp
+            )
+            activities.append(a)
+            db.add(a)
+        
+        db.commit()
+        
         return {
             "success": True,
             "message": "✨ Comprehensive demo data generated successfully for all modules!",
@@ -1511,7 +1763,11 @@ ORDER BY month, region;""",
                 "sqlite_database": db_stats,
                 "datasources": len(datasources),
                 "queries": len(queries),
-                "dashboards": len(dashboards)
+                "dashboards": len(dashboards),
+                "alerts": len(alerts),
+                "subscriptions": len(subscriptions),
+                "comments": len(comments),
+                "activities": len(activities)
             },
             "details": {
                 "datasources": [{"id": ds.id, "name": ds.name, "type": ds.type.value} for ds in datasources],
