@@ -22,7 +22,7 @@ class TenantBrandingAPITester:
         # Test data
         self.test_credentials = {
             "email": "admin@nexbii.demo",
-            "password": "demo123456"
+            "password": "demo123"
         }
 
     def log_test(self, name: str, success: bool, details: str = "", response_data: Any = None):
