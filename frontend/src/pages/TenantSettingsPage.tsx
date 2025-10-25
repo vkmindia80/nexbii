@@ -476,6 +476,12 @@ const TenantSettingsPage: React.FC = () => {
                     <span>{saving ? 'Saving...' : 'Save Branding'}</span>
                   </button>
                 </div>
+                </div>
+
+                {/* Right Column - Branding Preview */}
+                <div className="lg:sticky lg:top-6">
+                  <BrandingPreview branding={branding} />
+                </div>
               </div>
             )}
 
