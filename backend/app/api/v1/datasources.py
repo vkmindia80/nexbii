@@ -77,7 +77,7 @@ async def test_datasource_connection(
 @router.get("/{datasource_id}/schema", response_model=SchemaResponse)
 async def get_datasource_schema(
     datasource_id: str,
-    current_user: dict = Depends(get_current_user),
+    current_user = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     datasource = db.query(DataSource).filter(DataSource.id == datasource_id).first()
