@@ -1,0 +1,41 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e4]:
+  - generic [ref=e5]:
+    - img [ref=e7]
+    - heading "NexBII" [level=1] [ref=e9]
+    - paragraph [ref=e10]: Advanced Business Intelligence Platform
+  - generic [ref=e11]:
+    - heading "Welcome Back" [level=2] [ref=e12]
+    - generic [ref=e14]:
+      - img [ref=e15]
+      - generic [ref=e17]:
+        - heading "Try Demo Account" [level=3] [ref=e18]
+        - paragraph [ref=e19]: Explore the platform with pre-configured demo credentials
+        - generic [ref=e20]:
+          - button "Fill Demo Credentials" [ref=e21] [cursor=pointer]:
+            - img [ref=e22]
+            - generic [ref=e24]: Fill Demo Credentials
+          - button "Generate Demo Data" [ref=e25] [cursor=pointer]:
+            - img [ref=e26]
+            - generic [ref=e30]: Generate Demo Data
+    - generic [ref=e31]:
+      - generic [ref=e32]:
+        - generic [ref=e33]: Email Address
+        - generic [ref=e34]:
+          - img [ref=e35]
+          - textbox "you@example.com" [ref=e38]
+      - generic [ref=e39]:
+        - generic [ref=e40]: Password
+        - generic [ref=e41]:
+          - img [ref=e42]
+          - textbox "••••••••" [ref=e45]
+      - link "Forgot password?" [ref=e47] [cursor=pointer]:
+        - /url: /forgot-password
+      - button "Sign In" [ref=e48] [cursor=pointer]
+    - paragraph [ref=e50]:
+      - text: Don't have an account?
+      - link "Sign up" [ref=e51] [cursor=pointer]:
+        - /url: /register
+```
