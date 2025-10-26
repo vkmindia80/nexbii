@@ -150,3 +150,31 @@ def require_scope(required_scope: str):
         return user
     
     return scope_checker
+
+
+def require_role(allowed_roles: list):
+    """
+    Dependency to check if user has one of the allowed roles
+    Usage: current_user: User = Depends(require_role(["admin"]))
+    """
+    async def role_checker(user = Depends(get_current_user)):
+        from ..models.user import UserRole
+        
+        # Convert string roles to enum if needed
+        if isinstance(user.role, str):
+            user_role = user.role.lower()
+        else:
+            user_role = user.role.value.lower() if hasattr(user.role, 'value') else str(user.role).lower()
+        
+        # Check if user has one of the allowed roles
+        allowed_roles_lower = [role.lower() for role in allowed_roles]
+        
+        if user_role not in allowed_roles_lower:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Insufficient privileges. Required role: {', '.join(allowed_roles)}"
+            )
+        
+        return user
+    
+    return role_checker
