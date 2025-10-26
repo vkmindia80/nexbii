@@ -121,7 +121,7 @@ class MonitoringService:
                 cache_hit_rate=cache_hit_rate,
                 avg_query_time=avg_query_time,
                 error_count=error_count,
-                metadata={
+                additional_data={
                     "hostname": os.uname().nodename,
                     "python_version": os.sys.version,
                 }
