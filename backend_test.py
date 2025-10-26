@@ -389,73 +389,98 @@ class GovernanceAPITester:
         return all_passed
 
     def test_access_request_endpoints(self) -> bool:
-        """Test custom domain management APIs"""
+        """Test all 6 access request endpoints"""
         print("\n" + "="*60)
-        print("🌐 CUSTOM DOMAINS TESTS")
+        print("🔑 ACCESS REQUEST ENDPOINTS (6 endpoints)")
         print("="*60)
         
-        if not self.tenant_id:
-            print("❌ No tenant ID available for domain tests")
-            return False
-        
         all_passed = True
-        domain_id = None
-        test_domain = "analytics.testcompany.com"
         
-        # Add custom domain
-        success, response = self.run_api_test(
-            "Add Custom Domain",
+        # 1. Create access request
+        request_data = {
+            "requester_justification": "Need access to user data for analytics dashboard development",
+            "resource_type": "datasource",
+            "resource_id": "test-datasource-001",
+            "resource_name": "Test User Database",
+            "access_level": "read",
+            "duration_days": 30
+        }
+        
+        success, request_response = self.run_api_test(
+            "Create Access Request",
             "POST",
-            f"/api/tenants/{self.tenant_id}/domains",
+            "/api/governance/access-requests",
             200,
-            data={"domain": test_domain, "is_primary": False}
+            data=request_data
         )
         all_passed = all_passed and success
         
-        if success and 'id' in response:
-            domain_id = response['id']
-            print(f"   ✅ Domain added: {response.get('domain')}")
-            print(f"   ✅ Domain ID: {domain_id}")
-            print(f"   ✅ Verification Token: {response.get('verification_token', 'N/A')[:12]}...")
+        if success and 'id' in request_response:
+            self.access_request_id = request_response['id']
+            print(f"   ✅ Created access request: {self.access_request_id}")
         
-        # List custom domains
-        success, response = self.run_api_test(
-            "List Custom Domains",
+        # 2. Get all access requests
+        success, requests = self.run_api_test(
+            "Get Access Requests",
             "GET",
-            f"/api/tenants/{self.tenant_id}/domains",
+            "/api/governance/access-requests",
             200
         )
         all_passed = all_passed and success
-        
         if success:
-            domains = response if isinstance(response, list) else []
-            print(f"   ✅ Found {len(domains)} domains")
+            requests_list = requests if isinstance(requests, list) else []
+            print(f"   ✅ Found {len(requests_list)} access requests")
         
-        # Get verification instructions (if domain was added)
-        if domain_id:
-            success, response = self.run_api_test(
-                "Get Domain Verification Instructions",
-                "GET",
-                f"/api/tenants/{self.tenant_id}/domains/{domain_id}/verification-instructions",
+        # 3. Get pending requests (admin only)
+        success, pending = self.run_api_test(
+            "Get Pending Requests",
+            "GET",
+            "/api/governance/access-requests/pending",
+            200
+        )
+        all_passed = all_passed and success
+        if success:
+            pending_list = pending if isinstance(pending, list) else []
+            print(f"   ✅ Found {len(pending_list)} pending requests")
+        
+        # 4. Approve access request
+        if self.access_request_id:
+            success, approved = self.run_api_test(
+                "Approve Access Request",
+                "POST",
+                f"/api/governance/access-requests/{self.access_request_id}/approve?approval_notes=Approved for analytics work",
                 200
             )
             all_passed = all_passed and success
+        
+        # 5. Create another request to test rejection
+        reject_request_data = {
+            "requester_justification": "Test request for rejection",
+            "resource_type": "datasource", 
+            "resource_id": "test-datasource-002",
+            "access_level": "admin"
+        }
+        
+        success, reject_response = self.run_api_test(
+            "Create Request for Rejection Test",
+            "POST",
+            "/api/governance/access-requests",
+            200,
+            data=reject_request_data
+        )
+        
+        if success and 'id' in reject_response:
+            reject_request_id = reject_response['id']
             
-            if success:
-                print(f"   ✅ Verification Method: {response.get('method', 'N/A')}")
-                print(f"   ✅ Instructions Available: {bool(response.get('instructions'))}")
-            
-            # Test domain verification (will likely fail as we don't have real DNS)
-            success, response = self.run_api_test(
-                "Verify Domain (Expected to Fail)",
+            # 6. Reject access request
+            success, rejected = self.run_api_test(
+                "Reject Access Request",
                 "POST",
-                f"/api/tenants/{self.tenant_id}/domains/{domain_id}/verify",
-                200  # API should return 200 with success: false
+                f"/api/governance/access-requests/{reject_request_id}/reject?rejection_notes=Insufficient justification",
+                200
             )
-            # Don't count this as failure since we expect DNS verification to fail
-            if not success:
-                print("   ℹ️  Domain verification failed as expected (no real DNS setup)")
-
+            all_passed = all_passed and success
+        
         return all_passed
 
     def test_ssl_certificates(self) -> bool:
