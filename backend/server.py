@@ -105,6 +105,9 @@ app.add_middleware(
 # Add tenant context middleware
 app.add_middleware(TenantContextMiddleware)
 
+# Add rate limiting middleware
+app.add_middleware(RateLimitMiddleware)
+
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(tenants.router, prefix="/api/tenants", tags=["Multi-Tenancy"])
