@@ -1,3 +1,3 @@
-from . import auth, datasources, queries, dashboards, demo, cache, exports, sharing, analytics
+from . import auth, datasources, queries, dashboards, demo, cache, exports, sharing, analytics, api_keys
 
-__all__ = ["auth", "datasources", "queries", "dashboards", "demo", "cache", "exports", "sharing", "analytics"]
+__all__ = ["auth", "datasources", "queries", "dashboards", "demo", "cache", "exports", "sharing", "analytics", "api_keys"]
