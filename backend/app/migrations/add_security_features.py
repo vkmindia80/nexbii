@@ -32,8 +32,11 @@ def run_migration():
     """Create security-related tables"""
     print("🔐 Starting Phase 4.3 Security Features Migration...")
     
-    # Create engine
-    engine = create_engine(settings.POSTGRES_URL)
+    # Use the same engine logic as the app (PostgreSQL with SQLite fallback)
+    from app.core.database import engine as app_engine
+    engine = app_engine
+    
+    print(f"Using database: {engine.url}")
     
     try:
         # Create all security tables
