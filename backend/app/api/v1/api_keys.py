@@ -4,7 +4,7 @@ from typing import List
 from ...core.database import get_db
 from ...core.security import get_current_user
 from ...models.user import User, UserRole
-from ..schemas.api_key import (
+from ...schemas.api_key import (
     APIKeyCreate,
     APIKeyUpdate,
     APIKeyResponse,
@@ -15,7 +15,7 @@ from ..schemas.api_key import (
     APIKeyUsageStats,
     AVAILABLE_SCOPES
 )
-from ..services.api_key_service import APIKeyService
+from ...services.api_key_service import APIKeyService
 
 router = APIRouter()
 
