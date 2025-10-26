@@ -48,6 +48,17 @@ const Layout: React.FC = () => {
     { path: '/activity', icon: Activity, label: 'Activity Feed' },
     { path: '/integrations', icon: Plug, label: 'Integrations' },
     { path: '/charts-showcase', icon: PieChart, label: 'Charts Showcase' },
+  ];
+
+  const securityItems = [
+    { path: '/security/policies', icon: Shield, label: 'Security Policies' },
+    { path: '/security/sso', icon: Lock, label: 'SSO Configuration' },
+    { path: '/security/mfa', icon: Smartphone, label: 'MFA Management' },
+    { path: '/security/audit-logs', icon: FileText, label: 'Audit Logs' },
+    { path: '/security/compliance', icon: FileCheck, label: 'Compliance' },
+  ];
+
+  const settingsItems = [
     { path: '/settings/api-keys', icon: Key, label: 'API Keys' },
     { path: '/settings/webhooks', icon: Webhook, label: 'Webhooks' },
     { path: '/settings/plugins', icon: Puzzle, label: 'Plugins' },
