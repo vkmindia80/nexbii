@@ -92,6 +92,11 @@ function App() {
           <Route path="/settings/api-keys" element={<APIKeysPage />} />
           <Route path="/settings/webhooks" element={<WebhooksPage />} />
           <Route path="/settings/plugins" element={<PluginsPage />} />
+          <Route path="/security/policies" element={<SecurityPoliciesPage />} />
+          <Route path="/security/sso" element={<SSOConfigPage />} />
+          <Route path="/security/mfa" element={<MFAManagementPage />} />
+          <Route path="/security/audit-logs" element={<AuditLogsPage />} />
+          <Route path="/security/compliance" element={<CompliancePage />} />
         </Route>
       </Routes>
     </Router>
