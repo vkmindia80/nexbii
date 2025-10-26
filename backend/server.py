@@ -2,11 +2,12 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import Base, engine, SessionLocal
-from app.api.v1 import auth, datasources, queries, dashboards, demo, cache, exports, sharing, subscriptions, comments, activities, alerts, integrations, ai, analytics, tenants, api_keys
+from app.api.v1 import auth, datasources, queries, dashboards, demo, cache, exports, sharing, subscriptions, comments, activities, alerts, integrations, ai, analytics, tenants, api_keys, webhooks, plugins
 from app.models.user import User, UserRole
 from app.core.security import get_password_hash
 from app.services.websocket_service import socket_app, sio
 from app.core.tenant_context import TenantContextMiddleware
+from app.core.rate_limit_middleware import RateLimitMiddleware
 import uvicorn
 import uuid
 
