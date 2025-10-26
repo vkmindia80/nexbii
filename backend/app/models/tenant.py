@@ -49,6 +49,11 @@ class Tenant(Base):
     suspended_at = Column(DateTime(timezone=True), nullable=True)
     
     # Relationships (users, datasources, etc. will have tenant_id foreign key)
+    security_policies = relationship("SecurityPolicy", back_populates="tenant", cascade="all, delete-orphan")
+    data_masking_rules = relationship("DataMaskingRule", back_populates="tenant", cascade="all, delete-orphan")
+    oauth_providers = relationship("OAuthProvider", back_populates="tenant", cascade="all, delete-orphan")
+    saml_configs = relationship("SAMLConfig", back_populates="tenant", cascade="all, delete-orphan")
+    ldap_configs = relationship("LDAPConfig", back_populates="tenant", cascade="all, delete-orphan")
     
     def __repr__(self):
         return f"<Tenant {self.name} ({self.slug})>"
