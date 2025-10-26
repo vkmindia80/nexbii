@@ -19,6 +19,11 @@ from .security import (
     MFAConfig, AuditLog, AuditEventCategory,
     ConsentRecord, SessionLog
 )
+from .admin import (
+    SystemMetrics, UserActivity, UserSession, TenantUsageMetrics,
+    BackupJob, BackupType, BackupStatus, BackupStorageType,
+    ConfigurationVersion, SystemHealthCheck, MetricType
+)
 
 __all__ = [
     "User", "UserRole", 
@@ -39,6 +44,9 @@ __all__ = [
     "DataMaskingRule", "DataClassification", "DataClassificationType",
     "OAuthProvider", "SAMLConfig", "LDAPConfig",
     "MFAConfig", "AuditLog", "AuditEventCategory",
-    "ConsentRecord", "SessionLog"
+    "ConsentRecord", "SessionLog",
+    "SystemMetrics", "UserActivity", "UserSession", "TenantUsageMetrics",
+    "BackupJob", "BackupType", "BackupStatus", "BackupStorageType",
+    "ConfigurationVersion", "SystemHealthCheck", "MetricType"
 ]
 
