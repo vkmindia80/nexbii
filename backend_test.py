@@ -19,7 +19,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class GovernanceAPITester:
-    def __init__(self, base_url: str = "https://admin-portal-122.preview.emergentagent.com"):
+    def __init__(self, base_url: str = "https://monitor-db-fix.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
         self.tenant_id = None

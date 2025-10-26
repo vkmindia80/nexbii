@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://admin-portal-122.preview.emergentagent.com",
-        "https://admin-portal-122.preview.emergentagent.com",
-        "https://admin-portal-122.preview.emergentagent.com"
+        "https://monitor-db-fix.preview.emergentagent.com",
+        "https://monitor-db-fix.preview.emergentagent.com",
+        "https://monitor-db-fix.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
