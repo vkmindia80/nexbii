@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://accessshield-1.preview.emergentagent.com",
-        "https://accessshield-1.preview.emergentagent.com",
-        "https://accessshield-1.preview.emergentagent.com"
+        "https://repo-review-map.preview.emergentagent.com",
+        "https://repo-review-map.preview.emergentagent.com",
+        "https://repo-review-map.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
