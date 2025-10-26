@@ -25,7 +25,11 @@ import {
   FileCheck,
   GitBranch,
   Table,
-  Search
+  Search,
+  Users,
+  TrendingUp,
+  HardDrive,
+  Cog
 } from 'lucide-react';
 import { authService } from '../services/authService';
 import TenantSwitcher from './TenantSwitcher';
