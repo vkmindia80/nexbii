@@ -136,7 +136,7 @@ class MonitoringService:
                 memory_usage=0.0,
                 disk_usage=0.0,
                 error_count=1,
-                metadata={"error": str(e)}
+                additional_data={"error": str(e)}
             )
     
     def store_metrics(self, metrics: SystemMetricsCreate) -> None:
