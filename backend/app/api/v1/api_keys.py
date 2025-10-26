@@ -245,7 +245,7 @@ async def get_api_key_usage(
 @router.post("/test", status_code=status.HTTP_200_OK)
 async def test_api_key_authentication(
     request: Request,
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user_or_api_key)
 ):
     """
     Test API key authentication
