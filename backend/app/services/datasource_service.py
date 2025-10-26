@@ -5,6 +5,67 @@ from pymongo import MongoClient
 import sqlite3
 from ..models.datasource import DataSourceType
 
+# Optional imports for additional data sources (with fallback)
+try:
+    import pymssql
+    MSSQL_AVAILABLE = True
+except ImportError:
+    MSSQL_AVAILABLE = False
+
+try:
+    import cx_Oracle
+    ORACLE_AVAILABLE = True
+except ImportError:
+    ORACLE_AVAILABLE = False
+
+try:
+    from cassandra.cluster import Cluster
+    CASSANDRA_AVAILABLE = True
+except ImportError:
+    CASSANDRA_AVAILABLE = False
+
+try:
+    import boto3
+    BOTO3_AVAILABLE = True
+except ImportError:
+    BOTO3_AVAILABLE = False
+
+try:
+    from elasticsearch import Elasticsearch
+    ELASTICSEARCH_AVAILABLE = True
+except ImportError:
+    ELASTICSEARCH_AVAILABLE = False
+
+try:
+    import clickhouse_connect
+    CLICKHOUSE_AVAILABLE = True
+except ImportError:
+    CLICKHOUSE_AVAILABLE = False
+
+try:
+    import redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    REDIS_AVAILABLE = False
+
+try:
+    from google.cloud import bigquery
+    BIGQUERY_AVAILABLE = True
+except ImportError:
+    BIGQUERY_AVAILABLE = False
+
+try:
+    from snowflake.connector import connect as snowflake_connect
+    SNOWFLAKE_AVAILABLE = True
+except ImportError:
+    SNOWFLAKE_AVAILABLE = False
+
+try:
+    import couchdb
+    COUCHDB_AVAILABLE = True
+except ImportError:
+    COUCHDB_AVAILABLE = False
+
 class DataSourceService:
     async def test_connection(self, ds_type: DataSourceType, config: Dict[str, Any]) -> bool:
         """Test connection to a data source"""
