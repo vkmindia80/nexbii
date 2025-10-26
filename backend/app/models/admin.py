@@ -169,7 +169,7 @@ class TenantUsageMetrics(Base):
     billable_amount = Column(Float, default=0.0)
     
     # Additional data
-    metadata = Column(JSON, nullable=True)
+    additional_data = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     
     # Relationships
