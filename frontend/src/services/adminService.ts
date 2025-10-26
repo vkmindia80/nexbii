@@ -21,25 +21,20 @@ export interface SystemMetrics {
 }
 
 export interface SystemHealth {
-  status: string;
+  id: string;
   timestamp: string;
-  checks: {
-    database: {
-      status: string;
-      response_time_ms: number;
-      message?: string;
-    };
-    redis: {
-      status: string;
-      response_time_ms: number;
-      message?: string;
-    };
-    integrations?: {
-      status: string;
-      message?: string;
-    };
-  };
+  database_status: string;
+  redis_status: string;
+  api_status: string;
+  email_service_status?: string;
+  slack_service_status?: string;
+  database_response_time?: number;
+  redis_response_time?: number;
+  api_response_time?: number;
   overall_status: string;
+  alerts_triggered?: Array<{ type: string; message: string }>;
+  additional_data?: any;
+  created_at: string;
 }
 
 export interface UserActivity {
