@@ -250,41 +250,77 @@ class GovernanceAPITester:
         return all_passed
 
     def test_data_lineage_endpoints(self) -> bool:
-        """Test core tenant management APIs"""
+        """Test all 3 data lineage endpoints"""
         print("\n" + "="*60)
-        print("🏢 TENANT MANAGEMENT TESTS")
+        print("🔗 DATA LINEAGE ENDPOINTS (3 endpoints)")
         print("="*60)
         
         all_passed = True
         
-        # Get current tenant
-        success, response = self.run_api_test(
-            "Get Current Tenant",
-            "GET",
-            "/api/tenants/current",
-            200
-        )
+        # 1. Create lineage entry
+        lineage_data = {
+            "source_type": "datasource",
+            "source_id": "test-datasource-001",
+            "source_table": "users",
+            "source_column": "email",
+            "target_type": "query",
+            "target_id": "test-query-001",
+            "target_table": "user_analytics",
+            "target_column": "user_email",
+            "transformation_type": "select",
+            "transformation_logic": "SELECT email FROM users",
+            "confidence_score": 95,
+            "is_active": True
+        }
         
-        if success and 'id' in response:
-            self.tenant_id = response['id']
-            print(f"   ✅ Tenant ID: {self.tenant_id}")
-            print(f"   ✅ Tenant Name: {response.get('name', 'N/A')}")
-            print(f"   ✅ Plan: {response.get('plan', 'N/A')}")
-            print(f"   ✅ Features: {response.get('features', {})}")
-        else:
-            all_passed = False
-            print("   ❌ Failed to get current tenant")
-            return False
-
-        # Get tenant by ID
-        success, response = self.run_api_test(
-            "Get Tenant by ID",
+        success, lineage_response = self.run_api_test(
+            "Create Lineage Entry",
+            "POST",
+            "/api/governance/lineage",
+            200,
+            data=lineage_data
+        )
+        all_passed = all_passed and success
+        
+        if success and 'id' in lineage_response:
+            self.lineage_id = lineage_response['id']
+            print(f"   ✅ Created lineage entry: {self.lineage_id}")
+        
+        # 2. Get lineage graph
+        success, graph = self.run_api_test(
+            "Get Lineage Graph",
             "GET",
-            f"/api/tenants/{self.tenant_id}",
+            "/api/governance/lineage/graph/datasource/test-datasource-001",
             200
         )
         all_passed = all_passed and success
-
+        if success:
+            nodes = graph.get('nodes', [])
+            edges = graph.get('edges', [])
+            print(f"   ✅ Graph has {len(nodes)} nodes and {len(edges)} edges")
+        
+        # 3. Run impact analysis
+        impact_data = {
+            "change_type": "schema_change",
+            "affected_resource_type": "datasource",
+            "affected_resource_id": "test-datasource-001",
+            "affected_resource_name": "Test Data Source"
+        }
+        
+        success, impact_response = self.run_api_test(
+            "Run Impact Analysis",
+            "POST",
+            "/api/governance/lineage/impact-analysis",
+            200,
+            data=impact_data
+        )
+        all_passed = all_passed and success
+        if success:
+            impact_level = impact_response.get('impact_level', 'unknown')
+            affected_queries = impact_response.get('affected_queries', [])
+            print(f"   ✅ Impact level: {impact_level}")
+            print(f"   ✅ Affected queries: {len(affected_queries)}")
+        
         return all_passed
 
     def test_tenant_branding(self) -> bool:
