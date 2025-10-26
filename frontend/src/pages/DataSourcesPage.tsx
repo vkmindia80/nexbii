@@ -109,9 +109,38 @@ const DataSourcesPage: React.FC = () => {
 
   const getDefaultPort = (type: string) => {
     switch (type) {
-      case 'postgresql': return '5432';
-      case 'mysql': return '3306';
+      // Relational Databases
+      case 'postgresql': 
+      case 'timescaledb': return '5432';
+      case 'mysql': 
+      case 'mariadb': return '3306';
+      case 'mssql': return '1433';
+      case 'oracle': return '1521';
+      
+      // NoSQL Databases
       case 'mongodb': return '27017';
+      case 'cassandra': return '9042';
+      case 'couchdb': return '5984';
+      case 'redis': return '6379';
+      
+      // Cloud Data Warehouses
+      case 'redshift': return '5439';
+      case 'snowflake': return '';  // Uses account URL
+      case 'bigquery': return '';   // Uses project ID
+      case 'synapse': return '1433';
+      
+      // Analytics & Search
+      case 'elasticsearch': return '9200';
+      case 'clickhouse': return '8123';
+      case 'druid': return '8082';
+      
+      // Time Series
+      case 'influxdb': return '8086';
+      
+      // Distributed SQL
+      case 'presto':
+      case 'trino': return '8080';
+      
       default: return '';
     }
   };
