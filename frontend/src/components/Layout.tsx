@@ -18,7 +18,11 @@ import {
   Building2,
   Key,
   Webhook,
-  Puzzle
+  Puzzle,
+  Shield,
+  Lock,
+  Smartphone,
+  FileCheck
 } from 'lucide-react';
 import { authService } from '../services/authService';
 import TenantSwitcher from './TenantSwitcher';
