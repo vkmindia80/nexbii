@@ -112,7 +112,7 @@ class UsageAnalyticsService:
             avg_query_time=float(avg_query_time) if avg_query_time else None,
             cache_hit_rate=cache_hit_rate,
             billable_amount=billable_amount,
-            metadata={
+            additional_data={
                 "aggregated_at": datetime.utcnow().isoformat(),
                 "period": "daily"
             }
