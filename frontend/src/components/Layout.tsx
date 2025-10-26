@@ -61,6 +61,13 @@ const Layout: React.FC = () => {
     { path: '/security/compliance', icon: FileCheck, label: 'Compliance' },
   ];
 
+  const governanceItems = [
+    { path: '/governance/catalog', icon: Database, label: 'Data Catalog' },
+    { path: '/governance/lineage', icon: GitBranch, label: 'Data Lineage' },
+    { path: '/governance/classification', icon: Shield, label: 'Classification' },
+    { path: '/governance/access-requests', icon: Key, label: 'Access Requests' },
+  ];
+
   const settingsItems = [
     { path: '/settings/api-keys', icon: Key, label: 'API Keys' },
     { path: '/settings/webhooks', icon: Webhook, label: 'Webhooks' },
