@@ -111,6 +111,14 @@ function App() {
           <Route path="/governance/lineage" element={<DataLineagePage />} />
           <Route path="/governance/classification" element={<DataClassificationPage />} />
           <Route path="/governance/access-requests" element={<AccessRequestsPage />} />
+          
+          {/* Admin Routes - Phase 4.5 */}
+          <Route path="/admin/monitoring" element={<SystemMonitoringPage />} />
+          <Route path="/admin/performance" element={<PerformanceAnalyticsPage />} />
+          <Route path="/admin/usage" element={<UsageAnalyticsPage />} />
+          <Route path="/admin/users" element={<UserManagementPage />} />
+          <Route path="/admin/backups" element={<BackupManagementPage />} />
+          <Route path="/admin/config" element={<ConfigurationManagementPage />} />
         </Route>
       </Routes>
     </Router>
