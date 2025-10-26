@@ -79,7 +79,7 @@ class UserActivityBase(BaseModel):
     user_agent: Optional[str] = None
     location: Optional[str] = None
     duration: Optional[int] = None
-    metadata: Optional[Dict[str, Any]] = None
+    additional_data: Optional[Dict[str, Any]] = None
 
 
 class UserActivityCreate(UserActivityBase):
