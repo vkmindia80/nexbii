@@ -99,7 +99,7 @@ class UserActivity(Base):
     timestamp = Column(DateTime, default=datetime.utcnow, nullable=False, index=True)
     
     # Additional data
-    metadata = Column(JSON, nullable=True)
+    additional_data = Column(JSON, nullable=True)
     
     # Relationships
     user = relationship("User", backref="detailed_activities")
