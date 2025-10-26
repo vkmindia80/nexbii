@@ -15,7 +15,10 @@ import {
   Plug,
   Brain,
   User,
-  Building2
+  Building2,
+  Key,
+  Webhook,
+  Puzzle
 } from 'lucide-react';
 import { authService } from '../services/authService';
 import TenantSwitcher from './TenantSwitcher';
