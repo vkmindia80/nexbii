@@ -256,7 +256,7 @@ class DataSourceService:
         tables = []
         
         try:
-            if ds_type == DataSourceType.POSTGRESQL:
+            if ds_type in [DataSourceType.POSTGRESQL, DataSourceType.TIMESCALEDB]:
                 conn = psycopg2.connect(
                     host=config.get("host"),
                     port=config.get("port", 5432),
@@ -290,7 +290,7 @@ class DataSourceService:
                 
                 conn.close()
             
-            elif ds_type == DataSourceType.MYSQL:
+            elif ds_type in [DataSourceType.MYSQL, DataSourceType.MARIADB]:
                 conn = mysql.connector.connect(
                     host=config.get("host"),
                     port=config.get("port", 3306),
@@ -312,55 +312,6 @@ class DataSourceService:
                     tables.append({
                         "name": table_name,
                         "columns": [{"name": col[0], "type": col[1]} for col in columns]
-                    })
-                
-                conn.close()
-            
-            elif ds_type == DataSourceType.MONGODB:
-                client = MongoClient(
-                    host=config.get("host"),
-                    port=config.get("port", 27017),
-                    username=config.get("user"),
-                    password=config.get("password")
-                )
-                db = client[config.get("database")]
-                collection_names = db.list_collection_names()
-                
-                for collection_name in collection_names:
-                    # Sample document to infer schema
-                    sample = db[collection_name].find_one()
-                    columns = []
-                    if sample:
-                        columns = [{"name": key, "type": type(value).__name__} for key, value in sample.items()]
-                    
-                    tables.append({
-                        "name": collection_name,
-                        "columns": columns
-                    })
-                
-                client.close()
-            
-            elif ds_type == DataSourceType.SQLITE:
-                conn = sqlite3.connect(config.get("database_path") or config.get("database"))
-                cursor = conn.cursor()
-                
-                # Get tables
-                cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
-                table_names = cursor.fetchall()
-                
-                for (table_name,) in table_names:
-                    # Get columns for each table
-                    cursor.execute(f"PRAGMA table_info({table_name})")
-                    columns = cursor.fetchall()
-                    
-                    # Get row count
-                    cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
-                    row_count = cursor.fetchone()[0]
-                    
-                    tables.append({
-                        "name": table_name,
-                        "columns": [{"name": col[1], "type": col[2]} for col in columns],
-                        "row_count": row_count
                     })
                 
                 conn.close()
@@ -398,65 +349,29 @@ class DataSourceService:
                     
                     conn.close()
             
-            elif ds_type in [DataSourceType.MYSQL, DataSourceType.MARIADB]:
-                conn = mysql.connector.connect(
+            elif ds_type == DataSourceType.MONGODB:
+                client = MongoClient(
                     host=config.get("host"),
-                    port=config.get("port", 3306),
-                    database=config.get("database"),
-                    user=config.get("user"),
+                    port=config.get("port", 27017),
+                    username=config.get("user"),
                     password=config.get("password")
                 )
-                cursor = conn.cursor()
+                db = client[config.get("database")]
+                collection_names = db.list_collection_names()
                 
-                # Get tables
-                cursor.execute("SHOW TABLES")
-                table_names = cursor.fetchall()
-                
-                for (table_name,) in table_names:
-                    # Get columns for each table
-                    cursor.execute(f"DESCRIBE {table_name}")
-                    columns = cursor.fetchall()
+                for collection_name in collection_names:
+                    # Sample document to infer schema
+                    sample = db[collection_name].find_one()
+                    columns = []
+                    if sample:
+                        columns = [{"name": key, "type": type(value).__name__} for key, value in sample.items()]
                     
                     tables.append({
-                        "name": table_name,
-                        "columns": [{"name": col[0], "type": col[1]} for col in columns]
+                        "name": collection_name,
+                        "columns": columns
                     })
                 
-                conn.close()
-            
-            elif ds_type in [DataSourceType.POSTGRESQL, DataSourceType.TIMESCALEDB]:
-                conn = psycopg2.connect(
-                    host=config.get("host"),
-                    port=config.get("port", 5432),
-                    database=config.get("database"),
-                    user=config.get("user"),
-                    password=config.get("password")
-                )
-                cursor = conn.cursor()
-                
-                # Get tables
-                cursor.execute("""
-                    SELECT table_name 
-                    FROM information_schema.tables 
-                    WHERE table_schema = 'public'
-                """)
-                table_names = cursor.fetchall()
-                
-                for (table_name,) in table_names:
-                    # Get columns for each table
-                    cursor.execute("""
-                        SELECT column_name, data_type 
-                        FROM information_schema.columns 
-                        WHERE table_name = %s
-                    """, (table_name,))
-                    columns = cursor.fetchall()
-                    
-                    tables.append({
-                        "name": table_name,
-                        "columns": [{"name": col[0], "type": col[1]} for col in columns]
-                    })
-                
-                conn.close()
+                client.close()
             
             elif ds_type == DataSourceType.REDSHIFT:
                 # Redshift uses PostgreSQL protocol
@@ -599,6 +514,31 @@ class DataSourceService:
                         })
                     
                     cluster.shutdown()
+            
+            elif ds_type == DataSourceType.SQLITE:
+                conn = sqlite3.connect(config.get("database_path") or config.get("database"))
+                cursor = conn.cursor()
+                
+                # Get tables
+                cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
+                table_names = cursor.fetchall()
+                
+                for (table_name,) in table_names:
+                    # Get columns for each table
+                    cursor.execute(f"PRAGMA table_info({table_name})")
+                    columns = cursor.fetchall()
+                    
+                    # Get row count
+                    cursor.execute(f"SELECT COUNT(*) FROM {table_name}")
+                    row_count = cursor.fetchone()[0]
+                    
+                    tables.append({
+                        "name": table_name,
+                        "columns": [{"name": col[1], "type": col[2]} for col in columns],
+                        "row_count": row_count
+                    })
+                
+                conn.close()
         
         except Exception as e:
             print(f"Schema retrieval failed for {ds_type}: {str(e)}")
