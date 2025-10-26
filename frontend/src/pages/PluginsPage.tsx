@@ -79,8 +79,10 @@ const PluginsPage: React.FC = () => {
       setPlugins(pluginsData);
       setPluginTypes(typesData);
       setInstances(instancesData);
-    } catch (error) {
-      showMessage('error', 'Failed to load plugins');
+    } catch (error: any) {
+      console.error('Error loading plugins:', error);
+      const errorMessage = error.response?.data?.detail || error.message || 'Failed to load plugins';
+      showMessage('error', errorMessage);
     } finally {
       setLoading(false);
     }
