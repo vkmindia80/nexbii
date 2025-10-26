@@ -32,5 +32,12 @@ def get_db():
     finally:
         db.close()
 
+def get_db_url():
+    """Get the database URL being used"""
+    try:
+        return settings.POSTGRES_URL
+    except:
+        return SQLITE_URL
+
 def get_mongo_db():
     return mongo_db
