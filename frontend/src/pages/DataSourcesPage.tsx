@@ -254,10 +254,52 @@ const DataSourcesPage: React.FC = () => {
                     onChange={(e) => setFormData({ ...formData, type: e.target.value as any, port: getDefaultPort(e.target.value) })}
                     className="input"
                   >
-                    <option value="postgresql">PostgreSQL</option>
-                    <option value="mysql">MySQL</option>
-                    <option value="mongodb">MongoDB</option>
-                    <option value="sqlite">SQLite</option>
+                    <optgroup label="Relational Databases">
+                      <option value="postgresql">PostgreSQL</option>
+                      <option value="mysql">MySQL</option>
+                      <option value="mariadb">MariaDB</option>
+                      <option value="mssql">Microsoft SQL Server</option>
+                      <option value="oracle">Oracle Database</option>
+                      <option value="sqlite">SQLite</option>
+                    </optgroup>
+                    
+                    <optgroup label="Cloud Data Warehouses">
+                      <option value="snowflake">Snowflake</option>
+                      <option value="redshift">Amazon Redshift</option>
+                      <option value="bigquery">Google BigQuery</option>
+                      <option value="synapse">Azure Synapse Analytics</option>
+                    </optgroup>
+                    
+                    <optgroup label="NoSQL Databases">
+                      <option value="mongodb">MongoDB</option>
+                      <option value="cassandra">Apache Cassandra</option>
+                      <option value="dynamodb">Amazon DynamoDB</option>
+                      <option value="couchdb">CouchDB</option>
+                      <option value="redis">Redis</option>
+                    </optgroup>
+                    
+                    <optgroup label="Analytics & Search">
+                      <option value="elasticsearch">Elasticsearch</option>
+                      <option value="clickhouse">ClickHouse</option>
+                      <option value="druid">Apache Druid</option>
+                    </optgroup>
+                    
+                    <optgroup label="Time Series">
+                      <option value="timescaledb">TimescaleDB</option>
+                      <option value="influxdb">InfluxDB</option>
+                    </optgroup>
+                    
+                    <optgroup label="Distributed SQL">
+                      <option value="presto">Presto</option>
+                      <option value="trino">Trino</option>
+                    </optgroup>
+                    
+                    <optgroup label="File-based">
+                      <option value="csv">CSV Files</option>
+                      <option value="excel">Excel Files</option>
+                      <option value="json">JSON Files</option>
+                      <option value="parquet">Parquet Files</option>
+                    </optgroup>
                   </select>
                 </div>
 
