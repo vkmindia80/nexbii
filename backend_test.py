@@ -586,7 +586,7 @@ class GovernanceAPITester:
 
 def main():
     """Main test execution"""
-    tester = TenantBrandingAPITester()
+    tester = GovernanceAPITester()
     
     try:
         success = tester.run_all_tests()
