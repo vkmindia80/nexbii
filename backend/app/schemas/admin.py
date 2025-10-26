@@ -136,7 +136,7 @@ class TenantUsageMetricsBase(BaseModel):
     avg_query_time: Optional[float] = None
     cache_hit_rate: Optional[float] = None
     billable_amount: float = 0.0
-    metadata: Optional[Dict[str, Any]] = None
+    additional_data: Optional[Dict[str, Any]] = None
 
 
 class TenantUsageMetricsCreate(TenantUsageMetricsBase):
