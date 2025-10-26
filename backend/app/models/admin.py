@@ -65,8 +65,8 @@ class SystemMetrics(Base):
     avg_api_response_time = Column(Float, nullable=True)  # Milliseconds
     error_count = Column(Integer, default=0)
     
-    # Additional metadata
-    metadata = Column(JSON, nullable=True)
+    # Additional data
+    additional_data = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
