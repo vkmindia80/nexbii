@@ -72,6 +72,15 @@ const Layout: React.FC = () => {
     { path: '/governance/access-requests', icon: Key, label: 'Access Requests' },
   ];
 
+  const adminItems = [
+    { path: '/admin/monitoring', icon: Activity, label: 'System Monitoring' },
+    { path: '/admin/performance', icon: TrendingUp, label: 'Performance' },
+    { path: '/admin/usage', icon: BarChart3, label: 'Usage Analytics' },
+    { path: '/admin/users', icon: Users, label: 'User Management' },
+    { path: '/admin/backups', icon: HardDrive, label: 'Backups' },
+    { path: '/admin/config', icon: Cog, label: 'Configuration' },
+  ];
+
   const settingsItems = [
     { path: '/settings/api-keys', icon: Key, label: 'API Keys' },
     { path: '/settings/webhooks', icon: Webhook, label: 'Webhooks' },
