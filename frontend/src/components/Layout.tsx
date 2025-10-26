@@ -22,7 +22,10 @@ import {
   Shield,
   Lock,
   Smartphone,
-  FileCheck
+  FileCheck,
+  GitBranch,
+  Table,
+  Search
 } from 'lucide-react';
 import { authService } from '../services/authService';
 import TenantSwitcher from './TenantSwitcher';
