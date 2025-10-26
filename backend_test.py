@@ -26,8 +26,15 @@ class GovernanceAPITester:
         self.tests_run = 0
         self.tests_passed = 0
         self.test_results = []
+        self.failed_tests = []
         
-        # Test data
+        # Test data storage
+        self.catalog_entry_id = None
+        self.lineage_id = None
+        self.classification_rule_id = None
+        self.access_request_id = None
+        
+        # Test credentials
         self.test_credentials = {
             "email": "admin@nexbii.demo",
             "password": "demo123"
