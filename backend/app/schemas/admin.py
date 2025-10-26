@@ -46,7 +46,7 @@ class SystemMetricsBase(BaseModel):
     avg_query_time: Optional[float] = None
     avg_api_response_time: Optional[float] = None
     error_count: int = Field(default=0, ge=0)
-    metadata: Optional[Dict[str, Any]] = None
+    additional_data: Optional[Dict[str, Any]] = None
 
 
 class SystemMetricsCreate(SystemMetricsBase):
