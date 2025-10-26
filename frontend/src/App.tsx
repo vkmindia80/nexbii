@@ -84,6 +84,9 @@ function App() {
           <Route path="/integrations" element={<IntegrationsPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/tenant-settings" element={<TenantSettingsPage />} />
+          <Route path="/settings/api-keys" element={<APIKeysPage />} />
+          <Route path="/settings/webhooks" element={<WebhooksPage />} />
+          <Route path="/settings/plugins" element={<PluginsPage />} />
         </Route>
       </Routes>
     </Router>
