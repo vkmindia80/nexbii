@@ -107,6 +107,7 @@ app.add_middleware(TenantContextMiddleware)
 # Include routers
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(tenants.router, prefix="/api/tenants", tags=["Multi-Tenancy"])
+app.include_router(api_keys.router, prefix="/api/api-keys", tags=["API Keys"])
 app.include_router(datasources.router, prefix="/api/datasources", tags=["Data Sources"])
 app.include_router(queries.router, prefix="/api/queries", tags=["Queries"])
 app.include_router(dashboards.router, prefix="/api/dashboards", tags=["Dashboards"])
