@@ -128,6 +128,11 @@ app.include_router(alerts.router, prefix="/api/alerts", tags=["Alerts"])
 app.include_router(integrations.router, prefix="/api/integrations", tags=["Integrations"])
 app.include_router(ai.router, prefix="/api/ai", tags=["AI Features"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
+app.include_router(security.router, prefix="/api/security", tags=["Security"])
+app.include_router(sso.router, prefix="/api/sso", tags=["SSO"])
+app.include_router(mfa.router, prefix="/api/mfa", tags=["MFA"])
+app.include_router(audit.router, prefix="/api/audit", tags=["Audit Logs"])
+app.include_router(compliance.router, prefix="/api/compliance", tags=["Compliance"])
 
 @app.get("/api/health")
 async def health_check():
