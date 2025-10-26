@@ -106,7 +106,7 @@ class TenantDomain(TenantDomainBase):
     is_verified: bool
     is_primary: bool
     ssl_enabled: bool
-    verification_token: str
+    verification_token: Optional[str]
     verification_method: str
     verified_at: Optional[datetime]
     created_at: datetime
