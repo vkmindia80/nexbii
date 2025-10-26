@@ -9,6 +9,9 @@ from .activity import Activity, ActivityType
 from .alert import Alert, AlertHistory, AlertConditionType, AlertFrequency, AlertStatus
 from .analytics import SavedAnalysis, MLModel
 from .tenant import Tenant, TenantDomain, TenantInvitation, TenantUsage
+from .api_key import APIKey, APIKeyUsageLog
+from .webhook import Webhook, WebhookDelivery
+from .plugin import Plugin, PluginInstance
 
 __all__ = [
     "User", "UserRole", 
@@ -21,5 +24,8 @@ __all__ = [
     "Activity", "ActivityType",
     "Alert", "AlertHistory", "AlertConditionType", "AlertFrequency", "AlertStatus",
     "SavedAnalysis", "MLModel",
-    "Tenant", "TenantDomain", "TenantInvitation", "TenantUsage"
+    "Tenant", "TenantDomain", "TenantInvitation", "TenantUsage",
+    "APIKey", "APIKeyUsageLog",
+    "Webhook", "WebhookDelivery",
+    "Plugin", "PluginInstance"
 ]
