@@ -364,8 +364,243 @@ class DataSourceService:
                     })
                 
                 conn.close()
+            
+            elif ds_type == DataSourceType.MSSQL:
+                if MSSQL_AVAILABLE:
+                    conn = pymssql.connect(
+                        server=config.get("host"),
+                        port=config.get("port", 1433),
+                        database=config.get("database"),
+                        user=config.get("user"),
+                        password=config.get("password")
+                    )
+                    cursor = conn.cursor()
+                    
+                    cursor.execute("""
+                        SELECT TABLE_NAME 
+                        FROM INFORMATION_SCHEMA.TABLES 
+                        WHERE TABLE_TYPE = 'BASE TABLE'
+                    """)
+                    table_names = cursor.fetchall()
+                    
+                    for (table_name,) in table_names:
+                        cursor.execute("""
+                            SELECT COLUMN_NAME, DATA_TYPE 
+                            FROM INFORMATION_SCHEMA.COLUMNS 
+                            WHERE TABLE_NAME = ?
+                        """, (table_name,))
+                        columns = cursor.fetchall()
+                        
+                        tables.append({
+                            "name": table_name,
+                            "columns": [{"name": col[0], "type": col[1]} for col in columns]
+                        })
+                    
+                    conn.close()
+            
+            elif ds_type in [DataSourceType.MYSQL, DataSourceType.MARIADB]:
+                conn = mysql.connector.connect(
+                    host=config.get("host"),
+                    port=config.get("port", 3306),
+                    database=config.get("database"),
+                    user=config.get("user"),
+                    password=config.get("password")
+                )
+                cursor = conn.cursor()
+                
+                # Get tables
+                cursor.execute("SHOW TABLES")
+                table_names = cursor.fetchall()
+                
+                for (table_name,) in table_names:
+                    # Get columns for each table
+                    cursor.execute(f"DESCRIBE {table_name}")
+                    columns = cursor.fetchall()
+                    
+                    tables.append({
+                        "name": table_name,
+                        "columns": [{"name": col[0], "type": col[1]} for col in columns]
+                    })
+                
+                conn.close()
+            
+            elif ds_type in [DataSourceType.POSTGRESQL, DataSourceType.TIMESCALEDB]:
+                conn = psycopg2.connect(
+                    host=config.get("host"),
+                    port=config.get("port", 5432),
+                    database=config.get("database"),
+                    user=config.get("user"),
+                    password=config.get("password")
+                )
+                cursor = conn.cursor()
+                
+                # Get tables
+                cursor.execute("""
+                    SELECT table_name 
+                    FROM information_schema.tables 
+                    WHERE table_schema = 'public'
+                """)
+                table_names = cursor.fetchall()
+                
+                for (table_name,) in table_names:
+                    # Get columns for each table
+                    cursor.execute("""
+                        SELECT column_name, data_type 
+                        FROM information_schema.columns 
+                        WHERE table_name = %s
+                    """, (table_name,))
+                    columns = cursor.fetchall()
+                    
+                    tables.append({
+                        "name": table_name,
+                        "columns": [{"name": col[0], "type": col[1]} for col in columns]
+                    })
+                
+                conn.close()
+            
+            elif ds_type == DataSourceType.REDSHIFT:
+                # Redshift uses PostgreSQL protocol
+                conn = psycopg2.connect(
+                    host=config.get("host"),
+                    port=config.get("port", 5439),
+                    database=config.get("database"),
+                    user=config.get("user"),
+                    password=config.get("password")
+                )
+                cursor = conn.cursor()
+                
+                cursor.execute("""
+                    SELECT tablename 
+                    FROM pg_tables 
+                    WHERE schemaname = 'public'
+                """)
+                table_names = cursor.fetchall()
+                
+                for (table_name,) in table_names:
+                    cursor.execute(f"""
+                        SELECT column_name, data_type 
+                        FROM information_schema.columns 
+                        WHERE table_name = '{table_name}'
+                    """)
+                    columns = cursor.fetchall()
+                    
+                    tables.append({
+                        "name": table_name,
+                        "columns": [{"name": col[0], "type": col[1]} for col in columns]
+                    })
+                
+                conn.close()
+            
+            elif ds_type == DataSourceType.CLICKHOUSE:
+                if CLICKHOUSE_AVAILABLE:
+                    client = clickhouse_connect.get_client(
+                        host=config.get("host"),
+                        port=config.get("port", 8123),
+                        username=config.get("user"),
+                        password=config.get("password"),
+                        database=config.get("database", "default")
+                    )
+                    
+                    result = client.query("SHOW TABLES")
+                    table_names = [row[0] for row in result.result_rows]
+                    
+                    for table_name in table_names:
+                        result = client.query(f"DESCRIBE TABLE {table_name}")
+                        columns = [{"name": row[0], "type": row[1]} for row in result.result_rows]
+                        
+                        tables.append({
+                            "name": table_name,
+                            "columns": columns
+                        })
+            
+            elif ds_type == DataSourceType.SNOWFLAKE:
+                if SNOWFLAKE_AVAILABLE:
+                    conn = snowflake_connect(
+                        user=config.get("user"),
+                        password=config.get("password"),
+                        account=config.get("account"),
+                        warehouse=config.get("warehouse"),
+                        database=config.get("database"),
+                        schema=config.get("schema", "PUBLIC")
+                    )
+                    cursor = conn.cursor()
+                    
+                    cursor.execute("SHOW TABLES")
+                    table_names = cursor.fetchall()
+                    
+                    for row in table_names:
+                        table_name = row[1]  # Table name is in the second column
+                        cursor.execute(f"DESCRIBE TABLE {table_name}")
+                        columns = cursor.fetchall()
+                        
+                        tables.append({
+                            "name": table_name,
+                            "columns": [{"name": col[0], "type": col[1]} for col in columns]
+                        })
+                    
+                    conn.close()
+            
+            elif ds_type == DataSourceType.ELASTICSEARCH:
+                if ELASTICSEARCH_AVAILABLE:
+                    es = Elasticsearch(
+                        [f"{config.get('host')}:{config.get('port', 9200)}"],
+                        basic_auth=(config.get("user"), config.get("password")) if config.get("user") else None
+                    )
+                    
+                    # Get all indices
+                    indices = es.indices.get_alias(index="*")
+                    
+                    for index_name in indices.keys():
+                        if not index_name.startswith('.'):  # Skip system indices
+                            # Get mapping to infer schema
+                            mapping = es.indices.get_mapping(index=index_name)
+                            properties = mapping[index_name]["mappings"].get("properties", {})
+                            
+                            columns = [{"name": field, "type": props.get("type", "unknown")} 
+                                     for field, props in properties.items()]
+                            
+                            tables.append({
+                                "name": index_name,
+                                "columns": columns
+                            })
+            
+            elif ds_type == DataSourceType.CASSANDRA:
+                if CASSANDRA_AVAILABLE:
+                    cluster = Cluster([config.get("host")], port=config.get("port", 9042))
+                    session = cluster.connect()
+                    
+                    # Get keyspaces
+                    keyspace = config.get("keyspace", "system")
+                    session.set_keyspace(keyspace)
+                    
+                    # Get tables in keyspace
+                    rows = session.execute(f"""
+                        SELECT table_name 
+                        FROM system_schema.tables 
+                        WHERE keyspace_name = '{keyspace}'
+                    """)
+                    
+                    for row in rows:
+                        table_name = row.table_name
+                        
+                        # Get columns
+                        col_rows = session.execute(f"""
+                            SELECT column_name, type 
+                            FROM system_schema.columns 
+                            WHERE keyspace_name = '{keyspace}' AND table_name = '{table_name}'
+                        """)
+                        
+                        columns = [{"name": col_row.column_name, "type": col_row.type} 
+                                 for col_row in col_rows]
+                        
+                        tables.append({
+                            "name": table_name,
+                            "columns": columns
+                        })
+                    
+                    cluster.shutdown()
         
         except Exception as e:
-            print(f"Schema retrieval failed: {str(e)}")
+            print(f"Schema retrieval failed for {ds_type}: {str(e)}")
         
         return tables
