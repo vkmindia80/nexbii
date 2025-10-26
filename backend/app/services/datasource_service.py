@@ -70,7 +70,7 @@ class DataSourceService:
     async def test_connection(self, ds_type: DataSourceType, config: Dict[str, Any]) -> bool:
         """Test connection to a data source"""
         try:
-            if ds_type == DataSourceType.POSTGRESQL:
+            if ds_type == DataSourceType.POSTGRESQL or ds_type == DataSourceType.TIMESCALEDB:
                 conn = psycopg2.connect(
                     host=config.get("host"),
                     port=config.get("port", 5432),
@@ -81,13 +81,42 @@ class DataSourceService:
                 conn.close()
                 return True
             
-            elif ds_type == DataSourceType.MYSQL:
+            elif ds_type == DataSourceType.MYSQL or ds_type == DataSourceType.MARIADB:
                 conn = mysql.connector.connect(
                     host=config.get("host"),
                     port=config.get("port", 3306),
                     database=config.get("database"),
                     user=config.get("user"),
                     password=config.get("password")
+                )
+                conn.close()
+                return True
+            
+            elif ds_type == DataSourceType.MSSQL:
+                if not MSSQL_AVAILABLE:
+                    return False
+                conn = pymssql.connect(
+                    server=config.get("host"),
+                    port=config.get("port", 1433),
+                    database=config.get("database"),
+                    user=config.get("user"),
+                    password=config.get("password")
+                )
+                conn.close()
+                return True
+            
+            elif ds_type == DataSourceType.ORACLE:
+                if not ORACLE_AVAILABLE:
+                    return False
+                dsn = cx_Oracle.makedsn(
+                    config.get("host"),
+                    config.get("port", 1521),
+                    service_name=config.get("service_name") or config.get("database")
+                )
+                conn = cx_Oracle.connect(
+                    user=config.get("user"),
+                    password=config.get("password"),
+                    dsn=dsn
                 )
                 conn.close()
                 return True
@@ -103,14 +132,123 @@ class DataSourceService:
                 client.close()
                 return True
             
+            elif ds_type == DataSourceType.CASSANDRA:
+                if not CASSANDRA_AVAILABLE:
+                    return False
+                cluster = Cluster([config.get("host")], port=config.get("port", 9042))
+                session = cluster.connect()
+                cluster.shutdown()
+                return True
+            
+            elif ds_type == DataSourceType.REDIS:
+                if not REDIS_AVAILABLE:
+                    return False
+                r = redis.Redis(
+                    host=config.get("host"),
+                    port=config.get("port", 6379),
+                    password=config.get("password"),
+                    db=config.get("database", 0)
+                )
+                r.ping()
+                return True
+            
+            elif ds_type == DataSourceType.ELASTICSEARCH:
+                if not ELASTICSEARCH_AVAILABLE:
+                    return False
+                es = Elasticsearch(
+                    [f"{config.get('host')}:{config.get('port', 9200)}"],
+                    basic_auth=(config.get("user"), config.get("password")) if config.get("user") else None
+                )
+                es.ping()
+                return True
+            
+            elif ds_type == DataSourceType.CLICKHOUSE:
+                if not CLICKHOUSE_AVAILABLE:
+                    return False
+                client = clickhouse_connect.get_client(
+                    host=config.get("host"),
+                    port=config.get("port", 8123),
+                    username=config.get("user"),
+                    password=config.get("password"),
+                    database=config.get("database", "default")
+                )
+                client.ping()
+                return True
+            
+            elif ds_type == DataSourceType.SNOWFLAKE:
+                if not SNOWFLAKE_AVAILABLE:
+                    return False
+                conn = snowflake_connect(
+                    user=config.get("user"),
+                    password=config.get("password"),
+                    account=config.get("account"),
+                    warehouse=config.get("warehouse"),
+                    database=config.get("database"),
+                    schema=config.get("schema", "PUBLIC")
+                )
+                conn.close()
+                return True
+            
+            elif ds_type == DataSourceType.REDSHIFT:
+                # Redshift uses PostgreSQL protocol
+                conn = psycopg2.connect(
+                    host=config.get("host"),
+                    port=config.get("port", 5439),
+                    database=config.get("database"),
+                    user=config.get("user"),
+                    password=config.get("password")
+                )
+                conn.close()
+                return True
+            
+            elif ds_type == DataSourceType.BIGQUERY:
+                if not BIGQUERY_AVAILABLE:
+                    return False
+                client = bigquery.Client(
+                    project=config.get("project_id"),
+                    credentials=config.get("credentials")  # Service account JSON
+                )
+                # Test query
+                query = "SELECT 1"
+                client.query(query).result()
+                return True
+            
+            elif ds_type == DataSourceType.DYNAMODB:
+                if not BOTO3_AVAILABLE:
+                    return False
+                dynamodb = boto3.resource(
+                    'dynamodb',
+                    region_name=config.get("region"),
+                    aws_access_key_id=config.get("access_key_id"),
+                    aws_secret_access_key=config.get("secret_access_key")
+                )
+                # List tables to test connection
+                list(dynamodb.tables.all())
+                return True
+            
+            elif ds_type == DataSourceType.COUCHDB:
+                if not COUCHDB_AVAILABLE:
+                    return False
+                server = couchdb.Server(
+                    f"http://{config.get('host')}:{config.get('port', 5984)}"
+                )
+                if config.get("user"):
+                    server.resource.credentials = (config.get("user"), config.get("password"))
+                server.version()
+                return True
+            
             elif ds_type == DataSourceType.SQLITE:
                 conn = sqlite3.connect(config.get("database_path") or config.get("database"))
                 conn.close()
                 return True
             
+            # File-based sources (CSV, Excel, JSON, Parquet) don't need connection testing
+            elif ds_type in [DataSourceType.CSV, DataSourceType.EXCEL, DataSourceType.JSON_FILE, DataSourceType.PARQUET]:
+                return True
+            
             return True
         except Exception as e:
-            print(f"Connection test failed: {str(e)}")
+            print(f"Connection test failed for {ds_type}: {str(e)}")
             return False
     
     async def get_schema(self, ds_type: DataSourceType, config: Dict[str, Any]) -> List[Dict[str, Any]]:
