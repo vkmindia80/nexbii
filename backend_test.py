@@ -158,38 +158,96 @@ class GovernanceAPITester:
         return False
 
     def test_data_catalog_endpoints(self) -> bool:
-        """Test tenant provisioning if no tenant exists"""
+        """Test all 6 data catalog endpoints"""
         print("\n" + "="*60)
-        print("🏗️  TENANT PROVISIONING TESTS")
+        print("📚 DATA CATALOG ENDPOINTS (6 endpoints)")
         print("="*60)
         
-        # Try to provision a tenant for testing
-        provision_data = {
-            "organization_name": "Demo Organization",
-            "admin_name": "Demo Admin",
-            "admin_email": "admin@nexbii.demo",
-            "admin_password": "demo123456",
-            "plan": "enterprise",
-            "custom_slug": "demo"
+        all_passed = True
+        
+        # 1. Get catalog statistics
+        success, stats = self.run_api_test(
+            "Get Catalog Statistics",
+            "GET",
+            "/api/governance/catalog/statistics",
+            200
+        )
+        all_passed = all_passed and success
+        if success:
+            print(f"   ✅ Total entries: {stats.get('total_entries', 0)}")
+            print(f"   ✅ Total tables: {stats.get('total_tables', 0)}")
+            print(f"   ✅ PII count: {stats.get('pii_count', 0)}")
+        
+        # 2. Get catalog entries (empty initially)
+        success, entries_response = self.run_api_test(
+            "Get Catalog Entries",
+            "GET",
+            "/api/governance/catalog",
+            200
+        )
+        all_passed = all_passed and success
+        if success:
+            entries = entries_response.get('entries', [])
+            print(f"   ✅ Found {len(entries)} existing entries")
+        
+        # 3. Create catalog entry
+        catalog_data = {
+            "datasource_id": "test-datasource-001",
+            "table_name": "users",
+            "column_name": "email",
+            "display_name": "User Email Address",
+            "description": "Primary email address for user accounts",
+            "business_owner": "Data Team",
+            "technical_owner": "Engineering Team",
+            "tags": ["user-data", "contact-info"],
+            "classification_level": "internal",
+            "is_pii": True,
+            "pii_types": ["email"],
+            "data_type": "varchar(255)",
+            "is_nullable": False,
+            "usage_notes": "Used for authentication and notifications"
         }
         
-        success, response = self.run_api_test(
-            "Provision Demo Tenant",
+        success, entry_response = self.run_api_test(
+            "Create Catalog Entry",
             "POST",
-            "/api/tenants/provision",
+            "/api/governance/catalog",
             200,
-            data=provision_data
+            data=catalog_data
         )
+        all_passed = all_passed and success
         
-        if success and 'tenant' in response:
-            tenant_data = response['tenant']
-            self.tenant_id = tenant_data['id']
-            print(f"   ✅ Tenant provisioned: {tenant_data.get('name')}")
-            print(f"   ✅ Tenant ID: {self.tenant_id}")
-            return True
-        else:
-            print("   ℹ️  Tenant provisioning failed (may already exist)")
-            return False
+        if success and 'id' in entry_response:
+            self.catalog_entry_id = entry_response['id']
+            print(f"   ✅ Created catalog entry: {self.catalog_entry_id}")
+        
+        # 4. Get specific catalog entry
+        if self.catalog_entry_id:
+            success, entry = self.run_api_test(
+                "Get Specific Catalog Entry",
+                "GET",
+                f"/api/governance/catalog/{self.catalog_entry_id}",
+                200
+            )
+            all_passed = all_passed and success
+        
+        # 5. Update catalog entry
+        if self.catalog_entry_id:
+            update_data = {
+                "description": "Updated: Primary email address for user accounts with notifications",
+                "tags": ["user-data", "contact-info", "notifications"]
+            }
+            
+            success, updated_entry = self.run_api_test(
+                "Update Catalog Entry",
+                "PUT",
+                f"/api/governance/catalog/{self.catalog_entry_id}",
+                200,
+                data=update_data
+            )
+            all_passed = all_passed and success
+        
+        return all_passed
 
     def test_tenant_management(self) -> bool:
         """Test core tenant management APIs"""
