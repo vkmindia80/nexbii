@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://git-connect-api.preview.emergentagent.com",
-        "https://git-connect-api.preview.emergentagent.com",
-        "https://git-connect-api.preview.emergentagent.com"
+        "https://webhook-control.preview.emergentagent.com",
+        "https://webhook-control.preview.emergentagent.com",
+        "https://webhook-control.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
