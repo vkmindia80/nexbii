@@ -7,7 +7,7 @@ Tests:
 - Data Catalog: 6 endpoints (CRUD + statistics)
 - Data Lineage: 3 endpoints (create, graph, impact analysis)
 - Data Classification: 3 endpoints (rules, scan PII)
-- Access Requests: 5 endpoints (CRUD + approve/reject)
+- Access Requests: 6 endpoints (CRUD + approve/reject)
 - Health: 1 endpoint
 - Authentication & Multi-tenancy
 """
