@@ -12,6 +12,13 @@ from .tenant import Tenant, TenantDomain, TenantInvitation, TenantUsage
 from .api_key import APIKey, APIKeyUsageLog
 from .webhook import Webhook, WebhookDelivery
 from .plugin import Plugin, PluginInstance
+from .security import (
+    SecurityPolicy, PolicyType, 
+    DataMaskingRule, DataClassification, DataClassificationType,
+    OAuthProvider, SAMLConfig, LDAPConfig,
+    MFAConfig, AuditLog, AuditEventCategory,
+    ConsentRecord, SessionLog
+)
 
 __all__ = [
     "User", "UserRole", 
@@ -27,5 +34,11 @@ __all__ = [
     "Tenant", "TenantDomain", "TenantInvitation", "TenantUsage",
     "APIKey", "APIKeyUsageLog",
     "Webhook", "WebhookDelivery",
-    "Plugin", "PluginInstance"
+    "Plugin", "PluginInstance",
+    "SecurityPolicy", "PolicyType",
+    "DataMaskingRule", "DataClassification", "DataClassificationType",
+    "OAuthProvider", "SAMLConfig", "LDAPConfig",
+    "MFAConfig", "AuditLog", "AuditEventCategory",
+    "ConsentRecord", "SessionLog"
 ]
+
