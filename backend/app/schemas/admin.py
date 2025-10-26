@@ -194,7 +194,7 @@ class BackupJobResponse(BackupJobBase):
     created_at: datetime
     error_message: Optional[str]
     retry_count: int
-    metadata: Optional[Dict[str, Any]]
+    additional_data: Optional[Dict[str, Any]]
     created_by: Optional[str]
 
     class Config:
