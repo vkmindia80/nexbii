@@ -32,3 +32,5 @@ class User(Base):
     
     # Relationships
     analyses = relationship("SavedAnalysis", back_populates="user")
+    mfa_config = relationship("MFAConfig", back_populates="user", uselist=False, cascade="all, delete-orphan")
+    consent_records = relationship("ConsentRecord", back_populates="user", cascade="all, delete-orphan")
