@@ -291,5 +291,5 @@ class SystemHealthCheck(Base):
     alerts_triggered = Column(JSON, nullable=True)
     
     # Additional data
-    metadata = Column(JSON, nullable=True)
+    additional_data = Column(JSON, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
