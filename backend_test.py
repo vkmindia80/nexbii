@@ -324,46 +324,68 @@ class GovernanceAPITester:
         return all_passed
 
     def test_classification_endpoints(self) -> bool:
-        """Test tenant branding APIs"""
+        """Test all 3 classification endpoints"""
         print("\n" + "="*60)
-        print("🎨 TENANT BRANDING TESTS")
+        print("🛡️ DATA CLASSIFICATION ENDPOINTS (3 endpoints)")
         print("="*60)
-        
-        if not self.tenant_id:
-            print("❌ No tenant ID available for branding tests")
-            return False
         
         all_passed = True
         
-        # Test branding update
-        branding_data = {
-            "branding": {
-                "logo_url": "https://example.com/logo.png",
-                "logo_dark_url": "https://example.com/logo-dark.png",
-                "primary_color": "#667eea",
-                "secondary_color": "#764ba2",
-                "accent_color": "#3b82f6",
-                "font_family": "Arial, sans-serif",
-                "custom_css": "/* Custom styles */",
-                "favicon_url": "https://example.com/favicon.ico"
-            }
+        # 1. Create classification rule
+        rule_data = {
+            "name": "Email Detection Rule",
+            "description": "Detects email addresses in column names and data",
+            "pii_type": "email",
+            "pattern": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b",
+            "column_name_pattern": r"(email|e_mail|mail)",
+            "classification_level": "internal",
+            "is_enabled": True,
+            "priority": 10
         }
         
-        success, response = self.run_api_test(
-            "Update Tenant Branding",
-            "PUT",
-            f"/api/tenants/{self.tenant_id}/branding",
+        success, rule_response = self.run_api_test(
+            "Create Classification Rule",
+            "POST",
+            "/api/governance/classification/rules",
             200,
-            data=branding_data
+            data=rule_data
         )
         all_passed = all_passed and success
         
+        if success and 'id' in rule_response:
+            self.classification_rule_id = rule_response['id']
+            print(f"   ✅ Created classification rule: {self.classification_rule_id}")
+        
+        # 2. Get classification rules
+        success, rules = self.run_api_test(
+            "Get Classification Rules",
+            "GET",
+            "/api/governance/classification/rules",
+            200
+        )
+        all_passed = all_passed and success
         if success:
-            print(f"   ✅ Branding updated successfully")
-            branding = response.get('branding', {})
-            print(f"   ✅ Logo URL: {branding.get('logo_url', 'N/A')}")
-            print(f"   ✅ Primary Color: {branding.get('primary_color', 'N/A')}")
-
+            rules_list = rules if isinstance(rules, list) else []
+            print(f"   ✅ Found {len(rules_list)} classification rules")
+        
+        # 3. Scan for PII
+        scan_data = {
+            "datasource_id": "test-datasource-001",
+            "table_name": "users"
+        }
+        
+        success, scan_results = self.run_api_test(
+            "Scan for PII",
+            "POST",
+            "/api/governance/classification/scan",
+            200,
+            data=scan_data
+        )
+        all_passed = all_passed and success
+        if success:
+            results_list = scan_results if isinstance(scan_results, list) else []
+            print(f"   ✅ PII scan found {len(results_list)} potential matches")
+        
         return all_passed
 
     def test_custom_domains(self) -> bool:
