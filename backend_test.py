@@ -503,8 +503,8 @@ class GovernanceAPITester:
         print("   ✅ Cleanup completed")
 
     def run_all_tests(self) -> bool:
-        """Run all test suites"""
-        print("🚀 Starting Comprehensive Tenant Branding API Tests")
+        """Run all governance API test suites"""
+        print("🚀 Starting Comprehensive Data Governance API Tests")
         print(f"🌐 Backend URL: {self.base_url}")
         print(f"📧 Test User: {self.test_credentials['email']}")
         print("="*80)
@@ -514,17 +514,17 @@ class GovernanceAPITester:
             print("\n❌ Authentication failed - cannot proceed with other tests")
             return False
         
-        # Try tenant provisioning if needed
-        self.test_tenant_provisioning()
+        # Test governance health first
+        if not self.test_governance_health():
+            print("\n❌ Governance health check failed - service may be down")
+            return False
         
-        # Run all test suites
+        # Run all governance test suites
         test_suites = [
-            ("Tenant Management", self.test_tenant_management),
-            ("Tenant Branding", self.test_tenant_branding),
-            ("Custom Domains", self.test_custom_domains),
-            ("SSL Certificates", self.test_ssl_certificates),
-            ("Tenant Features", self.test_tenant_features),
-            ("Limits & Usage", self.test_tenant_limits_and_usage),
+            ("Data Catalog", self.test_data_catalog_endpoints),
+            ("Data Lineage", self.test_data_lineage_endpoints),
+            ("Data Classification", self.test_classification_endpoints),
+            ("Access Requests", self.test_access_request_endpoints),
         ]
         
         suite_results = []
@@ -535,6 +535,16 @@ class GovernanceAPITester:
             except Exception as e:
                 print(f"\n❌ {suite_name} test suite failed with exception: {str(e)}")
                 suite_results.append((suite_name, False))
+                self.failed_tests.append({
+                    'test_suite': suite_name,
+                    'error': str(e)
+                })
+        
+        # Cleanup test data
+        try:
+            self.cleanup_test_data()
+        except Exception as e:
+            print(f"⚠️  Cleanup failed: {str(e)}")
         
         # Print final results
         print("\n" + "="*80)
@@ -549,22 +559,30 @@ class GovernanceAPITester:
         success_rate = (self.tests_passed / self.tests_run * 100) if self.tests_run > 0 else 0
         print(f"Success Rate: {success_rate:.1f}%")
         
+        if self.failed_tests:
+            print(f"\n❌ Failed Tests: {len(self.failed_tests)}")
+            for failure in self.failed_tests[:5]:  # Show first 5 failures
+                print(f"   • {failure}")
+        
         # Save detailed results
-        results_file = f"/app/test_reports/backend_api_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        results_file = f"/app/test_reports/governance_api_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
         with open(results_file, 'w') as f:
             json.dump({
                 "summary": {
                     "total_tests": self.tests_run,
                     "passed_tests": self.tests_passed,
+                    "failed_tests": len(self.failed_tests),
                     "success_rate": success_rate,
-                    "timestamp": datetime.now().isoformat()
+                    "timestamp": datetime.now().isoformat(),
+                    "test_suites": dict(suite_results)
                 },
-                "test_results": self.test_results
+                "test_results": self.test_results,
+                "failed_tests": self.failed_tests
             }, f, indent=2)
         
         print(f"\n📄 Detailed results saved to: {results_file}")
         
-        return success_rate >= 70  # Consider 70%+ success rate as passing
+        return success_rate >= 80  # Consider 80%+ success rate as passing
 
 def main():
     """Main test execution"""
