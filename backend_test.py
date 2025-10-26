@@ -157,7 +157,7 @@ class GovernanceAPITester:
             return True
         return False
 
-    def test_tenant_provisioning(self) -> bool:
+    def test_data_catalog_endpoints(self) -> bool:
         """Test tenant provisioning if no tenant exists"""
         print("\n" + "="*60)
         print("🏗️  TENANT PROVISIONING TESTS")
