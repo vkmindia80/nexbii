@@ -249,7 +249,7 @@ class GovernanceAPITester:
         
         return all_passed
 
-    def test_tenant_management(self) -> bool:
+    def test_data_lineage_endpoints(self) -> bool:
         """Test core tenant management APIs"""
         print("\n" + "="*60)
         print("🏢 TENANT MANAGEMENT TESTS")
