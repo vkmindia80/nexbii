@@ -21,9 +21,9 @@ class Settings(BaseSettings):
     # CORS
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:3000",
-        "https://code-compass-15.preview.emergentagent.com",
-        "https://code-compass-15.preview.emergentagent.com",
-        "https://code-compass-15.preview.emergentagent.com"
+        "https://git-roadmap-guide-1.preview.emergentagent.com",
+        "https://git-roadmap-guide-1.preview.emergentagent.com",
+        "https://git-roadmap-guide-1.preview.emergentagent.com"
     ]
     
     # Frontend URL (for password reset links)
