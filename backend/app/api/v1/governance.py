@@ -210,19 +210,6 @@ def delete_catalog_entry(
         raise HTTPException(status_code=500, detail=f"Failed to delete catalog entry: {str(e)}")
 
 
-@router.get("/catalog/statistics", response_model=CatalogStatistics, tags=["Data Catalog"])
-def get_catalog_statistics(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_user)
-):
-    """Get statistics for the data catalog"""
-    try:
-        stats = GovernanceService.get_catalog_statistics(db, current_user.tenant_id)
-        return stats
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to get statistics: {str(e)}")
-
-
 # ==================== Data Lineage Endpoints ====================
 
 @router.post("/lineage", response_model=DataLineage, tags=["Data Lineage"])
