@@ -129,11 +129,33 @@ class GovernanceAPITester:
         
         if success and 'access_token' in response:
             self.token = response['access_token']
+            self.tenant_id = response.get('tenant_id')
             print(f"   ✅ Token obtained: {self.token[:20]}...")
+            print(f"   ✅ Tenant ID: {self.tenant_id}")
             return True
         else:
             print("   ❌ Failed to obtain authentication token")
             return False
+
+    def test_governance_health(self) -> bool:
+        """Test governance health endpoint"""
+        print("\n" + "="*60)
+        print("🏥 GOVERNANCE HEALTH CHECK")
+        print("="*60)
+        
+        success, response = self.run_api_test(
+            "Governance Health Check",
+            "GET",
+            "/api/governance/health",
+            200
+        )
+        
+        if success and response.get('status') == 'healthy':
+            print(f"   ✅ Service: {response.get('service', 'N/A')}")
+            features = response.get('features', [])
+            print(f"   ✅ Features: {', '.join(features)}")
+            return True
+        return False
 
     def test_tenant_provisioning(self) -> bool:
         """Test tenant provisioning if no tenant exists"""
