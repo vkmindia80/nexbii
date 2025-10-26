@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
 """
-Comprehensive Backend API Testing for White-Labeling Multi-Tenancy System
-Tests all tenant management, branding, DNS verification, and SSL certificate APIs
+Data Governance Backend API Testing
+Phase 4.4: Comprehensive testing of all 18 governance endpoints
+
+Tests:
+- Data Catalog: 6 endpoints (CRUD + statistics)
+- Data Lineage: 3 endpoints (create, graph, impact analysis)
+- Data Classification: 3 endpoints (rules, scan PII)
+- Access Requests: 5 endpoints (CRUD + approve/reject)
+- Health: 1 endpoint
+- Authentication & Multi-tenancy
 """
 
 import requests
-import sys
 import json
+import sys
 from datetime import datetime
 from typing import Dict, Any, Optional
 
-class TenantBrandingAPITester:
+class GovernanceAPITester:
     def __init__(self, base_url: str = "https://phase-complete.preview.emergentagent.com"):
         self.base_url = base_url
         self.token = None
