@@ -219,8 +219,8 @@ class BackupJob(Base):
     error_message = Column(Text, nullable=True)
     retry_count = Column(Integer, default=0)
     
-    # Metadata
-    metadata = Column(JSON, nullable=True)
+    # Additional data
+    additional_data = Column(JSON, nullable=True)
     created_by = Column(String, ForeignKey("users.id"), nullable=True)
     
     # Relationships
