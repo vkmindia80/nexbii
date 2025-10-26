@@ -44,6 +44,9 @@ const Layout: React.FC = () => {
     { path: '/activity', icon: Activity, label: 'Activity Feed' },
     { path: '/integrations', icon: Plug, label: 'Integrations' },
     { path: '/charts-showcase', icon: PieChart, label: 'Charts Showcase' },
+    { path: '/settings/api-keys', icon: Key, label: 'API Keys' },
+    { path: '/settings/webhooks', icon: Webhook, label: 'Webhooks' },
+    { path: '/settings/plugins', icon: Puzzle, label: 'Plugins' },
     { path: '/profile', icon: User, label: 'Profile' },
     { path: '/tenant-settings', icon: Building2, label: 'Tenant Settings' },
   ];
