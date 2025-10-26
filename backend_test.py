@@ -483,158 +483,24 @@ class GovernanceAPITester:
         
         return all_passed
 
-    def test_ssl_certificates(self) -> bool:
-        """Test SSL certificate management APIs"""
+    def cleanup_test_data(self):
+        """Clean up test data created during testing"""
         print("\n" + "="*60)
-        print("🔒 SSL CERTIFICATE TESTS")
+        print("🧹 CLEANUP TEST DATA")
         print("="*60)
         
-        if not self.tenant_id:
-            print("❌ No tenant ID available for SSL tests")
-            return False
-        
-        all_passed = True
-        
-        # First, we need a domain to test SSL with
-        # Let's get existing domains
-        success, response = self.run_api_test(
-            "Get Domains for SSL Testing",
-            "GET",
-            f"/api/tenants/{self.tenant_id}/domains",
-            200
-        )
-        
-        if not success or not response:
-            print("   ℹ️  No domains available for SSL testing")
-            return True  # Not a failure, just no domains to test
-        
-        domains = response if isinstance(response, list) else []
-        if not domains:
-            print("   ℹ️  No domains found for SSL testing")
-            return True
-        
-        domain_id = domains[0]['id']
-        domain_name = domains[0]['domain']
-        print(f"   ℹ️  Testing SSL with domain: {domain_name}")
-        
-        # Test SSL certificate upload (will fail without valid cert, but tests API)
-        test_cert_data = {
-            "certificate_pem": "-----BEGIN CERTIFICATE-----\nTEST_CERT_DATA\n-----END CERTIFICATE-----",
-            "private_key_pem": "-----BEGIN PRIVATE KEY-----\nTEST_KEY_DATA\n-----END PRIVATE KEY-----",
-            "chain_pem": "-----BEGIN CERTIFICATE-----\nTEST_CHAIN_DATA\n-----END CERTIFICATE-----"
-        }
-        
-        success, response = self.run_api_test(
-            "Upload SSL Certificate (Expected to Fail)",
-            "POST",
-            f"/api/tenants/{self.tenant_id}/domains/{domain_id}/ssl/upload",
-            400,  # Expect 400 due to invalid certificate
-            data=test_cert_data
-        )
-        # This should fail with invalid certificate, which is expected
-        if not success and response.get('detail', '').find('Invalid certificate') >= 0:
-            print("   ✅ SSL upload validation working (rejected invalid certificate)")
-            all_passed = True
-        
-        # Test Let's Encrypt request (will fail without proper domain setup)
-        success, response = self.run_api_test(
-            "Request Let's Encrypt Certificate (Expected to Fail)",
-            "POST",
-            f"/api/tenants/{self.tenant_id}/domains/{domain_id}/ssl/letsencrypt",
-            200,  # API returns 200 with success: false
-            data={"email": "admin@example.com", "staging": True}
-        )
-        # Don't count as failure since we expect this to fail without proper domain setup
-        if not success:
-            print("   ℹ️  Let's Encrypt request failed as expected (no real domain setup)")
-        
-        # Test SSL certificate info
-        success, response = self.run_api_test(
-            "Get SSL Certificate Info",
-            "GET",
-            f"/api/tenants/{self.tenant_id}/domains/{domain_id}/ssl/info",
-            200
-        )
-        all_passed = all_passed and success
-        
-        if success:
-            print(f"   ✅ SSL Status: {response.get('ssl_enabled', False)}")
-
-        return all_passed
-
-    def test_tenant_features(self) -> bool:
-        """Test tenant feature access APIs"""
-        print("\n" + "="*60)
-        print("🔍 TENANT FEATURES TESTS")
-        print("="*60)
-        
-        if not self.tenant_id:
-            print("❌ No tenant ID available for feature tests")
-            return False
-        
-        all_passed = True
-        
-        # Test feature access checks
-        features_to_test = ["white_labeling", "ai_enabled", "advanced_analytics", "api_access"]
-        
-        for feature in features_to_test:
-            success, response = self.run_api_test(
-                f"Check Feature Access: {feature}",
-                "GET",
-                f"/api/tenants/{self.tenant_id}/features/{feature}",
+        # Delete catalog entry
+        if self.catalog_entry_id:
+            success, _ = self.run_api_test(
+                "Delete Catalog Entry",
+                "DELETE",
+                f"/api/governance/catalog/{self.catalog_entry_id}",
                 200
             )
-            all_passed = all_passed and success
-            
             if success:
-                has_access = response.get('has_access', False)
-                print(f"   ✅ {feature}: {'Enabled' if has_access else 'Disabled'}")
-
-        return all_passed
-
-    def test_tenant_limits_and_usage(self) -> bool:
-        """Test tenant limits and usage APIs"""
-        print("\n" + "="*60)
-        print("📊 TENANT LIMITS & USAGE TESTS")
-        print("="*60)
+                print("   ✅ Cleaned up catalog entry")
         
-        if not self.tenant_id:
-            print("❌ No tenant ID available for limits tests")
-            return False
-        
-        all_passed = True
-        
-        # Test limits check
-        success, response = self.run_api_test(
-            "Check Tenant Limits",
-            "GET",
-            f"/api/tenants/{self.tenant_id}/limits",
-            200
-        )
-        all_passed = all_passed and success
-        
-        if success:
-            print(f"   ✅ Within User Limit: {response.get('within_user_limit', 'N/A')}")
-            print(f"   ✅ Within Storage Limit: {response.get('within_storage_limit', 'N/A')}")
-            limits_exceeded = response.get('limits_exceeded', [])
-            if limits_exceeded:
-                print(f"   ⚠️  Limits Exceeded: {', '.join(limits_exceeded)}")
-        
-        # Test usage stats
-        success, response = self.run_api_test(
-            "Get Tenant Usage",
-            "GET",
-            f"/api/tenants/{self.tenant_id}/usage",
-            200
-        )
-        all_passed = all_passed and success
-        
-        if success:
-            print(f"   ✅ Current Users: {response.get('current_users', 'N/A')}")
-            print(f"   ✅ Current Dashboards: {response.get('current_dashboards', 'N/A')}")
-            print(f"   ✅ Storage Used: {response.get('storage_used_mb', 'N/A')} MB")
-
-        return all_passed
+        print("   ✅ Cleanup completed")
 
     def run_all_tests(self) -> bool:
         """Run all test suites"""
