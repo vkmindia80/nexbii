@@ -388,7 +388,7 @@ class GovernanceAPITester:
         
         return all_passed
 
-    def test_custom_domains(self) -> bool:
+    def test_access_request_endpoints(self) -> bool:
         """Test custom domain management APIs"""
         print("\n" + "="*60)
         print("🌐 CUSTOM DOMAINS TESTS")
