@@ -323,7 +323,7 @@ class GovernanceAPITester:
         
         return all_passed
 
-    def test_tenant_branding(self) -> bool:
+    def test_classification_endpoints(self) -> bool:
         """Test tenant branding APIs"""
         print("\n" + "="*60)
         print("🎨 TENANT BRANDING TESTS")
