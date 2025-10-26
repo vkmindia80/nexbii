@@ -144,55 +144,59 @@ const SystemMonitoringPage: React.FC = () => {
       )}
 
       {/* Service Health Checks */}
-      {health && (
+      {health && health.checks && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Database Health */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <Database className="w-8 h-8 text-blue-500" />
-                <h3 className="ml-3 text-lg font-semibold">Database</h3>
+          {health.checks.database && (
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <Database className="w-8 h-8 text-blue-500" />
+                  <h3 className="ml-3 text-lg font-semibold">Database</h3>
+                </div>
+                {getStatusIcon(health.checks.database.status)}
               </div>
-              {getStatusIcon(health.checks.database.status)}
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Status:</span>
+                  <span className="font-medium">{health.checks.database.status}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Response Time:</span>
+                  <span className="font-medium">{health.checks.database.response_time_ms}ms</span>
+                </div>
+                {health.checks.database.message && (
+                  <p className="text-xs text-gray-500 mt-2">{health.checks.database.message}</p>
+                )}
+              </div>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Status:</span>
-                <span className="font-medium">{health.checks.database.status}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Response Time:</span>
-                <span className="font-medium">{health.checks.database.response_time_ms}ms</span>
-              </div>
-              {health.checks.database.message && (
-                <p className="text-xs text-gray-500 mt-2">{health.checks.database.message}</p>
-              )}
-            </div>
-          </div>
+          )}
 
           {/* Redis Health */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center">
-                <Zap className="w-8 h-8 text-red-500" />
-                <h3 className="ml-3 text-lg font-semibold">Redis Cache</h3>
+          {health.checks.redis && (
+            <div className="bg-white rounded-lg border border-gray-200 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center">
+                  <Zap className="w-8 h-8 text-red-500" />
+                  <h3 className="ml-3 text-lg font-semibold">Redis Cache</h3>
+                </div>
+                {getStatusIcon(health.checks.redis.status)}
               </div>
-              {getStatusIcon(health.checks.redis.status)}
+              <div className="space-y-2">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Status:</span>
+                  <span className="font-medium">{health.checks.redis.status}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-500">Response Time:</span>
+                  <span className="font-medium">{health.checks.redis.response_time_ms}ms</span>
+                </div>
+                {health.checks.redis.message && (
+                  <p className="text-xs text-gray-500 mt-2">{health.checks.redis.message}</p>
+                )}
+              </div>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Status:</span>
-                <span className="font-medium">{health.checks.redis.status}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Response Time:</span>
-                <span className="font-medium">{health.checks.redis.response_time_ms}ms</span>
-              </div>
-              {health.checks.redis.message && (
-                <p className="text-xs text-gray-500 mt-2">{health.checks.redis.message}</p>
-              )}
-            </div>
-          </div>
+          )}
 
           {/* Server Health */}
           <div className="bg-white rounded-lg border border-gray-200 p-6">
