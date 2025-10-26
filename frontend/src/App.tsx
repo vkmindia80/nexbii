@@ -101,6 +101,10 @@ function App() {
           <Route path="/security/mfa" element={<MFAManagementPage />} />
           <Route path="/security/audit-logs" element={<AuditLogsPage />} />
           <Route path="/security/compliance" element={<CompliancePage />} />
+          <Route path="/governance/catalog" element={<DataCatalogPage />} />
+          <Route path="/governance/lineage" element={<DataLineagePage />} />
+          <Route path="/governance/classification" element={<DataClassificationPage />} />
+          <Route path="/governance/access-requests" element={<AccessRequestsPage />} />
         </Route>
       </Routes>
     </Router>
