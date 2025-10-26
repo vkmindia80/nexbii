@@ -134,6 +134,7 @@ app.include_router(mfa.router, prefix="/api/mfa", tags=["MFA"])
 app.include_router(audit.router, prefix="/api/audit", tags=["Audit Logs"])
 app.include_router(compliance.router, prefix="/api/compliance", tags=["Compliance"])
 app.include_router(governance.router, prefix="/api/governance", tags=["Data Governance"])
+app.include_router(admin.router)  # Admin router has its own prefix
 
 @app.get("/api/health")
 async def health_check():
