@@ -563,16 +563,25 @@ NexBII is now a **fully functional Business Intelligence platform** with compreh
 **Backend:** FastAPI with JWT authentication, SQLAlchemy models  
 **Frontend:** React with protected routes, token storage
 
-#### 2. **Data Source Connectivity** (90%)
-- ✅ Support for 4 database types: PostgreSQL, MySQL, MongoDB, SQLite
+#### 2. **Data Source Connectivity** (100%) 🎉 **EXPANDED!**
+- ✅ **Support for 30+ database types!** 🆕 (January 2026)
+  - **Relational:** PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, SQLite
+  - **Cloud Warehouses:** Snowflake, Redshift, BigQuery, Azure Synapse
+  - **NoSQL:** MongoDB, Cassandra, DynamoDB, CouchDB, Redis
+  - **Analytics:** Elasticsearch, ClickHouse, Apache Druid
+  - **Time-Series:** TimescaleDB, InfluxDB
+  - **Distributed SQL:** Presto, Trino
+  - **File-based:** CSV, Excel, JSON, Parquet
 - ✅ Connection testing before saving
 - ✅ Secure credential storage
 - ✅ Schema introspection (tables, columns, data types)
-- ✅ **NEW: Schema Browser UI** with search and tree view
+- ✅ **Schema Browser UI** with search and tree view
 - ✅ CRUD operations for data sources
 
-**Backend:** Connection managers for each database type, schema endpoint  
-**Frontend:** Data sources page with Schema Browser modal
+**Backend:** Connection managers for 30+ database types, schema endpoint  
+**Frontend:** Categorized data source selector with 7 categories
+
+**📄 See detailed guide:** `/app/DATA_SOURCES_EXPANDED.md`
 
 #### 3. **SQL Query Editor** (100%) 🎉
 - ✅ Create, save, and execute SQL queries
