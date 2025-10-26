@@ -55,6 +55,13 @@ class Tenant(Base):
     saml_configs = relationship("SAMLConfig", back_populates="tenant", cascade="all, delete-orphan")
     ldap_configs = relationship("LDAPConfig", back_populates="tenant", cascade="all, delete-orphan")
     
+    # Data Governance relationships
+    catalog_entries = relationship("DataCatalogEntry", back_populates="tenant", cascade="all, delete-orphan")
+    lineage_entries = relationship("DataLineage", back_populates="tenant", cascade="all, delete-orphan")
+    classification_rules = relationship("DataClassificationRule", back_populates="tenant", cascade="all, delete-orphan")
+    access_requests = relationship("AccessRequest", back_populates="tenant", cascade="all, delete-orphan")
+    impact_analyses = relationship("DataImpactAnalysis", back_populates="tenant", cascade="all, delete-orphan")
+    
     def __repr__(self):
         return f"<Tenant {self.name} ({self.slug})>"
 
