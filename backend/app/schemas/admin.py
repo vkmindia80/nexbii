@@ -278,7 +278,7 @@ class SystemHealthCheckResponse(BaseModel):
     api_response_time: Optional[float]
     overall_status: str
     alerts_triggered: Optional[List[Dict[str, Any]]]
-    metadata: Optional[Dict[str, Any]]
+    additional_data: Optional[Dict[str, Any]]
     created_at: datetime
 
     class Config:
