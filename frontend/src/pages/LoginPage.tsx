@@ -80,8 +80,15 @@ const LoginPage: React.FC = () => {
         `🌐 Public Sharing: ${data.shared_dashboards || 3} shared dashboard links\n` +
         `   • Password-protected, expiring, and permanent links\n\n` +
         `⚡ Cache Records: ${data.cache_records || 20} cached query executions\n\n` +
-        `📤 Export History: ${data.export_records || 15} export records\n` +
+        `📤 Export History: ${data.dashboard_share_records || 15} export records\n` +
         `   • PDF, Excel, CSV, PNG formats\n\n` +
+        `🔑 API Keys: ${data.api_keys || 3} programmatic access keys\n` +
+        `   • Full access, Read-only, Query execution with rate limits\n\n` +
+        `🔗 Webhooks: ${data.webhooks || 4} event-driven integrations\n` +
+        `   • Alert notifications, Query monitoring, Dashboard analytics\n\n` +
+        `🧩 Plugins: ${data.plugins || 3} custom extensions\n` +
+        `   • Sankey visualization, Data cleaner, PDF template\n` +
+        `   • Plugin instances: ${data.plugin_instances || 3} configured\n\n` +
         `🤖 AI Features Available:\n` +
         `   • Natural language to SQL queries\n` +
         `   • Query validation & optimization\n` +
