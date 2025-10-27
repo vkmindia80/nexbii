@@ -451,14 +451,25 @@ const DashboardBuilderPage: React.FC = () => {
 
       {/* Add Widget Modal */}
       {showAddWidget && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="modal-backdrop">
+          <div className="modal-content">
             <div className="p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Add Widget</h2>
-              
-              <div className="space-y-4">
+              <div className="flex items-center justify-between mb-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Add Widget</h2>
+                  <p className="text-gray-600 mt-1">Configure your widget settings</p>
+                </div>
+                <button
+                  onClick={() => setShowAddWidget(false)}
+                  className="p-2 hover:bg-gray-100 rounded-xl transition-all duration-200 hover:scale-110"
+                >
+                  <X className="w-6 h-6 text-gray-500" />
+                </button>
+              </div>
+              
+              <div className="space-y-5">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Widget Title *
                   </label>
                   <input
@@ -472,7 +483,7 @@ const DashboardBuilderPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Query *
                   </label>
                   <select
@@ -491,7 +502,7 @@ const DashboardBuilderPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Chart Type *
                   </label>
                   <select
@@ -500,32 +511,34 @@ const DashboardBuilderPage: React.FC = () => {
                     className="input"
                     data-testid="widget-chart-type-select"
                   >
-                    <option value="line">Line Chart</option>
-                    <option value="bar">Bar Chart</option>
-                    <option value="column">Column Chart</option>
-                    <option value="area">Area Chart</option>
-                    <option value="pie">Pie Chart</option>
-                    <option value="donut">Donut Chart</option>
-                    <option value="scatter">Scatter Plot</option>
-                    <option value="gauge">Gauge</option>
-                    <option value="metric">Metric Card</option>
-                    <option value="table">Data Table</option>
+                    <option value="line">📈 Line Chart</option>
+                    <option value="bar">📊 Bar Chart</option>
+                    <option value="column">📊 Column Chart</option>
+                    <option value="area">🌄 Area Chart</option>
+                    <option value="pie">🥧 Pie Chart</option>
+                    <option value="donut">🍩 Donut Chart</option>
+                    <option value="scatter">⚡ Scatter Plot</option>
+                    <option value="gauge">🎯 Gauge</option>
+                    <option value="metric">💯 Metric Card</option>
+                    <option value="table">📋 Data Table</option>
                   </select>
                 </div>
 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <p className="text-sm text-blue-800">
-                    <strong>Tip:</strong> After adding the widget, you can drag and resize it on the dashboard grid.
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-4">
+                  <p className="text-sm text-blue-800 flex items-start">
+                    <span className="inline-block mr-2 text-lg">💡</span>
+                    <span><strong>Tip:</strong> After adding the widget, you can drag and resize it on the dashboard grid to customize its position and size.</span>
                   </p>
                 </div>
               </div>
 
-              <div className="flex space-x-3 pt-6">
+              <div className="flex space-x-3 pt-6 border-t border-gray-200 mt-6">
                 <button
                   onClick={handleAddWidget}
-                  className="flex-1 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+                  className="btn-primary flex-1"
                   data-testid="confirm-add-widget-button"
                 >
+                  <Plus className="w-5 h-5 mr-2" />
                   Add Widget
                 </button>
                 <button
@@ -539,7 +552,7 @@ const DashboardBuilderPage: React.FC = () => {
                       config: {}
                     });
                   }}
-                  className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                  className="btn-secondary px-6"
                   data-testid="cancel-add-widget-button"
                 >
                   Cancel
