@@ -311,23 +311,24 @@ const DashboardBuilderPage: React.FC = () => {
   }
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 animate-fadeIn">
       {/* Header */}
-      <div className="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+      <div className="mb-6 bg-gradient-to-r from-white via-blue-50/30 to-purple-50/30 rounded-2xl shadow-lg border border-gray-200/50 p-6 backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => navigate('/dashboards')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2.5 hover:bg-white rounded-xl transition-all duration-200 hover:shadow-md hover:scale-105 active:scale-95"
               data-testid="back-to-dashboards-button"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-5 h-5 text-gray-700" />
             </button>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
                 {dashboard?.name || 'Dashboard Builder'}
               </h1>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-sm text-gray-600 mt-1 flex items-center">
+                <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
                 Drag and resize widgets to customize your dashboard
               </p>
             </div>
@@ -335,7 +336,7 @@ const DashboardBuilderPage: React.FC = () => {
           <div className="flex items-center space-x-3">
             <button
               onClick={handleRefresh}
-              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="btn-secondary flex items-center space-x-2"
               data-testid="refresh-dashboard-button"
             >
               <RefreshCw className="w-4 h-4" />
@@ -343,7 +344,7 @@ const DashboardBuilderPage: React.FC = () => {
             </button>
             <button
               onClick={() => navigate(`/dashboards/${id}`)}
-              className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              className="btn-secondary flex items-center space-x-2"
               data-testid="view-dashboard-button"
             >
               <Eye className="w-4 h-4" />
@@ -352,39 +353,45 @@ const DashboardBuilderPage: React.FC = () => {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+              className="btn-primary flex items-center space-x-2"
               data-testid="save-dashboard-button"
             >
               <Save className="w-4 h-4" />
-              <span>{saving ? 'Saving...' : 'Save'}</span>
+              <span>{saving ? 'Saving...' : 'Save Changes'}</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Add Widget Button */}
-      <div className="mb-4">
+      <div className="mb-6">
         <button
           onClick={() => setShowAddWidget(true)}
-          className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+          className="btn-success flex items-center space-x-2 shadow-lg shadow-green-500/30"
           data-testid="add-widget-button"
         >
-          <Plus className="w-4 h-4" />
-          <span>Add Widget</span>
+          <Plus className="w-5 h-5" />
+          <span className="font-semibold">Add Widget</span>
         </button>
       </div>
 
       {/* Dashboard Grid */}
       {widgets.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No widgets yet</h3>
-          <p className="text-gray-600 mb-4">Start building your dashboard by adding widgets</p>
-          <button
-            onClick={() => setShowAddWidget(true)}
-            className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700"
-          >
-            Add Your First Widget
-          </button>
+        <div className="text-center py-20 bg-gradient-to-br from-white to-gray-50/50 rounded-2xl border-2 border-dashed border-gray-300 animate-fadeIn">
+          <div className="flex flex-col items-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full flex items-center justify-center mb-6 shadow-lg shadow-primary-500/30">
+              <Plus className="w-10 h-10 text-white" />
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">No widgets yet</h3>
+            <p className="text-gray-600 mb-6 max-w-md">Start building your dashboard by adding your first widget. Choose from various chart types and queries.</p>
+            <button
+              onClick={() => setShowAddWidget(true)}
+              className="btn-primary shadow-lg shadow-primary-500/30"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Add Your First Widget
+            </button>
+          </div>
         </div>
       ) : (
         React.createElement(ResponsiveGridLayout as any, {
