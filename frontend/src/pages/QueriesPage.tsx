@@ -441,16 +441,19 @@ const QueriesPage: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="animate-fadeIn">
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">SQL Editor</h1>
-          <p className="text-gray-600 mt-2">Write and execute SQL queries with advanced features</p>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">SQL Editor</h1>
+          <p className="text-gray-600 mt-2 flex items-center">
+            <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+            Write and execute SQL queries with advanced features
+          </p>
         </div>
         <div className="flex space-x-3">
           <button
             onClick={() => setShowHistory(!showHistory)}
-            className="flex items-center space-x-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            className="btn-secondary flex items-center space-x-2"
             data-testid="query-history-button"
           >
             <History className="w-5 h-5" />
@@ -475,7 +478,7 @@ const QueriesPage: React.FC = () => {
               }
             }}
             disabled={datasources.length === 0}
-            className="flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-primary flex items-center space-x-2 shadow-lg shadow-primary-500/30 disabled:opacity-50 disabled:cursor-not-allowed"
             data-testid="create-query-button"
           >
             <Plus className="w-5 h-5" />
@@ -485,8 +488,11 @@ const QueriesPage: React.FC = () => {
       </div>
 
       {datasources.length === 0 && (
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg mb-6">
-          Please add a data source first before creating queries.
+        <div className="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-400 text-yellow-800 px-6 py-4 rounded-xl mb-6 shadow-md">
+          <p className="font-semibold flex items-center">
+            <span className="text-2xl mr-2">⚠️</span>
+            Please add a data source first before creating queries.
+          </p>
         </div>
       )}
 
