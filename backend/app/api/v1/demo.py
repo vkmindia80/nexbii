@@ -2485,7 +2485,11 @@ if __name__ == "__main__":
                 "integrations": len(integrations),
                 "shared_dashboards": len(shared_dashboards),
                 "cache_records": len(cache_activities),
-                "dashboard_share_records": len(dashboard_activities)
+                "dashboard_share_records": len(dashboard_activities),
+                "api_keys": len(api_keys),
+                "webhooks": len(webhooks),
+                "plugins": len(plugins),
+                "plugin_instances": len(plugin_instances)
             },
             "details": {
                 "datasources": [{"id": ds.id, "name": ds.name, "type": ds.type.value} for ds in datasources],
