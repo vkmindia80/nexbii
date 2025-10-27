@@ -60,23 +60,33 @@ const DashboardPage: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className="animate-fadeIn">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Welcome to NexBII</h1>
-        <p className="text-gray-600 mt-2">Your advanced business intelligence platform</p>
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Welcome to NexBII</h1>
+        <p className="text-gray-600 mt-2 flex items-center">
+          <span className="inline-block w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+          Your advanced business intelligence platform
+        </p>
       </div>
 
       {loading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+          <div className="text-center">
+            <div className="relative inline-block">
+              <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary-200 border-t-primary-600 shadow-lg shadow-primary-500/30"></div>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 opacity-20 blur-xl animate-pulse"></div>
+            </div>
+            <p className="mt-4 text-gray-600 font-medium">Loading dashboard...</p>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {statCards.map((card) => {
             const Icon = card.icon;
             return (
-              <div key={card.title} className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <div className="flex items-center justify-between">
+              <div key={card.title} className="card group hover-lift cursor-pointer">
+                <div className="p-6">
+                  <div className="flex items-center justify-between">
                   <div>
                     <p className="text-gray-600 text-sm font-medium">{card.title}</p>
                     <p className="text-3xl font-bold text-gray-900 mt-2">{card.value}</p>
