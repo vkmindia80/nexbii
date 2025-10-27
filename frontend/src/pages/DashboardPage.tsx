@@ -87,12 +87,13 @@ const DashboardPage: React.FC = () => {
               <div key={card.title} className="card group hover-lift cursor-pointer">
                 <div className="p-6">
                   <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-gray-600 text-sm font-semibold uppercase tracking-wider">{card.title}</p>
-                    <p className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mt-2">{card.value}</p>
-                  </div>
-                  <div className={`${card.bgColor} p-4 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-200`}>
-                    <Icon className={`w-7 h-7 bg-gradient-to-r ${card.color} bg-clip-text text-transparent`} style={{ strokeWidth: 2.5 }} />
+                    <div>
+                      <p className="text-gray-600 text-sm font-semibold uppercase tracking-wider">{card.title}</p>
+                      <p className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mt-2">{card.value}</p>
+                    </div>
+                    <div className={`${card.bgColor} p-4 rounded-xl shadow-md group-hover:scale-110 transition-transform duration-200`}>
+                      <Icon className={`w-7 h-7 bg-gradient-to-r ${card.color} bg-clip-text text-transparent`} style={{ strokeWidth: 2.5 }} />
+                    </div>
                   </div>
                 </div>
               </div>
