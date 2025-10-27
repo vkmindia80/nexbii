@@ -2248,8 +2248,15 @@ ORDER BY month, region;""",
         
         db.commit()
         
-        # Create Demo Plugins
+        # Create Demo Plugins (check if they exist first)
         plugins = []
+        
+        # Clean up existing demo plugins
+        db.query(PluginInstance).filter(PluginInstance.plugin_id.in_(
+            db.query(Plugin.id).filter(Plugin.name.in_(['sankey_chart', 'data_cleaner', 'custom_pdf_template']))
+        )).delete(synchronize_session=False)
+        db.query(Plugin).filter(Plugin.name.in_(['sankey_chart', 'data_cleaner', 'custom_pdf_template'])).delete(synchronize_session=False)
+        db.commit()
         
         # Plugin 1: Custom Visualization
         p1 = Plugin(
