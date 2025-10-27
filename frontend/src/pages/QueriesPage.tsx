@@ -620,33 +620,42 @@ const QueriesPage: React.FC = () => {
 
       {/* Enhanced SQL Editor Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-6xl w-full max-h-[95vh] overflow-y-auto">
+        <div className="modal-backdrop">
+          <div className="modal-content max-w-6xl">
             <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">
-                  {editingQuery ? 'Edit Query' : 'SQL Editor'}
-                </h2>
-                <div className="flex items-center space-x-2">
+              <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+                <div>
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">
+                    {editingQuery ? 'Edit Query' : 'SQL Editor'}
+                  </h2>
+                  <p className="text-gray-600 mt-1">Create and execute powerful SQL queries</p>
+                </div>
+                <div className="flex items-center space-x-3">
                   <button
                     onClick={() => setShowAIPanel(!showAIPanel)}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl transition-all duration-200 font-medium ${
                       showAIPanel 
-                        ? 'bg-purple-600 text-white' 
-                        : 'bg-purple-50 text-purple-600 hover:bg-purple-100'
+                        ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/30' 
+                        : 'bg-purple-50 text-purple-600 hover:bg-purple-100 border border-purple-200'
                     }`}
                     title="Toggle AI Assistant"
                     data-testid="toggle-ai-panel-button"
                   >
                     <Sparkles className="w-5 h-5" />
-                    <span className="font-medium">AI Assistant</span>
+                    <span>AI Assistant</span>
                   </button>
                   <button
                     onClick={() => setDarkMode(!darkMode)}
-                    className="p-2 rounded-lg hover:bg-gray-100"
+                    className="p-2.5 rounded-xl hover:bg-gray-100 transition-all duration-200 hover:scale-110"
                     title="Toggle theme"
                   >
                     {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                  </button>
+                  <button
+                    onClick={() => setShowModal(false)}
+                    className="p-2.5 rounded-xl hover:bg-gray-100 transition-all duration-200 hover:scale-110"
+                  >
+                    <X className="w-5 h-5" />
                   </button>
                 </div>
               </div>
