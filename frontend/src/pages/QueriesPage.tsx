@@ -542,65 +542,76 @@ const QueriesPage: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {queries.map((query) => (
-            <div key={query.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center space-x-3">
-                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                    query.query_type === 'visual' ? 'bg-purple-100' : 'bg-green-100'
-                  }`}>
-                    {query.query_type === 'visual' ? (
-                      <BarChart3 className="w-5 h-5 text-purple-600" />
-                    ) : (
-                      <FileText className="w-5 h-5 text-green-600" />
-                    )}
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{query.name}</h3>
-                    <div className="flex items-center space-x-2">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        query.query_type === 'visual' 
-                          ? 'bg-purple-100 text-purple-700' 
-                          : 'bg-green-100 text-green-700'
-                      }`}>
-                        {query.query_type === 'visual' ? 'Visual Builder' : 'SQL'}
-                      </span>
+            <div key={query.id} className="card group hover-lift cursor-pointer">
+              <div className="p-6">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center shadow-md ${
+                      query.query_type === 'visual' 
+                        ? 'bg-gradient-to-br from-purple-500 to-purple-600 shadow-purple-500/30' 
+                        : 'bg-gradient-to-br from-green-500 to-green-600 shadow-green-500/30'
+                    }`}>
+                      {query.query_type === 'visual' ? (
+                        <BarChart3 className="w-6 h-6 text-white" />
+                      ) : (
+                        <FileText className="w-6 h-6 text-white" />
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition-colors">{query.name}</h3>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
+                          query.query_type === 'visual' 
+                            ? 'bg-purple-100 text-purple-700' 
+                            : 'bg-green-100 text-green-700'
+                        }`}>
+                          {query.query_type === 'visual' ? 'Visual Builder' : 'SQL'}
+                        </span>
+                      </div>
                     </div>
                   </div>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => handleView(query)}
+                      className="text-gray-400 hover:text-primary-600 transition-all duration-200 hover:scale-110"
+                      title="View query"
+                      data-testid={`view-query-${query.id}`}
+                    >
+                      <Eye className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleEdit(query)}
+                      className="text-gray-400 hover:text-blue-600 transition-all duration-200 hover:scale-110"
+                      title="Edit query"
+                      data-testid={`edit-query-${query.id}`}
+                    >
+                      <Edit className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(query.id)}
+                      className="text-gray-400 hover:text-red-600 transition-all duration-200 hover:scale-110"
+                      title="Delete query"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => handleView(query)}
-                    className="text-gray-600 hover:text-gray-700"
-                    title="View query"
-                    data-testid={`view-query-${query.id}`}
-                  >
-                    <Eye className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => handleEdit(query)}
-                    className="text-blue-600 hover:text-blue-700"
-                    title="Edit query"
-                    data-testid={`edit-query-${query.id}`}
-                  >
-                    <Edit className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(query.id)}
-                    className="text-red-600 hover:text-red-700"
-                    title="Delete query"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
+                {query.description && (
+                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">{query.description}</p>
+                )}
+                <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg p-3 mb-3 border border-gray-200">
+                  <code className="text-xs text-gray-700 break-all line-clamp-2">{query.sql_query?.substring(0, 100)}...</code>
                 </div>
-              </div>
-              {query.description && (
-                <p className="text-sm text-gray-600 mb-3">{query.description}</p>
-              )}
-              <div className="bg-gray-50 rounded p-2 mb-3">
-                <code className="text-xs text-gray-700 break-all">{query.sql_query?.substring(0, 100)}...</code>
-              </div>
-              <div className="text-sm text-gray-500">
-                <p>Created: {new Date(query.created_at).toLocaleDateString()}</p>
+                <div className="text-xs text-gray-500 flex items-center justify-between">
+                  <span className="flex items-center">
+                    <Clock className="w-3 h-3 mr-1" />
+                    {new Date(query.created_at).toLocaleDateString()}
+                  </span>
+                  <span className="flex items-center space-x-1 px-2 py-1 bg-gray-100 rounded-full">
+                    <Database className="w-3 h-3" />
+                    <span>Data Source</span>
+                  </span>
+                </div>
               </div>
             </div>
           ))}
