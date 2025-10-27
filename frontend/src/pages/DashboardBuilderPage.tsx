@@ -408,13 +408,16 @@ const DashboardBuilderPage: React.FC = () => {
             const chartType = widget.chart_type || widget.type;
 
             return (
-              <div key={widget.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+              <div key={widget.id} className="bg-gradient-to-br from-white to-gray-50/50 rounded-xl shadow-lg border border-gray-200/80 overflow-hidden hover:shadow-xl transition-all duration-300 group">
                 {/* Widget Header */}
-                <div className="drag-handle bg-gray-50 border-b border-gray-200 px-4 py-2 flex items-center justify-between cursor-move">
-                  <h3 className="font-semibold text-gray-900 text-sm">{widget.title}</h3>
+                <div className="drag-handle bg-gradient-to-r from-gray-50 to-gray-100/50 border-b border-gray-200/80 px-4 py-3 flex items-center justify-between cursor-move group-hover:from-primary-50 group-hover:to-secondary-50 transition-all duration-200">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full animate-pulse"></div>
+                    <h3 className="font-semibold text-gray-900 text-sm">{widget.title}</h3>
+                  </div>
                   <button
                     onClick={() => handleRemoveWidget(widget.id)}
-                    className="text-red-600 hover:text-red-700 p-1"
+                    className="text-gray-400 hover:text-red-600 p-1.5 rounded-lg hover:bg-red-50 transition-all duration-200 hover:scale-110"
                     data-testid={`remove-widget-${widget.id}`}
                   >
                     <Trash2 className="w-4 h-4" />
@@ -422,7 +425,7 @@ const DashboardBuilderPage: React.FC = () => {
                 </div>
                 
                 {/* Widget Content */}
-                <div className="p-4 h-[calc(100%-44px)] overflow-auto">
+                <div className="p-4 h-[calc(100%-52px)] overflow-auto bg-white">
                   {data ? (
                     <ChartContainer
                       type={chartType as any}
@@ -433,7 +436,10 @@ const DashboardBuilderPage: React.FC = () => {
                     />
                   ) : (
                     <div className="flex items-center justify-center h-full">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+                      <div className="text-center">
+                        <div className="animate-spin rounded-full h-10 w-10 border-4 border-primary-200 border-t-primary-600 mx-auto mb-3"></div>
+                        <p className="text-sm text-gray-500">Loading widget data...</p>
+                      </div>
                     </div>
                   )}
                 </div>
