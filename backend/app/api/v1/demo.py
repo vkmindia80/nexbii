@@ -2074,6 +2074,398 @@ ORDER BY month, region;""",
         
         db.commit()
         
+        # Create Demo API Keys
+        api_keys = []
+        
+        # API Key 1: Full Access Key
+        api_key_1_value = f"nexbii_{secrets.token_urlsafe(32)}"
+        ak1 = APIKey(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            user_id=user_id,
+            name="Production API Key",
+            description="Full access key for production integrations",
+            key_prefix=api_key_1_value[:8],
+            key_hash=hashlib.sha256(api_key_1_value.encode()).hexdigest(),
+            scopes=["admin:*"],
+            rate_limit_per_minute=60,
+            rate_limit_per_hour=1000,
+            rate_limit_per_day=10000,
+            is_active=True,
+            expires_at=None,
+            request_count=random.randint(500, 2000),
+            last_used_at=datetime.utcnow() - timedelta(days=random.randint(0, 5)),
+            last_used_ip=f"192.168.1.{random.randint(1, 255)}",
+            created_at=datetime.utcnow() - timedelta(days=60)
+        )
+        api_keys.append(ak1)
+        db.add(ak1)
+        
+        # API Key 2: Read-Only Key
+        api_key_2_value = f"nexbii_{secrets.token_urlsafe(32)}"
+        ak2 = APIKey(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            user_id=user_id,
+            name="Analytics Dashboard Read-Only",
+            description="Read-only access for external dashboards",
+            key_prefix=api_key_2_value[:8],
+            key_hash=hashlib.sha256(api_key_2_value.encode()).hexdigest(),
+            scopes=["read:dashboards", "read:queries", "read:datasources"],
+            rate_limit_per_minute=30,
+            rate_limit_per_hour=500,
+            rate_limit_per_day=5000,
+            is_active=True,
+            expires_at=datetime.utcnow() + timedelta(days=90),
+            request_count=random.randint(200, 800),
+            last_used_at=datetime.utcnow() - timedelta(hours=random.randint(1, 24)),
+            last_used_ip=f"10.0.1.{random.randint(1, 255)}",
+            created_at=datetime.utcnow() - timedelta(days=30)
+        )
+        api_keys.append(ak2)
+        db.add(ak2)
+        
+        # API Key 3: Query Execution Key
+        api_key_3_value = f"nexbii_{secrets.token_urlsafe(32)}"
+        ak3 = APIKey(
+            id=str(uuid.uuid4()),
+            tenant_id=t2.id,
+            user_id=user_id,
+            name="Query Execution API",
+            description="For automated query execution and reporting",
+            key_prefix=api_key_3_value[:8],
+            key_hash=hashlib.sha256(api_key_3_value.encode()).hexdigest(),
+            scopes=["read:queries", "execute:queries", "read:dashboards"],
+            rate_limit_per_minute=45,
+            rate_limit_per_hour=800,
+            rate_limit_per_day=8000,
+            is_active=True,
+            expires_at=datetime.utcnow() + timedelta(days=180),
+            request_count=random.randint(1000, 3000),
+            last_used_at=datetime.utcnow() - timedelta(minutes=random.randint(5, 120)),
+            last_used_ip=f"172.16.0.{random.randint(1, 255)}",
+            created_at=datetime.utcnow() - timedelta(days=45)
+        )
+        api_keys.append(ak3)
+        db.add(ak3)
+        
+        db.commit()
+        
+        # Create Demo Webhooks
+        webhooks = []
+        
+        # Webhook 1: Alert Notifications
+        wh1 = Webhook(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            user_id=user_id,
+            name="Slack Alert Notifications",
+            description="Send alert notifications to Slack channel",
+            url="https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXX",
+            secret=secrets.token_urlsafe(32),
+            events=["alert.triggered", "alert.resolved"],
+            is_active=True,
+            max_retries=3,
+            retry_backoff_seconds=60,
+            total_deliveries=random.randint(50, 150),
+            successful_deliveries=random.randint(45, 140),
+            failed_deliveries=random.randint(1, 10),
+            last_triggered_at=datetime.utcnow() - timedelta(hours=random.randint(1, 24)),
+            last_success_at=datetime.utcnow() - timedelta(hours=random.randint(1, 24)),
+            created_at=datetime.utcnow() - timedelta(days=90)
+        )
+        webhooks.append(wh1)
+        db.add(wh1)
+        
+        # Webhook 2: Query Execution Monitoring
+        wh2 = Webhook(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            user_id=user_id,
+            name="Query Execution Monitor",
+            description="Monitor query executions and send to external monitoring system",
+            url="https://api.monitoring.example.com/webhooks/query-events",
+            secret=secrets.token_urlsafe(32),
+            events=["query.created", "query.executed", "query.deleted"],
+            is_active=True,
+            max_retries=5,
+            retry_backoff_seconds=30,
+            total_deliveries=random.randint(200, 500),
+            successful_deliveries=random.randint(190, 480),
+            failed_deliveries=random.randint(5, 20),
+            last_triggered_at=datetime.utcnow() - timedelta(minutes=random.randint(5, 60)),
+            last_success_at=datetime.utcnow() - timedelta(minutes=random.randint(5, 60)),
+            created_at=datetime.utcnow() - timedelta(days=60)
+        )
+        webhooks.append(wh2)
+        db.add(wh2)
+        
+        # Webhook 3: Dashboard Analytics
+        wh3 = Webhook(
+            id=str(uuid.uuid4()),
+            tenant_id=t2.id,
+            user_id=user_id,
+            name="Dashboard Usage Analytics",
+            description="Track dashboard views and interactions",
+            url="https://analytics.acme.com/api/events",
+            secret=secrets.token_urlsafe(32),
+            events=["dashboard.viewed", "dashboard.created", "dashboard.updated"],
+            is_active=True,
+            max_retries=3,
+            retry_backoff_seconds=45,
+            total_deliveries=random.randint(300, 700),
+            successful_deliveries=random.randint(290, 680),
+            failed_deliveries=random.randint(5, 20),
+            last_triggered_at=datetime.utcnow() - timedelta(hours=2),
+            last_success_at=datetime.utcnow() - timedelta(hours=2),
+            created_at=datetime.utcnow() - timedelta(days=75)
+        )
+        webhooks.append(wh3)
+        db.add(wh3)
+        
+        # Webhook 4: Export Completion
+        wh4 = Webhook(
+            id=str(uuid.uuid4()),
+            tenant_id=t1.id,
+            user_id=user_id,
+            name="Export Completion Notifier",
+            description="Notify when data exports are completed",
+            url="https://api.nexbii.demo/webhooks/export-complete",
+            secret=secrets.token_urlsafe(32),
+            events=["export.completed"],
+            is_active=True,
+            max_retries=2,
+            retry_backoff_seconds=120,
+            total_deliveries=random.randint(50, 120),
+            successful_deliveries=random.randint(48, 115),
+            failed_deliveries=random.randint(1, 5),
+            last_triggered_at=datetime.utcnow() - timedelta(days=random.randint(1, 7)),
+            last_success_at=datetime.utcnow() - timedelta(days=random.randint(1, 7)),
+            created_at=datetime.utcnow() - timedelta(days=45)
+        )
+        webhooks.append(wh4)
+        db.add(wh4)
+        
+        db.commit()
+        
+        # Create Demo Plugins
+        plugins = []
+        
+        # Plugin 1: Custom Visualization
+        p1 = Plugin(
+            id=str(uuid.uuid4()),
+            name="sankey_chart",
+            display_name="Sankey Flow Diagram",
+            description="Custom Sankey diagram for visualizing flow data",
+            version="1.0.0",
+            author="NexBII Team",
+            plugin_type="visualization",
+            entry_point="main.py",
+            files={
+                "main.py": """
+import json
+import sys
+
+def render_sankey(data):
+    # Simple sankey chart implementation
+    return {
+        "type": "sankey",
+        "data": data,
+        "rendered": True
+    }
+
+if __name__ == "__main__":
+    context_file = sys.argv[1]
+    with open(context_file, 'r') as f:
+        context = json.load(f)
+    
+    result = render_sankey(context['input'])
+    print(json.dumps(result))
+"""
+            },
+            manifest={
+                "name": "sankey_chart",
+                "version": "1.0.0",
+                "plugin_type": "visualization"
+            },
+            dependencies=[],
+            required_scopes=["read:data"],
+            config_schema={},
+            default_config={},
+            installed_by=user_id,
+            tenant_id=None,  # Global plugin
+            is_enabled=True,
+            is_verified=True,
+            usage_count=random.randint(50, 200),
+            last_used_at=datetime.utcnow() - timedelta(days=random.randint(1, 10)),
+            created_at=datetime.utcnow() - timedelta(days=120)
+        )
+        plugins.append(p1)
+        db.add(p1)
+        
+        # Plugin 2: Data Transformation
+        p2 = Plugin(
+            id=str(uuid.uuid4()),
+            name="data_cleaner",
+            display_name="Data Cleaning & Normalization",
+            description="Clean and normalize data before analysis",
+            version="2.1.0",
+            author="Community",
+            plugin_type="transformation",
+            entry_point="transform.py",
+            files={
+                "transform.py": """
+import json
+import sys
+
+def clean_data(data, config):
+    # Data cleaning logic
+    cleaned = []
+    for row in data:
+        cleaned_row = {k: v.strip() if isinstance(v, str) else v for k, v in row.items()}
+        cleaned.append(cleaned_row)
+    return cleaned
+
+if __name__ == "__main__":
+    context_file = sys.argv[1]
+    with open(context_file, 'r') as f:
+        context = json.load(f)
+    
+    result = clean_data(context['input'], context['config'])
+    print(json.dumps({"data": result, "rows_processed": len(result)}))
+"""
+            },
+            manifest={
+                "name": "data_cleaner",
+                "version": "2.1.0",
+                "plugin_type": "transformation"
+            },
+            dependencies=[],
+            required_scopes=["read:data", "write:data"],
+            config_schema={},
+            default_config={"remove_nulls": True, "trim_strings": True},
+            installed_by=user_id,
+            tenant_id=t1.id,  # Tenant-specific plugin
+            is_enabled=True,
+            is_verified=False,
+            usage_count=random.randint(100, 300),
+            last_used_at=datetime.utcnow() - timedelta(hours=random.randint(1, 48)),
+            created_at=datetime.utcnow() - timedelta(days=75)
+        )
+        plugins.append(p2)
+        db.add(p2)
+        
+        # Plugin 3: Export Formatter
+        p3 = Plugin(
+            id=str(uuid.uuid4()),
+            name="custom_pdf_template",
+            display_name="Custom PDF Report Template",
+            description="Generate professional PDF reports with custom branding",
+            version="1.5.2",
+            author="NexBII Team",
+            plugin_type="export",
+            entry_point="pdf_generator.py",
+            files={
+                "pdf_generator.py": """
+import json
+import sys
+
+def generate_pdf(data, config):
+    # PDF generation logic
+    return {
+        "format": "pdf",
+        "size_kb": 245,
+        "pages": 3,
+        "success": True
+    }
+
+if __name__ == "__main__":
+    context_file = sys.argv[1]
+    with open(context_file, 'r') as f:
+        context = json.load(f)
+    
+    result = generate_pdf(context['input'], context['config'])
+    print(json.dumps(result))
+"""
+            },
+            manifest={
+                "name": "custom_pdf_template",
+                "version": "1.5.2",
+                "plugin_type": "export"
+            },
+            dependencies=[],
+            required_scopes=["read:dashboards", "export:pdf"],
+            config_schema={},
+            default_config={"include_logo": True, "page_size": "A4"},
+            installed_by=user_id,
+            tenant_id=None,  # Global plugin
+            is_enabled=True,
+            is_verified=True,
+            usage_count=random.randint(30, 100),
+            last_used_at=datetime.utcnow() - timedelta(days=random.randint(1, 15)),
+            created_at=datetime.utcnow() - timedelta(days=90)
+        )
+        plugins.append(p3)
+        db.add(p3)
+        
+        db.commit()
+        
+        # Create Plugin Instances
+        plugin_instances = []
+        
+        # Instance 1: Sales Flow Visualization
+        pi1 = PluginInstance(
+            id=str(uuid.uuid4()),
+            plugin_id=p1.id,
+            tenant_id=t1.id,
+            name="Sales Flow Diagram",
+            config={"width": 800, "height": 600, "show_labels": True},
+            is_enabled=True,
+            execution_count=random.randint(20, 80),
+            last_executed_at=datetime.utcnow() - timedelta(days=random.randint(1, 10)),
+            total_execution_time_ms=random.randint(5000, 15000),
+            error_count=random.randint(0, 3),
+            created_at=datetime.utcnow() - timedelta(days=60)
+        )
+        plugin_instances.append(pi1)
+        db.add(pi1)
+        
+        # Instance 2: Data Cleaner for Sales Data
+        pi2 = PluginInstance(
+            id=str(uuid.uuid4()),
+            plugin_id=p2.id,
+            tenant_id=t1.id,
+            name="Sales Data Cleaner",
+            config={"remove_nulls": True, "trim_strings": True, "lowercase_emails": True},
+            is_enabled=True,
+            execution_count=random.randint(50, 150),
+            last_executed_at=datetime.utcnow() - timedelta(hours=random.randint(1, 24)),
+            total_execution_time_ms=random.randint(10000, 30000),
+            error_count=random.randint(1, 5),
+            created_at=datetime.utcnow() - timedelta(days=45)
+        )
+        plugin_instances.append(pi2)
+        db.add(pi2)
+        
+        # Instance 3: Monthly Report PDF
+        pi3 = PluginInstance(
+            id=str(uuid.uuid4()),
+            plugin_id=p3.id,
+            tenant_id=t1.id,
+            name="Monthly Sales Report PDF",
+            config={"include_logo": True, "page_size": "A4", "include_charts": True},
+            is_enabled=True,
+            execution_count=random.randint(10, 30),
+            last_executed_at=datetime.utcnow() - timedelta(days=random.randint(1, 15)),
+            total_execution_time_ms=random.randint(8000, 20000),
+            error_count=random.randint(0, 2),
+            created_at=datetime.utcnow() - timedelta(days=60)
+        )
+        plugin_instances.append(pi3)
+        db.add(pi3)
+        
+        db.commit()
+        
         return {
             "success": True,
             "message": "✨ Comprehensive demo data generated successfully for ALL modules!",
