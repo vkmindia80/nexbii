@@ -2074,8 +2074,14 @@ ORDER BY month, region;""",
         
         db.commit()
         
-        # Create Demo API Keys
+        # Create Demo API Keys (clean up existing first)
         api_keys = []
+        
+        # Clean up existing demo API keys
+        db.query(APIKey).filter(
+            APIKey.name.in_(['Production API Key', 'Analytics Dashboard Read-Only', 'Query Execution API'])
+        ).delete(synchronize_session=False)
+        db.commit()
         
         # API Key 1: Full Access Key
         api_key_1_value = f"nexbii_{secrets.token_urlsafe(32)}"
