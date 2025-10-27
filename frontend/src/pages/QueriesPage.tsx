@@ -709,15 +709,15 @@ const QueriesPage: React.FC = () => {
                 </div>
 
                 {/* Query Mode Toggle */}
-                <div className="flex items-center space-x-4 p-3 bg-gray-100 rounded-lg">
-                  <span className="text-sm font-medium text-gray-700">Query Mode:</span>
+                <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+                  <span className="text-sm font-bold text-gray-700">Query Mode:</span>
                   <button
                     type="button"
                     onClick={() => setQueryMode('sql')}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl transition-all duration-200 font-medium ${
                       queryMode === 'sql' 
-                        ? 'bg-primary-600 text-white' 
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                        ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-500/30 scale-105' 
+                        : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
                     }`}
                     data-testid="sql-mode-button"
                   >
@@ -732,10 +732,10 @@ const QueriesPage: React.FC = () => {
                         loadSchema(formData.datasource_id);
                       }
                     }}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center space-x-2 px-5 py-2.5 rounded-xl transition-all duration-200 font-medium ${
                       queryMode === 'visual' 
-                        ? 'bg-primary-600 text-white' 
-                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                        ? 'bg-gradient-to-r from-purple-600 to-purple-700 text-white shadow-lg shadow-purple-500/30 scale-105' 
+                        : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-300'
                     }`}
                     data-testid="visual-mode-button"
                   >
