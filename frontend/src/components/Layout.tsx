@@ -90,26 +90,31 @@ const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-purple-50/20">
       {/* Sidebar */}
       <aside
         className={`${
           sidebarOpen ? 'w-64' : 'w-20'
-        } bg-white border-r border-gray-200 transition-all duration-300 flex flex-col`}
+        } bg-white/90 backdrop-blur-xl border-r border-gray-200/80 shadow-xl transition-all duration-300 flex flex-col relative z-10`}
       >
+        {/* Gradient Accent */}
+        <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-primary-500 via-secondary-500 to-primary-500"></div>
+        
         {/* Logo */}
-        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200/80 bg-gradient-to-r from-white to-gray-50/50">
           {sidebarOpen ? (
-            <TenantLogo size="md" showText={true} />
+            <div className="animate-fadeIn">
+              <TenantLogo size="md" showText={true} />
+            </div>
           ) : (
             <TenantLogo size="md" showText={false} />
           )}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-1 rounded-lg hover:bg-gray-100"
+            className="p-2 rounded-lg hover:bg-gradient-to-br hover:from-primary-50 hover:to-secondary-50 transition-all duration-200 hover:scale-110 active:scale-95"
             data-testid="sidebar-toggle"
           >
-            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            {sidebarOpen ? <X className="w-5 h-5 text-gray-600" /> : <Menu className="w-5 h-5 text-gray-600" />}
           </button>
         </div>
 
@@ -123,15 +128,20 @@ const Layout: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors ${
+                className={`group flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-all duration-200 relative overflow-hidden ${
                   isActive
-                    ? 'bg-primary-50 text-primary-700'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg shadow-primary-500/30'
+                    : 'text-gray-700 hover:bg-gradient-to-r hover:from-gray-100 hover:to-gray-50 hover:shadow-md'
                 }`}
                 data-testid={`nav-${item.label.toLowerCase().replace(' ', '-')}`}
               >
-                <Icon className="w-5 h-5" />
-                {sidebarOpen && <span className="font-medium">{item.label}</span>}
+                <Icon className={`w-5 h-5 transition-transform duration-200 ${!isActive && 'group-hover:scale-110'}`} />
+                {sidebarOpen && (
+                  <span className="font-medium text-sm animate-fadeIn">{item.label}</span>
+                )}
+                {isActive && (
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 animate-shimmer"></div>
+                )}
               </Link>
             );
           })}
