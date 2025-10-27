@@ -2499,7 +2499,11 @@ if __name__ == "__main__":
                 "subscriptions": [{"id": s.id, "frequency": s.frequency.value} for s in subscriptions],
                 "tenants": [{"id": t.id, "name": t.name, "plan": t.plan} for t in tenants],
                 "shared_dashboards": [{"id": sd.id, "dashboard_id": sd.dashboard_id, "expires_at": str(sd.expires_at) if sd.expires_at else "Never"} for sd in shared_dashboards],
-                "integrations": [{"id": i.id, "smtp_configured": bool(i.smtp_host), "slack_configured": bool(i.slack_webhook_url)} for i in integrations]
+                "integrations": [{"id": i.id, "smtp_configured": bool(i.smtp_host), "slack_configured": bool(i.slack_webhook_url)} for i in integrations],
+                "api_keys": [{"id": ak.id, "name": ak.name, "scopes": ak.scopes} for ak in api_keys],
+                "webhooks": [{"id": wh.id, "name": wh.name, "events": wh.events} for wh in webhooks],
+                "plugins": [{"id": p.id, "name": p.display_name, "type": p.plugin_type} for p in plugins],
+                "plugin_instances": [{"id": pi.id, "name": pi.name} for pi in plugin_instances]
             },
             "summary": {
                 "database_records": {
