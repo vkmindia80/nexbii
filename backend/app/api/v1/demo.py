@@ -2534,7 +2534,11 @@ if __name__ == "__main__":
                     "✅ Integrations (Email SMTP & Slack webhook configurations)",
                     "✅ Shared Dashboards (3 public sharing links: password-protected, expiring, permanent)",
                     "✅ Cache Activity (20 cached query execution records)",
-                    "✅ Export History (15 export records: PDF, Excel, CSV, PNG)"
+                    "✅ Export History (15 export records: PDF, Excel, CSV, PNG)",
+                    "✅ API Keys (3 keys: Full access, Read-only, Query execution with rate limits)",
+                    "✅ Webhooks (4 webhooks: Alert notifications, Query monitoring, Dashboard analytics, Export completion)",
+                    "✅ Plugins (3 plugins: Sankey visualization, Data cleaner, PDF template)",
+                    "✅ Plugin Instances (3 instances: Sales flow, Data cleaner, Monthly report)"
                 ]
             }
         }
