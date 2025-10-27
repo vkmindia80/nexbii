@@ -16,8 +16,12 @@ from ...models.activity import Activity, ActivityType
 from ...models.tenant import Tenant, TenantDomain, TenantInvitation, TenantUsage
 from ...models.integration import Integration
 from ...models.share import SharedDashboard
+from ...models.api_key import APIKey
+from ...models.webhook import Webhook
+from ...models.plugin import Plugin, PluginInstance
 from ...core.security import get_password_hash
 import secrets
+import hashlib
 
 router = APIRouter()
 
