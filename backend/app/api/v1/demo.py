@@ -2157,8 +2157,14 @@ ORDER BY month, region;""",
         
         db.commit()
         
-        # Create Demo Webhooks
+        # Create Demo Webhooks (clean up existing first)
         webhooks = []
+        
+        # Clean up existing demo webhooks
+        db.query(Webhook).filter(
+            Webhook.name.in_(['Slack Alert Notifications', 'Query Execution Monitor', 'Dashboard Usage Analytics', 'Export Completion Notifier'])
+        ).delete(synchronize_session=False)
+        db.commit()
         
         # Webhook 1: Alert Notifications
         wh1 = Webhook(
