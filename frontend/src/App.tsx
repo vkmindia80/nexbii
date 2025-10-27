@@ -68,8 +68,14 @@ function App() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-50 via-blue-50/20 to-purple-50/20">
+        <div className="text-center">
+          <div className="relative">
+            <div className="animate-spin rounded-full h-16 w-16 border-4 border-primary-200 border-t-primary-600 mx-auto shadow-lg shadow-primary-500/30"></div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary-500 to-secondary-500 opacity-20 blur-xl animate-pulse"></div>
+          </div>
+          <p className="mt-4 text-gray-600 font-medium">Loading NexBII...</p>
+        </div>
       </div>
     );
   }
